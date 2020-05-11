@@ -40,6 +40,7 @@ struct Course
 	Course* next=NULL;
 };
 
+void savetxtCourse(ofstream& foutput,Course*& courseHead);
 //3.1
 void createSemester(Semester*& semesterHead);
 void saveSemester(Semester* semesterHead, ofstream& foutput);
@@ -53,4 +54,6 @@ void addCourse(ofstream& foutput, Semester* semesterHead);
 //3.4
 void readCourse(ifstream& finput, Course*& courseHead);
 void editCourse(ifstream& finput, ofstream& foutput, Semester* semesterHead, Course*& courseHead);
+//3.5
+void removeCourse(Course*& courseHead);
 #endif

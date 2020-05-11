@@ -341,7 +341,10 @@ void importSchedule(ifstream& finput,ofstream& foutput,Course*& courseHead,Semes
 		foutput << cur->daysOfWeek<<endl;
 		foutput << cur->startHour << " " << cur->startMin << endl;
 		foutput << cur->endHour << " " << cur->endMin << endl;
-		foutput << cur->room << endl << endl;
+		foutput << cur->room;
+		if (cur->next == NULL)
+			break;
+		foutput << endl << endl;
 		cur = cur->next;
 	}
 	foutput.close();
@@ -408,6 +411,31 @@ void addCourse(ofstream& foutput,Semester* semesterHead)
 	cout << "Add successfully";
 }
 
+void savetxtCourse(ofstream& foutput, Course*& courseHead)
+{
+	Course* cur = courseHead;
+	while (cur != NULL)
+	{
+		foutput << cur->ID << endl;
+		foutput << cur->name << endl;
+		foutput << cur->className << endl;
+		foutput << cur->lecturerUsername << endl;
+		foutput << cur->lecturerName << endl;
+		foutput << cur->lecturerDegree << endl;
+		foutput << cur->lecturerGender << endl;
+		foutput << cur->startDate.year << " " << cur->startDate.month << " " << cur->startDate.day << endl;
+		foutput << cur->endDate.year << " " << cur->endDate.month << " " << cur->endDate.day << endl;
+		foutput << cur->daysOfWeek << endl;
+		foutput << cur->startHour << " " << cur->startMin << endl;
+		foutput << cur->endHour << " " << cur->endMin << endl;
+		foutput << cur->room;
+		if (cur->next == NULL)
+			break;
+		foutput << endl << endl;
+		cur = cur->next;
+	}
+}
+
 void editCourse(ifstream& finput, ofstream& foutput, Semester* semesterHead, Course*& courseHead)
 {
 	int checkYear, checkTerm;
@@ -453,9 +481,90 @@ void editCourse(ifstream& finput, ofstream& foutput, Semester* semesterHead, Cou
 	courseHead = new Course;
 	readCourse(finput, courseHead);
 	Course* cur = courseHead;
-	
+	cout << "List of course: ";
+	while (cur != NULL)
+	{
+		cout << cur->ID << ", ";
+		cur = cur->next;
+	}
+	cur = courseHead;
+	char* temp = new char[10];
+	cout <<endl<< "Please choose a course to edit: ";
+	cin.ignore();
+	cin.get(temp, 10, '\n');
+	cin.ignore();
+	while (cur != NULL && strcmp(temp,cur->ID)!=0)
+		cur = cur->next;
+	cout << "Input Course ID: ";
+	cin.get(cur->ID, 10, '\n');
+	cin.ignore();
+	cout << "Input course name: ";
+	cin.get(cur->name, 100, '\n');
+	cin.ignore();
+	cout << "Input class name: ";
+	cin.get(cur->className, 10, '\n');
+	cin.ignore();
+	cout << "Input lecturer username: ";
+	cin.get(cur->lecturerUsername, 10, '\n');
+	cin.ignore();
+	cout << "Input lecturer name: ";
+	cin.get(cur->lecturerName, 50, '\n');
+	cin.ignore();
+	cout << "Input lecturer degree: ";
+	cin.get(cur->lecturerDegree, 10, '\n');
+	cin.ignore();
+	cout << "Input lecturer gender: ";
+	cin.get(cur->lecturerGender, 10, '\n');
+	cout << "Input Course's start day: ";
+	cin >> cur->startDate.day;
+	cout << "Input Course's start month: ";
+	cin >> cur->startDate.month;
+	cout << "Input Course's start year: ";
+	cin >> cur->startDate.year;
+	cout << "Input Course's end day: ";
+	cin >> cur->endDate.day;
+	cout << "Input Course's end month: ";
+	cin >> cur->endDate.month;
+	cout << "Input Course's end year: ";
+	cin >> cur->endDate.year;
+	cin.ignore();
+	char* tempDay = new char[4];
+	cout << "Input day in weeks: ";
+	cin.get(tempDay, 4, '\n');
+	if (strcmp(tempDay, "MON") == 0)
+		cur->daysOfWeek = 2;
+	else if (strcmp(tempDay, "TUE") == 0)
+		cur->daysOfWeek = 3;
+	else if (strcmp(tempDay, "WED") == 0)
+		cur->daysOfWeek = 4;
+	else if (strcmp(tempDay, "THU") == 0)
+		cur->daysOfWeek = 5;
+	else if (strcmp(tempDay, "FRI") == 0)
+		cur->daysOfWeek = 6;
+	else if (strcmp(tempDay, "SAT") == 0)
+		cur->daysOfWeek = 7;
+	else if (strcmp(tempDay, "SUN") == 0)
+		cur->daysOfWeek = 8;
+	cout << "Input course's start hour: ";
+	cin >> cur->startHour;
+	cout << "Input course's start min: ";
+	cin >> cur->startMin;
+	cout << "Input course's end hour: ";
+	cin >> cur->endHour;
+	cout << "Input course's end min: ";
+	cin >> cur->endMin;
+	cin.ignore();
+	cout << "Input room: ";
+	cur->room = new char[10];
+	cin.get(cur->room, 10, '\n');
+	cout << "Edited successfully!" << endl;
+	delete[]temp;
 	finput.close();
+	foutput.open(filename);
+	savetxtCourse(foutput, courseHead);
+	foutput.close();
 }
+
 
 void readCourse(ifstream& finput, Course*& courseHead)
 {
@@ -469,25 +578,75 @@ void readCourse(ifstream& finput, Course*& courseHead)
 		cur->lecturerName = new char[50];
 		cur->lecturerDegree = new char[10];
 		cur->lecturerGender = new char[10];
+		cur->room = new char[10];
 		finput.get(cur->ID, 10, '\n');
 		finput.ignore();
-		finput.get(cur->ID, 100, '\n');
+		finput.get(cur->name, 100, '\n');
 		finput.ignore();
-		finput.get(cur->ID, 10, '\n');
+		finput.get(cur->className, 10, '\n');
 		finput.ignore();
-		finput.get(cur->ID, 10, '\n');
+		finput.get(cur->lecturerUsername, 10, '\n');
 		finput.ignore();
-		finput.get(cur->ID, 10, '\n');
+		finput.get(cur->lecturerName, 50, '\n');
 		finput.ignore();
-		finput.get(cur->ID, 10, '\n');
+		finput.get(cur->lecturerDegree, 10, '\n');
 		finput.ignore();
-		finput.get(cur->ID, 10, '\n');
+		finput.get(cur->lecturerGender, 10, '\n');
+		finput >> cur->startDate.year;
+		finput >> cur->startDate.month;
+		finput >> cur->startDate.day;
+		finput >> cur->endDate.year;
+		finput >> cur->endDate.month;
+		finput >> cur->endDate.day;
+		finput >> cur->daysOfWeek;
+		finput >> cur->startHour;
+		finput >> cur->startMin;
+		finput >> cur->endHour;
+		finput >> cur->endMin;
 		finput.ignore();
-
+		finput.get(cur->room, 10, '\n');
 		if (finput.eof())
 			break;
+		finput.ignore();
+		
+		while (finput.get() != '\n');
+		
 		cur->next = new Course;
 		cur = cur->next;
-		while (finput.get() != ' ');
+		
+	}
+}
+
+void removeCourse(Course*& courseHead)
+{
+	Course* cur = courseHead;
+	cout << "List of course: ";
+	while (cur != NULL)
+	{
+		cout << cur->ID << ", ";
+		cur = cur->next;
+	}
+	cur = courseHead;
+	char* temp = new char[10];
+	cout << endl << "Please choose a course to removed: ";
+	cin.ignore();
+	cin.get(temp, 10, '\n');
+	cin.ignore();
+	while (cur != NULL && strcmp(temp, cur->ID) != 0)
+		cur = cur->next;
+	if (cur == courseHead)
+	{
+		courseHead = courseHead->next;
+		delete cur;
+		cout << "Removed successfully";
+		return;
+	}
+	Course* prev = courseHead;
+	while (prev->next != NULL && prev->next != cur)
+	{
+		prev->next = cur->next;
+		delete cur;
+		cout << "Removed successfully";
+		return;
 	}
 }
