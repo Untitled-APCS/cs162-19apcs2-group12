@@ -198,6 +198,7 @@ Course* inputCourse()
 void importSchedule(ifstream& finput,ofstream& foutput,Course*& courseHead,Semester* semesterHead)
 {
 	int checkYear, checkTerm;
+	string filename;
 	cout << "Enter academic years: ";
 	cin >> checkYear;
 	cout << "Enter semester: ";
@@ -221,6 +222,41 @@ void importSchedule(ifstream& finput,ofstream& foutput,Course*& courseHead,Semes
 	cout << "Enter class: ";
 	cin.ignore();
 	cin.get(className, 10, '\n');
+	filename = "Student-";
+	filename += className;
+	filename += ".txt";
+	finput.open(filename);
+	if (!finput.is_open())
+	{
+		cout << "Student file not found.";
+		return;
+	}
+	Student* studentHead = new Student;
+	Student* curStu = studentHead;
+	while (!finput.eof())
+	{
+		curStu->password = new char[100];
+		curStu->name = new char[100];
+		curStu->className = new char[10];
+		finput >> curStu->ID;
+		finput.ignore();
+		finput.get(curStu->password, 100, '\n');
+		finput.ignore();
+		finput.get(curStu->name, 100, '\n');
+		finput >> curStu->doB.year;
+		finput >> curStu->doB.month;
+		finput >> curStu->doB.day;
+		finput.ignore();
+		finput.get(curStu->className, 10, '\n');
+		finput >> curStu->status;
+		finput.ignore(1000, '\n');
+		if (finput.eof())
+			break;
+		curStu->next = new Student;
+		curStu = curStu->next;
+		
+	}
+	finput.close();
 	
 	char temp[1000];
 	cout << "Enter file path: ";
@@ -315,7 +351,8 @@ void importSchedule(ifstream& finput,ofstream& foutput,Course*& courseHead,Semes
 		}
 		finput.close();
 	}
-	string filename;
+	
+	filename = "";
 	filename += to_string(checkYear);
 	filename += "-";
 	filename += to_string(checkYear+1);
@@ -348,6 +385,46 @@ void importSchedule(ifstream& finput,ofstream& foutput,Course*& courseHead,Semes
 		cur = cur->next;
 	}
 	foutput.close();
+	cur = courseHead;
+	
+	while (cur != NULL)
+	{
+		curStu = studentHead;
+		filename = "";
+		filename += to_string(checkYear);
+		filename += "-";
+		filename += to_string(checkYear + 1);
+		filename += "-HK";
+		filename += to_string(checkTerm);
+		filename += "-";
+		filename += className;
+		filename += "-";
+		filename += cur->ID;
+		filename += "-Student.txt";
+		foutput.open(filename.c_str());
+		while (curStu != NULL)
+		{
+			foutput << curStu->ID << endl;
+			foutput << curStu->name << endl;
+			foutput << curStu->doB.year << " " << curStu->doB.month << " " << curStu->doB.day << endl;
+			foutput << curStu->className << endl;
+			foutput << curStu->status << endl;
+			foutput << "-1" << endl << "-1" << endl << "-1" << endl << "-1" << endl;
+			for (int i = 0; i < 9; ++i)
+				foutput << "Week" << i + 1 << " -1" << endl;
+			if (curStu->next == NULL)
+			{
+				foutput << "Week10 -1";
+				break;
+			}
+			foutput << "Week10 -1" << endl << endl;
+			curStu = curStu->next;
+		}
+		
+		foutput.close();
+		cur = cur->next;
+	}
+
 	cout << "Import successfully!";
 }
 
@@ -628,7 +705,7 @@ void removeCourse(Course*& courseHead)
 	}
 	cur = courseHead;
 	char* temp = new char[10];
-	cout << endl << "Please choose a course to removed: ";
+	cout << endl << "Please choose a course to remove: ";
 	cin.ignore();
 	cin.get(temp, 10, '\n');
 	cin.ignore();
@@ -648,5 +725,277 @@ void removeCourse(Course*& courseHead)
 		delete cur;
 		cout << "Removed successfully";
 		return;
+	}
+}
+
+void readStudentCourse(ifstream& finput, Student*& studentHead)
+{
+	Student* cur = studentHead;
+	while (!finput.eof())
+	{
+		cur->name = new char[100];
+		cur->className = new char[10];
+		finput >> cur->ID;
+		finput.ignore();
+		finput.get(cur->name, 100, '\n');
+		finput >> cur->doB.year;
+		finput >> cur->doB.month;
+		finput >> cur->doB.day;
+		finput.ignore();
+		finput.get(cur->className, 10, '\n');
+		finput >> cur->status;
+		for (int i = 0; i < 4; ++i)
+		{
+			finput >> cur->grade[i];
+		}
+		for (int i = 0; i < 10; ++i)
+		{
+			finput.ignore(100, ' ');
+			finput >> cur->attend[i];
+		}
+		if (finput.eof())
+			break;
+		finput.ignore(100, '\n');
+		cur->next = new Student;
+		cur = cur->next;
+	}
+}
+
+void saveStudentCourse(ofstream& foutput, Student* studentHead)
+{
+	Student* cur = studentHead;
+	while (cur!=NULL)
+	{
+		foutput << cur->ID<<endl;
+		foutput << cur->name << endl;
+		foutput << cur->doB.year << " " << cur->doB.month << " " << cur->doB.day  << endl;
+		foutput << cur->className << endl;
+		foutput << cur->status << endl;
+		for (int i = 0; i < 4; ++i)
+		{
+			foutput << cur->grade[i]<<endl;
+		}
+		for (int i = 0; i < 10; ++i)
+		{
+			foutput << "Week" << i + 1 << " " << cur->attend[i];
+			if (i == 9 && cur->next == NULL)
+				break;
+			foutput << endl;
+			if (i == 9)
+				foutput << endl;
+		}
+		cur = cur->next;
+	}
+}
+
+void removeStudentCourse(ifstream& finput,ofstream& foutput,Course*& courseHead, Semester* semesterHead,Student*& studentHead)
+{
+	int checkYear, checkTerm;
+	cout << "Enter academic years: ";
+	cin >> checkYear;
+	cout << "Enter semester: ";
+	cin >> checkTerm;
+	Semester* check = semesterHead;
+	if (semesterHead == NULL)
+	{
+		cout << "Semester does not exist" << endl;
+		return;
+	}
+	while (semesterHead->year != checkYear && semesterHead->term != checkTerm)
+	{
+		if (semesterHead->next == NULL)
+		{
+			cout << "Semester does not exist" << endl;
+			return;
+		}
+		semesterHead = semesterHead->next;
+	}
+	char* className = new char[10];
+	cout << "Enter class: ";
+	cin.ignore();
+	cin.get(className, 10, '\n');
+	char* courseName = new char[10];
+	cout << "Enter course ID: ";
+	cin.ignore();
+	cin.get(courseName, 10, '\n');
+	string filename;
+	filename += to_string(checkYear);
+	filename += "-";
+	filename += to_string(checkYear + 1);
+	filename += "-HK";
+	filename += to_string(checkTerm);
+	filename += "-";
+	filename += className;
+	filename += "-";
+	filename += courseName;
+	filename += "-Student.txt";
+	finput.open(filename);
+	if (!finput.is_open())
+	{
+		cout << "file not found.";
+		return;
+	}
+	emptyStudent(studentHead);
+	studentHead = new Student;
+	readStudentCourse(finput, studentHead);
+	finput.close();
+	cout << "Please input Student ID you want to delete: ";
+	int temp;
+	cin >> temp;
+	Student* cur = studentHead;
+	while (cur != NULL && cur->ID != temp)
+		cur = cur->next;
+	if (cur == NULL)
+	{
+		cout << "Student not found" << endl;
+		return;
+	}
+	if (cur == studentHead)
+	{
+		studentHead = studentHead->next;
+		delete cur;
+		cout << "Deleted successfully!";
+		return;
+	}
+	Student* prev = studentHead;
+	while (prev->next != NULL && prev->next != cur)
+		prev = prev->next;
+	prev->next = cur->next;
+	delete cur;
+	foutput.open(filename);
+	saveStudentCourse(foutput, studentHead);
+	foutput.close();
+}
+
+void addStudentCourse(ifstream& finput, ofstream& foutput, Student*& studentHead, Semester* semesterHead)
+{
+	char* className = new char[10];
+	cout << "Enter student's class: ";
+	cin.ignore();
+	cin.get(className, 10, '\n');
+	string filename;
+	filename = "Student-";
+	filename += className;
+	filename += ".txt";
+	finput.open(filename);
+	if (!finput.is_open())
+	{
+		cout << "Class does not exist." << endl;
+		return;
+	}
+	studentHead = new Student;
+	Student* curStu = studentHead;
+	while (!finput.eof())
+	{
+		curStu->password = new char[100];
+		curStu->name = new char[100];
+		curStu->className = new char[10];
+		finput >> curStu->ID;
+		finput.ignore();
+		finput.get(curStu->password, 100, '\n');
+		finput.ignore();
+		finput.get(curStu->name, 100, '\n');
+		finput >> curStu->doB.year;
+		finput >> curStu->doB.month;
+		finput >> curStu->doB.day;
+		finput.ignore();
+		finput.get(curStu->className, 10, '\n');
+		finput >> curStu->status;
+		finput.ignore(1000, '\n');
+		if (finput.eof())
+			break;
+		curStu->next = new Student;
+		curStu = curStu->next;
+
+	}
+	finput.close();
+	char* temp = new char[20];
+	cout << "Please input the year of course: ";
+	int tempYear;
+	cin >> tempYear;
+	filename = "";
+	filename += to_string(tempYear);
+	filename += "-";
+	filename += to_string(tempYear + 1);
+	filename += "-";
+	cin.ignore();
+	cout << "Please input semester: ";
+	cin.get(temp, 20, '\n');
+	filename += "HK";
+	filename += temp;
+	cout << "Please input course's class: ";
+	cin.ignore();
+	cin.get(temp, 20, '\n');
+	filename += "-";
+	filename += temp;
+	cout << "Please input course's ID: ";
+	cin.ignore();
+	cin.get(temp, 20, '\n');
+	filename += "-";
+	filename += temp;
+	filename += "-Student.txt";
+	foutput.open(filename, foutput.app);
+	if (!foutput.is_open())
+	{
+		cout << "Class does not exist." << endl;
+		return;
+	}
+	cout << "Input student ID to add: ";
+	int tempID;
+	cin >> tempID;
+	Student* cur = studentHead;
+	while (cur != NULL && cur->ID != tempID)
+	{
+		cur = cur->next;
+		if (cur->next == NULL)
+		{
+			cout << "Student not found.";
+			return;
+		}
+	}
+	foutput << endl;
+	foutput << cur->ID << endl;
+	foutput << cur->name << endl;
+	foutput << cur->doB.year << " " << cur->doB.month << " " << cur->doB.day << endl;
+	foutput << cur->className << endl;
+	foutput << cur->status << endl;
+	foutput << "-1" << endl << "-1" << endl << "-1" << endl << "-1" << endl;
+	for (int i = 0; i < 9; ++i)
+		foutput << "Week" << i + 1 << " -1" << endl;
+	foutput << "Week10 -1" << endl << endl;
+	foutput.close();
+	delete[]temp;
+	cout << "Added Successfully";
+}
+
+void emptyStudent(Student*& studentHead)
+{
+	Student* temp;
+	while (studentHead != NULL)
+	{
+		temp = studentHead;
+		studentHead = studentHead->next;
+		delete temp;
+	}
+}
+void emptyCourse(Course*& courseHead)
+{
+	Course* temp;
+	while (courseHead != NULL)
+	{
+		temp = courseHead;
+		courseHead = courseHead->next;
+		delete temp;
+	}
+}
+
+void emptySemester(Semester*& semesterHead)
+{
+	Semester* temp;
+	while (semesterHead != NULL)
+	{
+		temp = semesterHead;
+		semesterHead = semesterHead->next;
+		delete temp;
 	}
 }
