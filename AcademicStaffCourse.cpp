@@ -259,7 +259,7 @@ void importSchedule(ifstream& finput,ofstream& foutput,Course*& courseHead,Semes
 	cin.ignore();
 	cin.get(temp, 1000, '\n');
 	char* path = new char[strlen(temp) + 1];
-	strcpy_s(path, strlen(temp) + 1, temp);
+	strcpy(path, strlen(temp) + 1, temp);
 	finput.open(path);
 	if (!finput.is_open())
 		cout << "File does not exist" << endl;
