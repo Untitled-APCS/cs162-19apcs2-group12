@@ -182,7 +182,23 @@ void RemoveStudent(stu*& student, ofstream& f)
 }
 void viewlistofclass()
 {
-
+    ifstream classes;
+    classes.open("Class.txt");
+    if (!classes.is_open())
+        cout << "Can not open file!";
+    else
+    {
+        int n;
+        classes >> n;
+        char a[8];
+        for (int i = 0; i < n; i++)
+        {
+            classes.get(a, 9);
+            classes.get();
+            cout << a;
+        }
+    }
+    classes.close();
 }
 void viewlistofstudent(stu* student)
 {
