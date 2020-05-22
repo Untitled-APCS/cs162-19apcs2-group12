@@ -143,6 +143,7 @@ void view_attendance_list(StudentNode* head) {
 	}
 }
 void edit_attendance(StudentNode* head) {
+	if (head == nullptr) return;
 	int week;
 	string id;
 	string name;
@@ -178,7 +179,7 @@ void edit_attendance(StudentNode* head) {
 }
 void output_to_txt(StudentNode* head, ofstream& fout) {
 	string filename;
-	cout << "Enter the file name ";
+	cout << "Enter the course's name ";
 	
 	getline(cin, filename);
 	filename = filename + "-Student.txt";
@@ -210,7 +211,7 @@ void output_to_txt(StudentNode* head, ofstream& fout) {
 }
 void export_to_csv(StudentNode* head, ofstream& fout) {
 	string filename;
-	cout << "Enter the file's name ";
+	cout << "Enter the course's name ";
 	
 	getline(cin, filename);
 	filename = filename + "-attendance.csv";
@@ -219,7 +220,7 @@ void export_to_csv(StudentNode* head, ofstream& fout) {
 		cout << "Cannot open this file" << endl;
 		return;
 	}
-	fout << "Student name, student Id,";
+	fout << "No, Student name, Student Id,";
 	for(int i=1; i<=10; i++) {
 		if (i == 10) {
 			fout << "W" << i << "\n";
@@ -228,8 +229,9 @@ void export_to_csv(StudentNode* head, ofstream& fout) {
 			fout << "W0" << i << ",";
 		}
 	}
+	int i = 1;
 	while (head) {
-		fout << head->name << "," << head->id << ",";
+		fout << i <<","<< head->name << "," << head->id << ",";
 		for (int j = 0; j < 10; j++) {
 			int index = head->al[j].length() - 1;
 			if (j == 9) {
@@ -240,6 +242,7 @@ void export_to_csv(StudentNode* head, ofstream& fout) {
 			}
 		}
 		head = head->next;
+		i++;
 
 	}
 	fout.close();
