@@ -180,6 +180,7 @@ void RemoveStudent(stu*& student, ofstream& f)
             student = student->pNext;
         }
     }
+    savedata(student, f);
 }
 void viewlistofclass()
 {

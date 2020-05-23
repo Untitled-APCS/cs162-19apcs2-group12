@@ -22,4 +22,8 @@ void update_grade(BoardNode* head, StudentNode* root);
 void delete_all(BoardNode*& head);
 void edit_grade(StudentNode* root);
 
+//Kiet's part
+void outputScoreboard(BoardNode* pHead);
+void exportscoreboard(BoardNode* pHead, ofstream& f);
+
 #endif
