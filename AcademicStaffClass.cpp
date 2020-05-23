@@ -83,6 +83,7 @@ void changeclass(stu*& student, ofstream &f, char name[])
         }
         student = student->pNext;
     }
+    savedata(student, f);
 }
 
 void editstudent(stu* student, ofstream& f, char name[])
@@ -100,8 +101,8 @@ void editstudent(stu* student, ofstream& f, char name[])
             cin.get();
             cout << "Student's ID:";
             cin >> student->ID;
-            cout << "Student's day of birth:\n DD MM YYYY:";
-            cin >> student->day >> student->month >> student->year;
+            cout << "Student's day of birth:\n MM DD YYYY:";
+            cin >> student->month >> student->day >> student->year;
             cout << "Student's gender (Male/ Female): ";
             cin.get(student->gender, 6);
             cin.get();
@@ -141,8 +142,8 @@ void AddAStudent(stu*& student, ofstream& f)
         cin.get();
         cout << "Student's ID: ";
         cin >> student->ID;
-        cout << "Student's day of birth:\n DD MM YYYY: ";
-        cin >> student->day >> student->month >> student->year;
+        cout << "Student's day of birth:\n MM DD YYYY: ";
+        cin >> student->month >> student->day >> student->year;
         cout << "Student's gender (Male/ Female): ";
         cin.get(student->gender, 6);
         cin.get();
@@ -207,5 +208,6 @@ void viewlistofstudent(stu* student)
     {
         i++;
         cout << "\nNo." << i << " Name: " << student->firstname << " " << student->lastname << "\t ID: " << student->ID;
+        student=student->pNext;
     }
 }
