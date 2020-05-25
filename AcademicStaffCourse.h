@@ -2,12 +2,6 @@
 #ifndef _ACADEMICSTAFFCOURSE_H_
 #define _ACADEMICSTAFFCOURSE_H_
 
-#include<iostream>
-#include<fstream>
-#include<cstring>
-
-using namespace std;
-
 struct Date
 {
 	int day, month, year;
@@ -60,6 +54,7 @@ struct Student {
 
 void savetxtCourse(ofstream& foutput,Course*& courseHead);
 //3.1
+void readSemester(ifstream& finput, Semester*& semesterHead);
 void createSemester(Semester*& semesterHead);
 void saveSemester(Semester* semesterHead, ofstream& foutput);
 void deleteSemester(Semester*& semesterHead);

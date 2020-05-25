@@ -1,5 +1,31 @@
+#include<iostream>
+using namespace std;
+#include<fstream>
 #include"AcademicStaffCourse.h"
+#include<string>
 
+void readSemester(ifstream& finput,Semester*& semesterHead)
+{
+	finput.open("semester.txt");
+	if (finput.peek() == finput.eof())
+		return;
+	semesterHead = new Semester;
+	Semester* cur = semesterHead;
+	while (!finput.eof())
+	{
+		finput >> cur->year;
+		while (finput.get() != '\n');
+		while (finput.get() != 'K');
+		finput >> cur->term;
+		if (finput.eof())
+		{
+			finput.close();
+			return;
+		}
+		cur->next = new Semester;
+		cur = cur->next;
+	}
+}
 
 void createSemester(Semester*& semesterHead)
 {
@@ -43,6 +69,8 @@ void saveSemester(Semester* semesterHead, ofstream& foutput)
 	{
 		foutput << semesterHead->year<<"-"<<semesterHead->year+1 << endl;
 		foutput << "HK" << semesterHead->term;
+		if (semesterHead->next == NULL)
+			return;
 		foutput << endl << endl;
 		semesterHead = semesterHead->next;
 	}
@@ -109,7 +137,7 @@ void viewSemester(Semester* semesterHead)
 	cout << "List:" << endl;
 	while (semesterHead != NULL)
 	{
-		cout << semesterHead->year<<"-"<<semesterHead->next+1<<endl;
+		cout << semesterHead->year<<"-"<<semesterHead->year+1<<endl;
 		cout << "HK"<<semesterHead->term<<endl<<endl;
 		semesterHead = semesterHead->next;
 	}
@@ -205,8 +233,10 @@ void importSchedule(ifstream& finput,ofstream& foutput,Course*& courseHead,Semes
 		cout << "Semester does not exist" << endl;
 		return;
 	}
-	while (semesterHead->year != checkYear && semesterHead->term != checkTerm)
+	while (true)
 	{
+		if (semesterHead->year == checkYear && semesterHead->term == checkTerm)
+			break;
 		if (semesterHead->next == NULL)
 		{
 			cout << "Semester does not exist"<<endl;
@@ -259,7 +289,7 @@ void importSchedule(ifstream& finput,ofstream& foutput,Course*& courseHead,Semes
 	cin.ignore();
 	cin.get(temp, 1000, '\n');
 	char* path = new char[strlen(temp) + 1];
-	strcpy(path, temp);
+	strcpy_s(path, strlen(temp) + 1, temp);
 	finput.open(path);
 	if (!finput.is_open())
 		cout << "File does not exist" << endl;
@@ -291,24 +321,24 @@ void importSchedule(ifstream& finput,ofstream& foutput,Course*& courseHead,Semes
 			finput.get(cur->lecturerDegree, 10, ',');
 			finput.ignore();
 			finput.get(cur->lecturerGender, 10, ',');
-			char* tempDate = new char[3];
-			finput.ignore();
-			finput.get(tempDate, 3, '/');
-			cur->startDate.day=atoi(tempDate);
+			char* tempDate = new char[5];
 			finput.ignore();
 			finput.get(tempDate, 3, '/');
 			cur->startDate.month = atoi(tempDate);
 			finput.ignore();
-			finput.get(tempDate, 3, ',');
-			cur->startDate.year = atoi(tempDate);
-			finput.ignore();
 			finput.get(tempDate, 3, '/');
-			cur->endDate.day = atoi(tempDate);
+			cur->startDate.day = atoi(tempDate);
+			finput.ignore();
+			finput.get(tempDate, 5, ',');
+			cur->startDate.year = atoi(tempDate);
 			finput.ignore();
 			finput.get(tempDate, 3, '/');
 			cur->endDate.month = atoi(tempDate);
 			finput.ignore();
-			finput.get(tempDate, 3, ',');
+			finput.get(tempDate, 3, '/');
+			cur->endDate.day = atoi(tempDate);
+			finput.ignore();
+			finput.get(tempDate, 5, ',');
 			cur->endDate.year = atoi(tempDate);
 			finput.ignore();
 			char* tempDay = new char[4];
@@ -369,8 +399,8 @@ void importSchedule(ifstream& finput,ofstream& foutput,Course*& courseHead,Semes
 		foutput << cur->lecturerName << endl;
 		foutput << cur->lecturerDegree << endl;
 		foutput << cur->lecturerGender << endl;
-		foutput << cur->startDate.year << " " << cur->startDate.month << " "<<cur->startDate.day << endl;
-		foutput << cur->endDate.year << " " << cur->endDate.month << " " << cur->endDate.day << endl;
+		foutput << cur->startDate.month << " " << cur->startDate.day << " "<<cur->startDate.year << endl;
+		foutput << cur->endDate.month << " " << cur->endDate.day << " " << cur->endDate.year << endl;
 		foutput << cur->daysOfWeek<<endl;
 		foutput << cur->startHour << " " << cur->startMin << endl;
 		foutput << cur->endHour << " " << cur->endMin << endl;
@@ -437,8 +467,10 @@ void addCourse(ofstream& foutput,Semester* semesterHead)
 		cout << "Semester does not exist" << endl;
 		return;
 	}
-	while (semesterHead->year != checkYear && semesterHead->term != checkTerm)
+	while (true)
 	{
+		if (semesterHead->year == checkYear && semesterHead->term == checkTerm)
+			break;
 		if (semesterHead->next == NULL)
 		{
 			cout << "Semester does not exist" << endl;
@@ -467,6 +499,7 @@ void addCourse(ofstream& foutput,Semester* semesterHead)
 		return;
 	}
 	Course* cur = inputCourse();
+	foutput << endl<<endl;
 	foutput << cur->ID << endl;
 	foutput << cur->name << endl;
 	foutput << cur->className << endl;
@@ -474,12 +507,12 @@ void addCourse(ofstream& foutput,Semester* semesterHead)
 	foutput << cur->lecturerName << endl;
 	foutput << cur->lecturerDegree << endl;
 	foutput << cur->lecturerGender << endl;
-	foutput << cur->startDate.year << " " << cur->startDate.month << " " << cur->startDate.day << endl;
-	foutput << cur->endDate.year << " " << cur->endDate.month << " " << cur->endDate.day << endl;
+	foutput << cur->startDate.month << " " << cur->startDate.day << " " << cur->startDate.year << endl;
+	foutput << cur->endDate.month << " " << cur->endDate.day << " " << cur->endDate.year << endl;
 	foutput << cur->daysOfWeek << endl;
 	foutput << cur->startHour << " " << cur->startMin << endl;
 	foutput << cur->endHour << " " << cur->endMin << endl;
-	foutput << cur->room << endl << endl;
+	foutput << cur->room;
 	foutput.close();
 	cout << "Add successfully";
 }
@@ -496,8 +529,8 @@ void savetxtCourse(ofstream& foutput, Course*& courseHead)
 		foutput << cur->lecturerName << endl;
 		foutput << cur->lecturerDegree << endl;
 		foutput << cur->lecturerGender << endl;
-		foutput << cur->startDate.year << " " << cur->startDate.month << " " << cur->startDate.day << endl;
-		foutput << cur->endDate.year << " " << cur->endDate.month << " " << cur->endDate.day << endl;
+		foutput << cur->startDate.month << " " << cur->startDate.day << " " << cur->startDate.year << endl;
+		foutput << cur->endDate.month << " " << cur->endDate.day << " " << cur->endDate.year << endl;
 		foutput << cur->daysOfWeek << endl;
 		foutput << cur->startHour << " " << cur->startMin << endl;
 		foutput << cur->endHour << " " << cur->endMin << endl;
@@ -522,8 +555,10 @@ void editCourse(ifstream& finput, ofstream& foutput, Semester* semesterHead, Cou
 		cout << "Semester does not exist" << endl;
 		return;
 	}
-	while (semesterHead->year != checkYear && semesterHead->term != checkTerm)
+	while (true)
 	{
+		if (semesterHead->year == checkYear && semesterHead->term == checkTerm)
+			break;
 		if (semesterHead->next == NULL)
 		{
 			cout << "Semester does not exist" << endl;
@@ -665,12 +700,12 @@ void readCourse(ifstream& finput, Course*& courseHead)
 		finput.get(cur->lecturerDegree, 10, '\n');
 		finput.ignore();
 		finput.get(cur->lecturerGender, 10, '\n');
-		finput >> cur->startDate.year;
 		finput >> cur->startDate.month;
 		finput >> cur->startDate.day;
-		finput >> cur->endDate.year;
+		finput >> cur->startDate.year;
 		finput >> cur->endDate.month;
 		finput >> cur->endDate.day;
+		finput >> cur->endDate.year;
 		finput >> cur->daysOfWeek;
 		finput >> cur->startHour;
 		finput >> cur->startMin;
@@ -891,9 +926,9 @@ void addStudentCourse(ifstream& finput, ofstream& foutput, Student*& studentHead
 		finput.get(curStu->password, 100, '\n');
 		finput.ignore();
 		finput.get(curStu->name, 100, '\n');
-		finput >> curStu->doB.year;
 		finput >> curStu->doB.month;
 		finput >> curStu->doB.day;
+		finput >> curStu->doB.year;
 		finput.ignore();
 		finput.get(curStu->className, 10, '\n');
 		finput >> curStu->status;
@@ -952,7 +987,7 @@ void addStudentCourse(ifstream& finput, ofstream& foutput, Student*& studentHead
 	foutput << endl;
 	foutput << cur->ID << endl;
 	foutput << cur->name << endl;
-	foutput << cur->doB.year << " " << cur->doB.month << " " << cur->doB.day << endl;
+	foutput << cur->doB.month << " " << cur->doB.day << " " << cur->doB.year << endl;
 	foutput << cur->className << endl;
 	foutput << cur->status << endl;
 	foutput << "-1" << endl << "-1" << endl << "-1" << endl << "-1" << endl;
@@ -971,6 +1006,8 @@ void emptyStudent(Student*& studentHead)
 	{
 		temp = studentHead;
 		studentHead = studentHead->next;
+		delete[]temp->name;
+		delete[]temp->className;
 		delete temp;
 	}
 }
@@ -981,6 +1018,14 @@ void emptyCourse(Course*& courseHead)
 	{
 		temp = courseHead;
 		courseHead = courseHead->next;
+		delete[]temp->ID;
+		delete[]temp->name;
+		delete[]temp->className;
+		delete[]temp->lecturerUsername;
+		delete[]temp->lecturerName;
+		delete[]temp->lecturerDegree;
+		delete[]temp->lecturerGender;
+		delete[]temp->room;
 		delete temp;
 	}
 }
