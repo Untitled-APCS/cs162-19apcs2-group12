@@ -1,6 +1,6 @@
 #pragma once
-#ifndef __scoreboard__
-#define __scoreboard__
+#ifndef __AcademicStaffScoreBoard__
+#define __AcademicStaffScoreBoard__
 #include <iostream>
 #include <string>
 #include <fstream>

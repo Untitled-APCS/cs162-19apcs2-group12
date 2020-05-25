@@ -1,6 +1,6 @@
 #pragma once
-#ifndef __courses__
-#define __courses__
+#ifndef __Lecturer__
+#define __Lecturer__
 #include <iostream>
 #include <fstream>
 #include <string>
