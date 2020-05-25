@@ -8,7 +8,7 @@
 - Phone: 0826677301
 
 
-### Ngo Nhat Khang˚
+### Ngo Nhat Khang
 
 - Student ID: 19125050
 - Email: nnkhang19@apcs.vn

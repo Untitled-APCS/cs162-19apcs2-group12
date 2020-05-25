@@ -1,7 +1,7 @@
 #include "AcademicStaffCourse.h"
 #include "AcademicStaffClass.h"
-#include "courses.h"
-#include "scoreboard.h"
+#include "Lecturer.h"
+#include "AcademicStaffScoreBoard.h"
 
 int main()
 {
