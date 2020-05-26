@@ -9,17 +9,29 @@
 #define STUDENT 0
 #define LECTURER 1
 #define STAFF 3
+#define MALE 0
+#define FEMALE 1
 
 using namespace std;
 
-void normalize(string s);
+struct global {
+    static string username;
+    static int type;
+    static string workspace;
+};
 
-int LevenshteinDistance(string s1, string s2);
+void normalize(string &s);
+
+void normalizeFullName(string &s);
+
+int DamerauLevenshteinDistance(string s1, string s2);
 
 double similarity(string s1, string s2);
 
 string getFirstName(string fullName);
 
-string getTitle(int type, int gender);
+string getTitle(string fullName, int type, int gender);
+
+bool isStrongPassword(string password);
 
 #endif //CS162_19APCS2_GROUP12_OPTIMIZATION_H
