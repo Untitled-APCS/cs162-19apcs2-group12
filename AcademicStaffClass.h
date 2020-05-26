@@ -4,6 +4,7 @@
 
 #include<iostream>
 #include<fstream>
+#include<string>
 
 using namespace std;
 
@@ -14,14 +15,14 @@ struct stu
     int  year, month, day;
     stu* pNext;
 };
-void importstudent(ifstream& f, stu* student);
+stu* importstudent();
 void savedata(stu* student, ofstream& f);
-void changeclass(stu*& student, ofstream& f, char name[]);
-void editstudent(stu* student, ofstream& f, char name[]);
-void Int_to_Char(int n, char a[]);
-void AddAStudent(stu*& student, ofstream& f);
-void RemoveStudent(stu*& student, ofstream& f);
+void changeclass();
+void editstudent();
+void Int_to_Char();
+void AddAStudent();
+void RemoveStudent();
 void viewlistofclass();
-void viewlistofstudent(stu* student);
+void viewlistofstudent();
 
 #endif
