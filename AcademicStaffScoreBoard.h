@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "AcademicStaffScoreBoard.h"
+#include "Lecturer.h"
 
 using namespace std;
 struct BoardNode {
@@ -16,11 +16,15 @@ struct BoardNode {
 	string grade[4];// midterm->final->bonus->total
 	BoardNode* next = nullptr;
 };
-void import_from_csv(BoardNode*& head, ifstream& fin,StudentNode* root, ofstream &fout);
-void view_scoreboard(BoardNode* head);
+// Khang's part:
+void import_from_csv(BoardNode*& head, ifstream& fin,StudentNode* root, ofstream &fout, string& coursename);
 void update_grade(BoardNode* head, StudentNode* root);
 void delete_all(BoardNode*& head);
-void edit_grade(StudentNode* root);
+// Activities:
+void view_scoreboard();
+void edit_grade();
+void import_scoreboard();
+
 
 //Kiet's part
 void outputScoreboard(BoardNode* pHead);

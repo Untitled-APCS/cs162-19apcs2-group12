@@ -41,23 +41,28 @@ void input_list_courses(CourseNode*& head, ifstream& fin) {
 	}
 	fin.close();
 }
-void view_list_courses(CourseNode* head) {
-	while (head) {
-		cout << head->id << endl;
-		cout << head->name << endl;
-		cout << head->lecturer_username << endl;
-		cout << head->lecturer_name << endl;
-		cout << head->degree << endl;
-		cout << head->gender << endl;
-		cout << head->starting_date << endl;
-		cout << head->ending_date << endl;
-		cout << head->day_of_week << endl;
-		cout << head->starting_hour << endl;
-		cout << head->ending_hour << endl;
-		cout << head->room << endl;
+void view_list_courses() {
+	CourseNode* head = nullptr;
+	ifstream fin;
+	input_list_courses(head, fin);
+	CourseNode* cur = head;
+	while (cur) {
+		cout << cur->id << endl;
+		cout << cur->name << endl;
+		cout << cur->lecturer_username << endl;
+		cout << cur->lecturer_name << endl;
+		cout << cur->degree << endl;
+		cout << cur->gender << endl;
+		cout << cur->starting_date << endl;
+		cout << cur->ending_date << endl;
+		cout << cur->day_of_week << endl;
+		cout << cur->starting_hour << endl;
+		cout << cur->ending_hour << endl;
+		cout << cur->room << endl;
 		cout << endl << endl;
-		head = head->next;
+		cur = cur->next;
 	}
+	delete_all(head);
 }
 void delete_all(CourseNode*& head) {
 	while (head) {
@@ -67,11 +72,11 @@ void delete_all(CourseNode*& head) {
 	}
 }
 
-void input_list_student(StudentNode*& head, ifstream& fin) {
-	string s;
+void input_list_student(StudentNode*& head, ifstream& fin, string& coursename) {
+	string s="";
 	cout << "Enter name of the course ";
-	getline(cin, s);
-	s = s + "-Student.txt";
+	getline(cin, coursename);
+	 s = coursename + "-Student.txt";
 	fin.open(s);
 	if (!fin.is_open()) {
 		cout << "Cannot open this file ";
@@ -111,13 +116,20 @@ void input_list_student(StudentNode*& head, ifstream& fin) {
 	}
 	fin.close();
 }
-void view_list_student(StudentNode* head) {
+void view_list_student() {
+	StudentNode* root = nullptr;
+	ifstream fin;
+	string coursename;
+	input_list_student(root, fin, coursename);
+	StudentNode* head = root;
 	cout << "ID\t\t" << "Fullname\t" << "Date of birth\t" << "Class" << endl;
 	while (head) {
 		cout << head->id << '\t' << head->name << '\t' << head->doB << "\t"
 			<< head->class_ << endl;
 		head = head->next;
 	}
+	delete_all(root);
+	
 }
 void delete_all(StudentNode*& head) {
 	while (head) {
@@ -126,7 +138,12 @@ void delete_all(StudentNode*& head) {
 		head = tmp;
 	}
 }
-void view_attendance_list(StudentNode* head) {
+void view_attendance_list() {
+	StudentNode* root = nullptr;
+	ifstream fin;
+	string coursename;
+	input_list_student(root, fin, coursename);
+	StudentNode* head = root;
 	cout << "Students name\t";
 	for (int i = 0; i < 10; i++) {
 		cout << "W0" << i + 1 << '\t';
@@ -141,47 +158,61 @@ void view_attendance_list(StudentNode* head) {
 		cout << endl;
 		head = head->next;
 	}
+	delete_all(root);
 }
-void edit_attendance(StudentNode* head) {
+void edit_attendance() {
+	StudentNode* root = nullptr;
+	ifstream fin;
+	string coursename;
+	input_list_student(root, fin, coursename);
+	StudentNode* head = root;
+	
 	if (head == nullptr) return;
+	
 	int week;
 	string id;
 	string name;
 	int status;
+	
+	
 	cout << "Enter the student's id ";
 	getline(cin, id);
 	cout << "Enter the student's name ";
 	getline(cin, name);
+	StudentNode* cur = head;
+	while (cur) {
+		if (cur->id == id) break;
+		else cur  = cur->next;
+	}
+	if (cur == nullptr) {
+		cout << "Wrong id" << endl;
+		return;
+	}
+	
 	cout << "Enter the week from (1-10) ";
 	cin >> week;
 
 	cout << "Enter the status: (1 for presence and -1 for absence) ";
 	cin >> status;
+	
 
 
-	while (head) {
-		if (head->id == id) {
-			
-			break;
-		}
-		head = head->next;
-	}
-	int pos = head->al[0].length() - 1;
+	int pos = cur->al[0].length() - 1;
 	if (status == 1) {
-		head->al[week - 1][pos - 1] = ' ';
-		head->al[week - 1][pos] = '1';
+		cur->al[week - 1][pos - 1] = ' ';
+		cur->al[week - 1][pos] = '1';
 	}
 	else {
-		head->al[week - 1][pos - 1] = '-';
-		head->al[week - 1][pos] = '1';
+		cur->al[week - 1][pos - 1] = '-';
+		cur->al[week - 1][pos] = '1';
 	}
-
+	delete_all(root);
 }
-void output_to_txt(StudentNode* head, ofstream& fout) {
+void output_to_txt(StudentNode* head, ofstream& fout, string& coursename) {
 	string filename;
-	cout << "Enter the course's name ";
+	/*cout << "Enter the course's name ";
 	
-	getline(cin, filename);
+	getline(cin, filename);*/
 	filename = filename + "-Student.txt";
 	fout.open(filename);
 	if (!fout.is_open()) {
@@ -209,17 +240,20 @@ void output_to_txt(StudentNode* head, ofstream& fout) {
 	}
 	fout.close();
 }
-void export_to_csv(StudentNode* head, ofstream& fout) {
-	string filename;
-	cout << "Enter the course's name ";
-	
-	getline(cin, filename);
-	filename = filename + "-attendance.csv";
-	fout.open(filename);
+void export_to_csv() {
+	StudentNode* root = nullptr;
+	ifstream fin;
+
+	string coursename;
+	input_list_student(root, fin, coursename);
+	ofstream fout;
+	coursename = coursename + "-attendance.csv";
+	fout.open(coursename);
 	if (!fout.is_open()) {
 		cout << "Cannot open this file" << endl;
 		return;
 	}
+	StudentNode* head = root;
 	fout << "No, Student name, Student Id,";
 	for(int i=1; i<=10; i++) {
 		if (i == 10) {
@@ -245,6 +279,7 @@ void export_to_csv(StudentNode* head, ofstream& fout) {
 		i++;
 
 	}
+	delete_all(root);
 	fout.close();
 }
 int size(StudentNode* head) {
@@ -255,3 +290,4 @@ int size(StudentNode* head) {
 	}
 	return sum;
 }
+
