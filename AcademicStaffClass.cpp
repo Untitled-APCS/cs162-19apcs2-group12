@@ -1,23 +1,28 @@
 #include "AcademicStaffClass.h"
 
-void importstudent(ifstream& f, stu* student)
+stu* importstudent()
 {
-    stu* cur = nullptr;
-    while (!f.eof())
+    ifstream f;
+    f.open("19APCS1 - Student.csv");
+    stu* student = nullptr;
+    stu* cur=nullptr;
+    int length;
+    f >> length;
+    for (int i = 0; i < length; i++)
     {
         if (student == nullptr)
         {
             student = new stu;
             f >> student->No
                 >> student->ID;
-            f.get(student->fullname, 99);
+            f.get(student->fullname, 99, ',');
             f.ignore();
-            f.get(student->gender, 6);
+            f.get(student->gender, 6, ',');
             f.ignore();
             f >> student->year
                 >> student->month
                 >> student->day;
-            f.get(student->clas, 10);
+            f.get(student->clas, 10, ',');
             f.ignore();
             cur = student->pNext;
             cur = nullptr;
@@ -27,19 +32,20 @@ void importstudent(ifstream& f, stu* student)
             cur = new stu;
             f >> cur->No
                 >> cur->ID;
-            f.get(student->fullname, 99);
+            f.get(student->fullname, 99, ',');
             f.ignore();
-            f.get(cur->gender, 6);
+            f.get(cur->gender, 6, ',');
             f.ignore();
             f >> cur->year
                 >> cur->month
                 >> cur->day;
-            f.get(student->clas, 10);
+            f.get(student->clas, 10, ',');
             f.ignore();
             cur = cur->pNext;
             cur = nullptr;
         }
     }
+    return student;
 }
 void savedata(stu* student, ofstream& f)
 {
@@ -56,8 +62,18 @@ void savedata(stu* student, ofstream& f)
         student = student->pNext;
     }
 }
-void changeclass(stu*& student, ofstream& f, char name[])
+void changeclass()
 {
+    ofstream f;
+    f.open("19APCS1 - Student.csv");
+
+    stu* student = importstudent();
+
+    char  name[99];
+    cout << "Enter name of the student you want to change class: ";
+    cin.get(name, 99);
+    cin.ignore();
+    
     while (student->pNext != nullptr)
     {
         if (strcmp(student->fullname, name) == 0)
@@ -77,11 +93,20 @@ void changeclass(stu*& student, ofstream& f, char name[])
         }
         student = student->pNext;
     }
-    savedata(student, f);
 }
 
-void editstudent(stu* student, ofstream& f, char name[])
+void editstudent()
 {
+    ofstream f;
+    f.open("19APCS1 - Student.csv");
+
+    stu* student = importstudent();
+
+    char  name[99];
+    cout << "Enter name of the student you want to edit information: ";
+    cin.get(name, 99);
+    cin.ignore();
+
     while (student != nullptr)
     {
         if (strcmp(student->fullname, name) == 0)
@@ -105,12 +130,11 @@ void editstudent(stu* student, ofstream& f, char name[])
         }
         student = student->pNext;
     }
-    savedata(student, f);
 }
-void Int_to_Char(int n, char a[])
+void Int_to_Char(int n, char a[]) 
 {
     int len = strlen(a);
-    while (len > 0)
+    while (len>0)
     {
         int temp;
         temp = n % 10;
@@ -119,8 +143,13 @@ void Int_to_Char(int n, char a[])
         --len;
     }
 }
-void AddAStudent(stu*& student, ofstream& f)
+void AddAStudent()
 {
+    ofstream f;
+    f.open("19APCS1 - Student.csv");
+
+    stu* student = importstudent();
+
     int choice;
     cout << "Do you want to enrole into any class: (yes = 1, no = 0) ";
     cin >> choice;
@@ -145,13 +174,18 @@ void AddAStudent(stu*& student, ofstream& f)
         cout << "Your username is: " << student->username << "\nYour password is: " << student->password;
         cout << "\nYou should change your password!!!";
         savedata(student, f);
+
     }
-    savedata(student, f);
 }
-void RemoveStudent(stu*& student, ofstream& f)
+void RemoveStudent()
 {
+    ofstream f;
+    f.open("19APCS1 - Student.csv");
+
+    stu* student = importstudent();
+
     int choice;
-    cout << "Delete any student ? (yes = 1, no = 0) ";
+    cout << "Do you want to enrole into any class: (yes = 1, no = 0) ";
     cin >> choice;
     if (choice == 1)
     {
@@ -190,8 +224,13 @@ void viewlistofclass()
     }
     classes.close();
 }
-void viewlistofstudent(stu* student)
+void viewlistofstudent()
 {
+    ofstream f;
+    f.open("19APCS1 - Student.csv");
+
+    stu* student = importstudent();
+
     int i = 0;
     while (student != nullptr)
     {
