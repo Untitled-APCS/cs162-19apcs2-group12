@@ -2,7 +2,7 @@
 
 void importstudent(ifstream& f, stu* student)
 {
-    stu* cur=nullptr;
+    stu* cur = nullptr;
     while (!f.eof())
     {
         if (student == nullptr)
@@ -10,17 +10,15 @@ void importstudent(ifstream& f, stu* student)
             student = new stu;
             f >> student->No
                 >> student->ID;
-            f.get(student->lastname, 50);
-            f.get();
-            f.get(student->firstname, 50);
-            f.get();
+            f.get(student->fullname, 99);
+            f.ignore();
             f.get(student->gender, 6);
-            f.get();
+            f.ignore();
             f >> student->year
                 >> student->month
                 >> student->day;
             f.get(student->clas, 10);
-            f.get();
+            f.ignore();
             cur = student->pNext;
             cur = nullptr;
         }
@@ -29,17 +27,15 @@ void importstudent(ifstream& f, stu* student)
             cur = new stu;
             f >> cur->No
                 >> cur->ID;
-            f.get(cur->lastname, 50);
-            f.get();
-            f.get(cur->firstname, 50);
-            f.get();
+            f.get(student->fullname, 99);
+            f.ignore();
             f.get(cur->gender, 6);
-            f.get();
+            f.ignore();
             f >> cur->year
                 >> cur->month
                 >> cur->day;
             f.get(student->clas, 10);
-            f.get();
+            f.ignore();
             cur = cur->pNext;
             cur = nullptr;
         }
@@ -51,8 +47,7 @@ void savedata(stu* student, ofstream& f)
     {
         f << student->No
             << student->ID;
-        f << student->lastname;
-        f << student->firstname;
+        f << student->fullname;
         f << student->gender;
         f << student->year
             << student->month
@@ -61,23 +56,23 @@ void savedata(stu* student, ofstream& f)
         student = student->pNext;
     }
 }
-void changeclass(stu*& student, ofstream &f, char name[])
+void changeclass(stu*& student, ofstream& f, char name[])
 {
     while (student->pNext != nullptr)
     {
-        if (strcmp(student->firstname, name) == 0)
+        if (strcmp(student->fullname, name) == 0)
         {
             char check[9], classB[9];
-            cout << student->firstname << "ID:" << student->ID;
+            cout << student->fullname << "ID:" << student->ID;
             cout << "Is this the right student: ";
             cin.get(check, 9);
-            cin.get();
+            cin.ignore();
             if (check == "no")
                 return;
             cout << "This student is currently in class" << student->clas
                 << "\nMove to class?";
             cin.get(student->clas, 10);
-            cin.get();
+            cin.ignore();
             savedata(student, f);
         }
         student = student->pNext;
@@ -89,35 +84,33 @@ void editstudent(stu* student, ofstream& f, char name[])
 {
     while (student != nullptr)
     {
-        if (strcmp(student->firstname, name) == 0)
+        if (strcmp(student->fullname, name) == 0)
         {
             cout << "Please re_enter student information: \n"
-                << "Student first name:";
-            cin.get(student->firstname, 99);
-            cin.get();
-            cout << "Student's last name:";
-            cin.get(student->lastname, 99);
-            cin.get();
+                << "Student full name: ";
+            cin.get(student->fullname, 99);
+            cin.ignore();
             cout << "Student's ID:";
             cin >> student->ID;
-            cout << "Student's day of birth:\n MM DD YYYY:";
-            cin >> student->month >> student->day >> student->year;
+            cout << "Student's day of birth:\n DD MM YYYY:";
+            cin >> student->day >> student->month >> student->year;
             cout << "Student's gender (Male/ Female): ";
             cin.get(student->gender, 6);
-            cin.get();
+            cin.ignore();
             cout << "Student's class: ";
             cin.get(student->clas, 10);
-            cin.get();
+            cin.ignore();
             savedata(student, f);
             return;
         }
         student = student->pNext;
     }
+    savedata(student, f);
 }
-void Int_to_Char(int n, char a[]) 
+void Int_to_Char(int n, char a[])
 {
     int len = strlen(a);
-    while (len>0)
+    while (len > 0)
     {
         int temp;
         temp = n % 10;
@@ -133,35 +126,32 @@ void AddAStudent(stu*& student, ofstream& f)
     cin >> choice;
     if (choice == 1)
     {
-        cout << "Student first name: ";
-        cin.get(student->firstname, 99);
-        cin.get();
-        cout << "Student's last name: ";
-        cin.get(student->lastname, 99);
-        cin.get();
+        cout << "Student full name: ";
+        cin.get(student->fullname, 99);
+        cin.ignore();
         cout << "Student's ID: ";
         cin >> student->ID;
-        cout << "Student's day of birth:\n MM DD YYYY: ";
-        cin >> student->month >> student->day >> student->year;
+        cout << "Student's day of birth:\n DD MM YYYY: ";
+        cin >> student->day >> student->month >> student->year;
         cout << "Student's gender (Male/ Female): ";
         cin.get(student->gender, 6);
-        cin.get();
+        cin.ignore();
         cout << "Student's class: ";
         cin.get(student->clas, 10);
-        cin.get();
+        cin.ignore();
         Int_to_Char(student->ID, student->username);
         int password = student->year * 10000 + student->month * 100 + student->day;
         Int_to_Char(password, student->password);
         cout << "Your username is: " << student->username << "\nYour password is: " << student->password;
         cout << "\nYou should change your password!!!";
         savedata(student, f);
-
     }
+    savedata(student, f);
 }
 void RemoveStudent(stu*& student, ofstream& f)
 {
     int choice;
-    cout << "Do you want to enrole into any class: (yes = 1, no = 0) ";
+    cout << "Delete any student ? (yes = 1, no = 0) ";
     cin >> choice;
     if (choice == 1)
     {
@@ -179,7 +169,6 @@ void RemoveStudent(stu*& student, ofstream& f)
             student = student->pNext;
         }
     }
-    savedata(student, f);
 }
 void viewlistofclass()
 {
@@ -207,7 +196,6 @@ void viewlistofstudent(stu* student)
     while (student != nullptr)
     {
         i++;
-        cout << "\nNo." << i << " Name: " << student->firstname << " " << student->lastname << "\t ID: " << student->ID;
-        student=student->pNext;
+        cout << "\nNo." << i << " Name: " << student->fullname << "\t ID: " << student->ID;
     }
 }
