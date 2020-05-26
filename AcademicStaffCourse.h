@@ -2,25 +2,9 @@
 #ifndef _ACADEMICSTAFFCOURSE_H_
 #define _ACADEMICSTAFFCOURSE_H_
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-using namespace std;
-
 struct Date
 {
 	int day, month, year;
-};
-
-struct stu
-{
-	int No, ID;
-	char lastname[50], firstname[50], gender[6];
-	int  year, month, day;
-	stu* pNext;
 };
 
 struct Semester
@@ -62,27 +46,27 @@ struct Student {
 
 void savetxtCourse(ofstream& foutput,Course*& courseHead);
 //3.1
-void readSemester(ifstream& finput, Semester*& semesterHead);
-void createSemester(Semester*& semesterHead);
-void saveSemester(Semester* semesterHead, ofstream& foutput);
-void deleteSemester(Semester*& semesterHead);
-void viewSemester(Semester* semesterHead);
+void readSemester(Semester*& semesterHead);
+void createSemester();
+void saveSemester(Semester* semesterHead);
+void deleteSemester();
+void viewSemester();
 //3.2
-void importSchedule(ifstream& finput, ofstream& foutput, Course*& courseHead, Semester* semesterHead); //import from csv
+void importSchedule(); //import from csv
 //3.3
 Course* inputCourse(); //type to input course
-void addCourse(ofstream& foutput, Semester* semesterHead);
+void addCourse();
 //3.4
 void readCourse(ifstream& finput, Course*& courseHead); //read course txt files
-void editCourse(ifstream& finput, ofstream& foutput, Semester* semesterHead, Course*& courseHead);
+void editCourse();
 //3.5
-void removeCourse(Course*& courseHead);
+void removeCourse();
 //3.6
 void readStudentCourse(ifstream& finput, Student*& studentHead); //read student from course txt files
-void removeStudentCourse(ifstream& finput, ofstream& foutput, Course*& courseHead, Semester* semesterHead, Student*& studentHead);
+void removeStudentCourse();
 void saveStudentCourse(ofstream& foutput, Student* studentHead); //save student to course txt files
 //3.7
-void addStudentCourse(ifstream& finput, ofstream& foutput, Student*& studentHead, Semester* semesterHead);
+void addStudentCourse();
 
 void emptyStudent(Student*& studentHead);
 void emptyCourse(Course*& courseHead);
