@@ -1,8 +1,20 @@
+#include<iostream>
+using namespace std;
+#include<fstream>
 #include"AcademicStaffCourse.h"
+#include<string>
 
-void readSemester(ifstream& finput,Semester*& semesterHead)
+void readSemester(Semester*& semesterHead)
 {
+	ifstream finput;
 	finput.open("semester.txt");
+	finput.seekg(0, finput.end);
+	if (finput.tellg() == 0)
+	{
+		finput.seekg(0, finput.beg);
+		return;
+	}
+	finput.seekg(0, finput.beg);
 	if (finput.peek() == finput.eof())
 		return;
 	semesterHead = new Semester;
@@ -23,8 +35,10 @@ void readSemester(ifstream& finput,Semester*& semesterHead)
 	}
 }
 
-void createSemester(Semester*& semesterHead)
+void createSemester()
 {
+	Semester* semesterHead = NULL;
+	readSemester(semesterHead);
 	if (semesterHead == NULL)
 	{
 		semesterHead = new Semester;
@@ -32,8 +46,10 @@ void createSemester(Semester*& semesterHead)
 		cin >> semesterHead->year;
 		cout << "Please input term: ";
 		cin >> semesterHead->term;
+		saveSemester(semesterHead);
 		return;
 	}
+	
 	int checkTerm;
 	int checkYear;
 	cout << "Please input year: ";
@@ -57,19 +73,26 @@ void createSemester(Semester*& semesterHead)
 	cur = cur->next;
 	cur->term = checkTerm;
 	cur->year = checkYear;
+	saveSemester(semesterHead);
 }
 
-void saveSemester(Semester* semesterHead, ofstream& foutput)
+void saveSemester(Semester* semesterHead)
 {
+	ofstream foutput;
+	foutput.open("semester.txt");
 	while (semesterHead != NULL)
 	{
 		foutput << semesterHead->year<<"-"<<semesterHead->year+1 << endl;
 		foutput << "HK" << semesterHead->term;
 		if (semesterHead->next == NULL)
+		{
+			foutput.close();
 			return;
+		}
 		foutput << endl << endl;
 		semesterHead = semesterHead->next;
 	}
+	foutput.close();
 }
 
 void updateSemester(Semester*& semesterHead)
@@ -94,8 +117,10 @@ void updateSemester(Semester*& semesterHead)
 	}
 }
 
-void deleteSemester(Semester*& semesterHead)
-{
+void deleteSemester()
+{	
+	Semester* semesterHead = NULL;
+	readSemester(semesterHead);
 	int checkYear, checkTerm;
 	cout << "Please choose year: ";
 	cin >> checkYear;
@@ -117,6 +142,7 @@ void deleteSemester(Semester*& semesterHead)
 	{
 		semesterHead = semesterHead->next;
 		delete cur;
+		saveSemester(semesterHead);
 		cout << "Deleted successfully!" << endl;
 		return;
 	}
@@ -126,10 +152,13 @@ void deleteSemester(Semester*& semesterHead)
 	prev = cur->next;
 	cout << "Deleted successfully!" << endl;
 	delete cur;
+	saveSemester(semesterHead);
 }
 
-void viewSemester(Semester* semesterHead)
+void viewSemester()
 {
+	Semester* semesterHead = NULL;
+	readSemester(semesterHead);
 	cout << "List:" << endl;
 	while (semesterHead != NULL)
 	{
@@ -215,8 +244,13 @@ Course* inputCourse()
 	return cur;
 }
 
-void importSchedule(ifstream& finput,ofstream& foutput,Course*& courseHead,Semester* semesterHead)
+void importSchedule()
 {
+	Course* courseHead = NULL;
+	Semester* semesterHead = NULL;
+	readSemester(semesterHead);
+	ifstream finput;
+	ofstream foutput;
 	int checkYear, checkTerm;
 	string filename;
 	cout << "Enter academic years: ";
@@ -288,7 +322,10 @@ void importSchedule(ifstream& finput,ofstream& foutput,Course*& courseHead,Semes
 	strcpy_s(path, strlen(temp) + 1, temp);
 	finput.open(path);
 	if (!finput.is_open())
+	{
 		cout << "File does not exist" << endl;
+		return;
+	}
 	else
 	{
 		courseHead = new Course;
@@ -364,7 +401,9 @@ void importSchedule(ifstream& finput,ofstream& foutput,Course*& courseHead,Semes
 			finput.ignore();
 			cur->room = new char[10];
 			finput.get(cur->room, 10, '\n');
-			
+			finput.ignore(10000, '\n');
+			if(finput.get()=='\n')
+				finput.ignore(1000, '\n');
 			if (finput.eof())
 				break;
 			cur->next = new Course;
@@ -450,8 +489,11 @@ void importSchedule(ifstream& finput,ofstream& foutput,Course*& courseHead,Semes
 	cout << "Import successfully!";
 }
 
-void addCourse(ofstream& foutput,Semester* semesterHead)
+void addCourse()
 {
+	ofstream foutput;
+	Semester* semesterHead = NULL;
+	readSemester(semesterHead);
 	int checkYear, checkTerm;
 	cout << "Enter academic years: ";
 	cin >> checkYear;
@@ -538,8 +580,13 @@ void savetxtCourse(ofstream& foutput, Course*& courseHead)
 	}
 }
 
-void editCourse(ifstream& finput, ofstream& foutput, Semester* semesterHead, Course*& courseHead)
+void editCourse()
 {
+	ifstream finput;
+	ofstream foutput;
+	Semester* semesterHead = NULL;
+	Course* courseHead = NULL;
+	readSemester(semesterHead);
 	int checkYear, checkTerm;
 	cout << "Enter academic years: ";
 	cin >> checkYear;
@@ -721,8 +768,58 @@ void readCourse(ifstream& finput, Course*& courseHead)
 	}
 }
 
-void removeCourse(Course*& courseHead)
+void removeCourse()
 {
+	ifstream finput;
+	ofstream foutput;
+	Semester* semesterHead = NULL;
+	Course* courseHead = NULL;
+	readSemester(semesterHead);
+	int checkYear, checkTerm;
+	cout << "Enter academic years: ";
+	cin >> checkYear;
+	cout << "Enter semester: ";
+	cin >> checkTerm;
+	Semester* check = semesterHead;
+	if (semesterHead == NULL)
+	{
+		cout << "Semester does not exist" << endl;
+		return;
+	}
+	while (true)
+	{
+		if (semesterHead->year == checkYear && semesterHead->term == checkTerm)
+			break;
+		if (semesterHead->next == NULL)
+		{
+			cout << "Semester does not exist" << endl;
+			return;
+		}
+		semesterHead = semesterHead->next;
+	}
+	char* className = new char[10];
+	cout << "Enter class: ";
+	cin.ignore();
+	cin.get(className, 10, '\n');
+
+	string filename;
+	filename += to_string(checkYear);
+	filename += "-";
+	filename += to_string(checkYear + 1);
+	filename += "-HK";
+	filename += to_string(checkTerm);
+	filename += "-Schedule-";
+	filename += className;
+	filename += ".txt";
+	finput.open(filename);
+	if (!finput.is_open())
+	{
+		cout << "Schedule of class does not exist";
+		return;
+	}
+	courseHead = new Course;
+	readCourse(finput, courseHead);
+	finput.close();
 	Course* cur = courseHead;
 	cout << "List of course: ";
 	while (cur != NULL)
@@ -742,17 +839,24 @@ void removeCourse(Course*& courseHead)
 	{
 		courseHead = courseHead->next;
 		delete cur;
+		foutput.open(filename);
+		savetxtCourse(foutput, courseHead);
+		foutput.close();
 		cout << "Removed successfully";
 		return;
 	}
 	Course* prev = courseHead;
 	while (prev->next != NULL && prev->next != cur)
 	{
-		prev->next = cur->next;
-		delete cur;
-		cout << "Removed successfully";
-		return;
+		prev = prev->next;
 	}
+	prev->next = cur->next;
+	delete cur;
+	foutput.open(filename);
+	savetxtCourse(foutput, courseHead);
+	foutput.close();
+	cout << "Removed successfully";
+	return;
 }
 
 void readStudentCourse(ifstream& finput, Student*& studentHead)
@@ -815,8 +919,13 @@ void saveStudentCourse(ofstream& foutput, Student* studentHead)
 	}
 }
 
-void removeStudentCourse(ifstream& finput,ofstream& foutput,Course*& courseHead, Semester* semesterHead,Student*& studentHead)
+void removeStudentCourse()
 {
+	ifstream finput;
+	ofstream foutput;
+	Semester* semesterHead = NULL;
+	Student* studentHead = NULL;
+	readSemester(semesterHead);
 	int checkYear, checkTerm;
 	cout << "Enter academic years: ";
 	cin >> checkYear;
@@ -881,6 +990,9 @@ void removeStudentCourse(ifstream& finput,ofstream& foutput,Course*& courseHead,
 	{
 		studentHead = studentHead->next;
 		delete cur;
+		foutput.open(filename);
+		saveStudentCourse(foutput, studentHead);
+		foutput.close();
 		cout << "Deleted successfully!";
 		return;
 	}
@@ -894,8 +1006,13 @@ void removeStudentCourse(ifstream& finput,ofstream& foutput,Course*& courseHead,
 	foutput.close();
 }
 
-void addStudentCourse(ifstream& finput, ofstream& foutput, Student*& studentHead, Semester* semesterHead)
+void addStudentCourse()
 {
+	ifstream finput;
+	ofstream foutput;
+	Semester* semesterHead = NULL;
+	Student* studentHead = NULL;
+	readSemester(semesterHead);
 	char* className = new char[10];
 	cout << "Enter student's class: ";
 	cin.ignore();
@@ -989,7 +1106,7 @@ void addStudentCourse(ifstream& finput, ofstream& foutput, Student*& studentHead
 	foutput << "-1" << endl << "-1" << endl << "-1" << endl << "-1" << endl;
 	for (int i = 0; i < 9; ++i)
 		foutput << "Week" << i + 1 << " -1" << endl;
-	foutput << "Week10 -1" << endl << endl;
+	foutput << "Week10 -1";
 	foutput.close();
 	delete[]temp;
 	cout << "Added Successfully";
