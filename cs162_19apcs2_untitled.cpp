@@ -1,10 +1,10 @@
 #include "AcademicStaffCourse.h"
-#include "courses.h"
-#include "function.h"
-#include "scoreboard.h"
+#include "AcademicStaffClass.h"
+#include "Lecturer.h"
+#include "AcademicStaffScoreBoard.h"
 
 int main()
 {
-    
+    cout << "done";
     return 0;
 }

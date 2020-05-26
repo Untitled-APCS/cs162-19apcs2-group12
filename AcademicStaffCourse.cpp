@@ -1,8 +1,4 @@
-#include<iostream>
-using namespace std;
-#include<fstream>
 #include"AcademicStaffCourse.h"
-#include<string>
 
 void readSemester(ifstream& finput,Semester*& semesterHead)
 {

@@ -1,4 +1,4 @@
-#include "courses.h"
+#include "Lecturer.h"
 
 void input_list_courses(CourseNode*& head, ifstream& fin) {
 	string s;

@@ -2,6 +2,14 @@
 #ifndef _ACADEMICSTAFFCOURSE_H_
 #define _ACADEMICSTAFFCOURSE_H_
 
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+using namespace std;
+
 struct Date
 {
 	int day, month, year;

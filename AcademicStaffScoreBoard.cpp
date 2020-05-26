@@ -1,4 +1,4 @@
-#include "scoreboard.h"
+#include "AcademicStaffScoreBoard.h"
 
 void import_from_csv(BoardNode*& head, ifstream& fin, StudentNode* root, ofstream &fout) {
 	string filename;

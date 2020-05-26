@@ -1,6 +1,5 @@
 #include "AcademicStaffClass.h"
 
-
 void importstudent(ifstream& f, stu* student)
 {
     stu* cur = nullptr;
