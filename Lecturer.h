@@ -37,15 +37,19 @@ struct StudentNode {
 };
 
 void input_list_courses(CourseNode*& head, ifstream& fin);
-void view_list_courses(CourseNode* head);
 void delete_all(CourseNode*& head);
-void input_list_student(StudentNode*& head, ifstream& fin);
-void view_list_student(StudentNode* head);
+void input_list_student(StudentNode*& head, ifstream& fin, string& coursename);
 void delete_all(StudentNode*& head);
-void view_attendance_list(StudentNode* head);
-void edit_attendance(StudentNode* head);
-void output_to_txt(StudentNode* head, ofstream& fout);
-void export_to_csv(StudentNode* head, ofstream& fout);
+void output_to_txt(StudentNode* head, ofstream& fout, string& coursename);
 int  size(StudentNode* head);
+
+// Activities:
+void export_to_csv();
+void edit_attendance();
+void view_attendance_list();
+void view_list_courses();
+void view_list_student();
+
+
 
 #endif
