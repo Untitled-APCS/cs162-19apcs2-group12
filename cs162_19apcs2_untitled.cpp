@@ -1,10 +1,10 @@
-#include "AcademicStaffCourse.h"
-#include "AcademicStaffClass.h"
+//#include "AcademicStaffCourse.h"
+//#include "AcademicStaffClass.h"
 #include "Lecturer.h"
 #include "AcademicStaffScoreBoard.h"
 
 int main()
 {
-    cout << "done";
+    view_list_courses();
     return 0;
 }
