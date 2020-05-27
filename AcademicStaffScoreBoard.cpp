@@ -126,35 +126,35 @@ void exportscoreboard(BoardNode* pHead, ofstream& f)
 }
 
 // Khang's part:
-void import_scoreboard() {
+void import_scoreboard(string courseid) {
 	BoardNode* head = nullptr;
 	ifstream fin;
 	ofstream fout;
 	StudentNode* root=nullptr;
-	string coursename = "";
-	input_list_student(root, fin, coursename);
-	import_from_csv(head, fin, root, fout, coursename);
+	
+	input_list_student(root, fin, courseid);
+	import_from_csv(head, fin, root, fout, courseid);
 	delete_all(head);
 	delete_all(root);
 	
 }
 
-void view_scoreboard() {
+void view_scoreboard(string courseid) {
 	StudentNode* root = nullptr;
-	string coursename = "";
+	
 	ifstream fin;
+	
+	input_list_student(root, fin, courseid);
 	StudentNode* head = root;
-	input_list_student(root, fin, coursename);
 	int i = 1;
-	cout << "No" << '\t' << "ID " << '\t' << "Fullname" << '\t' << "Class" << '\t' << "Midterm" << '\t' << "Final" << '\t' << "Bonus" << '\t' << "Total" << endl;
+	cout << "No" << '\t' << "ID " << "\t\t" << "Fullname" << "\t" << "Class" << "\t" << "Midterm" << "\t" << "Final" << "\t" << "Bonus" << "\t" << "Total" << endl;
 	while (head) {
-		cout << i << '\t' << head->id << '\t' << head->name << '\t' << head->class_
-			<< '\t';
+		cout << i << "\t" << head->id << "\t" << head->name << "\t" << head->class_<<"\t"
+			;
 		for (int i = 0; i < 4; i++) {
-			cout << head->grade[i];
-			if (i == 3) cout << endl;
-			else cout << '\t';
+			cout << head->grade[i] <<"\t";
 		}
+		cout << endl;
 		head = head->next;
 		i++;
 	}
@@ -162,11 +162,11 @@ void view_scoreboard() {
 }
 
 
-void edit_grade() {
+void edit_grade(string courseid) {
 	StudentNode* root = nullptr;
-	string coursename = "";
+
 	ifstream fin;
-	input_list_student(root, fin, coursename);
+	input_list_student(root, fin, courseid);
 	StudentNode* head = root;
 	string id, name;
 	cout << "Enter student's id ";
@@ -187,11 +187,81 @@ void edit_grade() {
 	string new_grade;
 	cout << "Enter the kind of grade ( 0 : Midterm, 1: final, 2: bonus, 3: total ) ";
 	cin >> type;
+	cin.ignore();
 	cout << "Enter new grade ";
-	fflush(stdin);
+	
 	getline(cin, new_grade);
 	
 	head->grade[type] = new_grade;
 	delete_all(root);
 
+}
+
+void lecturer_options() {
+	cout << "1. View list of courses in the current semester " << endl;
+	cout << "2. View list of students of a course " << endl;
+	cout << "3. View attendance list of a course" << endl;
+	cout << "4. Edit an attendance " << endl;
+	int choice;
+	cin >> choice;
+	cin.ignore();
+	if (choice == 1) {
+		view_list_courses();
+	}
+	else {
+		CourseNode* course = nullptr;
+		ifstream fin;
+		input_list_courses(course, fin);
+		string courseid;
+		cout << "Enter the course's id ";
+		getline(cin, courseid);
+
+		if (!valid_course(course, courseid)) {
+			cout << "You don't have permission to access this course " << endl;
+			return;
+		}
+		
+		if (choice == 2) view_list_student(courseid);
+		else if (choice == 3) view_attendance_list(courseid);
+		else if (choice == 4) edit_attendance(courseid);
+		delete_all(course);
+	}
+	return;
+}
+void scoreboard_options() {
+	cout << "1. Search and view scoreborad " << endl;
+	cout << "2. Export scoreboard to csv " << endl;
+	cout << "3. Import scoreboard from csv file " << endl;
+	cout << "4. Edit grade of a student " << endl;
+	cout << "5. View scoreboard of a course" << endl;
+	int choice;
+	cin >> choice;
+	cin.ignore();
+	if (choice == 1) {
+		return;
+	}
+	else if (choice == 2) {
+		return;
+	}
+	else if (choice == 3 || choice==4|| choice ==5) {
+		CourseNode* course = nullptr;
+		ifstream fin;
+		input_list_courses(course, fin);
+		string courseid;
+		cout << "Enter the course's id ";
+		getline(cin, courseid);
+		if (!valid_course(course, courseid)) {
+			cout << "You don't have permission to access this course " << endl;
+			return;
+		}
+		if (choice == 3) {
+			import_scoreboard(courseid);
+		}
+		else if (choice == 4) {
+			edit_grade(courseid);
+		}
+		else if (choice == 5) {
+			view_scoreboard(courseid);
+		}
+	}
 }

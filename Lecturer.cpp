@@ -72,11 +72,10 @@ void delete_all(CourseNode*& head) {
 	}
 }
 
-void input_list_student(StudentNode*& head, ifstream& fin, string& coursename) {
-	string s="";
-	cout << "Enter name of the course ";
-	getline(cin, coursename);
-	 s = coursename + "-Student.txt";
+void input_list_student(StudentNode*& head, ifstream& fin, string& courseid) {
+	string s = "";
+	
+	 s = courseid + "-Student.txt";
 	fin.open(s);
 	if (!fin.is_open()) {
 		cout << "Cannot open this file ";
@@ -114,21 +113,42 @@ void input_list_student(StudentNode*& head, ifstream& fin, string& coursename) {
 		}
 		n--;
 	}
+
 	fin.close();
 }
-void view_list_student() {
-	StudentNode* root = nullptr;
+//View list students of a course.
+void view_list_student(string courseid) {
+	/*StudentNode* root = nullptr;
 	ifstream fin;
-	string coursename;
-	input_list_student(root, fin, coursename);
+	
+	string courseid;
+	cout << "Enter the course's id ";
+	getline(cin, courseid);
+	
+	CourseNode* course = nullptr;
+	input_list_courses(course, fin);
+	
+	if (!valid_course(course, courseid)) {
+		cout << "You don't have permission to access this course." << endl;
+		return;
+	}
+	
+	input_list_student(root, fin, courseid);*/
+	// Test:
+	StudentNode* root=nullptr;
+	ifstream fin;
+	input_list_student(root, fin, courseid);
 	StudentNode* head = root;
-	cout << "ID\t\t" << "Fullname\t" << "Date of birth\t" << "Class" << endl;
+	int i = 1;
+	cout << "No\t" << "ID\t\t" << "Fullname\t" << "Date of birth\t" << "Class" << endl;
 	while (head) {
-		cout << head->id << '\t' << head->name << '\t' << head->doB << "\t"
+		cout << i <<'\t'<< head->id << '\t' << head->name << '\t' << head->doB << "\t"
 			<< head->class_ << endl;
 		head = head->next;
+		i++;
 	}
 	delete_all(root);
+	//delete_all(course);
 	
 }
 void delete_all(StudentNode*& head) {
@@ -138,11 +158,12 @@ void delete_all(StudentNode*& head) {
 		head = tmp;
 	}
 }
-void view_attendance_list() {
+// View attendance list of a course.
+void view_attendance_list(string courseid) {
 	StudentNode* root = nullptr;
 	ifstream fin;
-	string coursename;
-	input_list_student(root, fin, coursename);
+
+	input_list_student(root, fin, courseid);
 	StudentNode* head = root;
 	cout << "Students name\t";
 	for (int i = 0; i < 10; i++) {
@@ -158,13 +179,19 @@ void view_attendance_list() {
 		cout << endl;
 		head = head->next;
 	}
+	// Delete
 	delete_all(root);
+	
 }
-void edit_attendance() {
+
+// Edit an attendance of a student in a course.
+void edit_attendance(string courseid) {
 	StudentNode* root = nullptr;
 	ifstream fin;
-	string coursename;
-	input_list_student(root, fin, coursename);
+	
+
+
+	input_list_student(root, fin, courseid);
 	StudentNode* head = root;
 	
 	if (head == nullptr) return;
@@ -206,6 +233,8 @@ void edit_attendance() {
 		cur->al[week - 1][pos - 1] = '-';
 		cur->al[week - 1][pos] = '1';
 	}
+
+	
 	delete_all(root);
 }
 void output_to_txt(StudentNode* head, ofstream& fout, string& coursename) {
@@ -213,7 +242,7 @@ void output_to_txt(StudentNode* head, ofstream& fout, string& coursename) {
 	/*cout << "Enter the course's name ";
 	
 	getline(cin, filename);*/
-	filename = filename + "-Student.txt";
+	filename = coursename + "-Student.txt";
 	fout.open(filename);
 	if (!fout.is_open()) {
 		cout << "Cannot open this file" << endl;
@@ -240,15 +269,16 @@ void output_to_txt(StudentNode* head, ofstream& fout, string& coursename) {
 	}
 	fout.close();
 }
-void export_to_csv() {
+// Export attendance list to file csv.
+void export_to_csv(string courseid) {
 	StudentNode* root = nullptr;
 	ifstream fin;
-
-	string coursename;
-	input_list_student(root, fin, coursename);
+	
+	input_list_student(root, fin, courseid);
+	
 	ofstream fout;
-	coursename = coursename + "-attendance.csv";
-	fout.open(coursename);
+	courseid = courseid + "-attendance.csv";
+	fout.open(courseid);
 	if (!fout.is_open()) {
 		cout << "Cannot open this file" << endl;
 		return;
@@ -280,6 +310,7 @@ void export_to_csv() {
 
 	}
 	delete_all(root);
+
 	fout.close();
 }
 int size(StudentNode* head) {
@@ -291,3 +322,48 @@ int size(StudentNode* head) {
 	return sum;
 }
 
+bool valid_course(CourseNode* course, string courseid) {
+	string username;
+	cout << "Enter your user name ";
+	getline(cin, username);
+	normalize(username);
+	normalize_course(course);
+	while (course) {
+		if (course->lecturer_username == username && course->id == courseid) return true;
+		course = course->next;
+	}
+	return false;
+}
+void normalize_course(CourseNode* course) {
+	while (course) {
+		normalize(course->name);
+		normalize(course->lecturer_username);
+		course = course->next;
+	}
+}
+
+string get_courseid(CourseNode* course, string coursename) {
+	while (course) {
+		if (course->name == coursename) {
+			return course->id;
+		}
+		course = course->next;
+	}
+	return "";
+}
+/*void lecturer_options() {
+	CourseNode* course=nullptr;
+	ifstream fin;
+	input_list_courses(course, fin);
+	string courseid;
+	cout << "Enter the course's id ";
+	getline(cin, courseid);	
+	
+	if (!valid_course(course, courseid)) {
+		cout << "You don't have permission to access this course " << endl;
+		return;
+	}
+	view_list_student(courseid);
+	delete_all(course);
+	return ;
+}*/
