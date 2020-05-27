@@ -28,6 +28,8 @@ int DamerauLevenshteinDistance(string s1, string s2);
 
 double similarity(string s1, string s2);
 
+double suitability(string s1, string s2);
+
 string getFirstName(string fullName);
 
 string getTitle(string fullName, int type, int gender);

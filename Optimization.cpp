@@ -58,6 +58,7 @@ int DamerauLevenshteinDistance(string s1, string s2) {
     normalize(s1);
     normalize(s2);
     int m = s1.length(), n = s2.length();
+    s1 = " " + s1; s2 = " " + s2;
     int inf = numeric_limits<int>::max() / 100;
 
     int **L = new int* [m + 1];
@@ -82,6 +83,11 @@ int DamerauLevenshteinDistance(string s1, string s2) {
             if (i > 1 && j > 1 && s1[i] == s2[j-1] && s1[i-1] == s2[j]) //Swap s1[i] and s1[j]
                 L[i][j] = min(L[i][j], L[i-2][j-2] + 1);
         }
+
+//    for (int i = 0; i<=m; i++) {
+//        for (int j = 0; j<=n; j++) cout << L[i][j] << " ";
+//        cout << endl;
+//    }
                           
     int ans = L[m][n];
     for (int i = 0; i<=m; i++)
@@ -91,9 +97,13 @@ int DamerauLevenshteinDistance(string s1, string s2) {
     return ans;
 }
 
-double similarity(string s1, string s2) {
+double similarity(string s1, string s2) { // 0 <= similarity <= 1
     return 1  - (double) DamerauLevenshteinDistance(s1, s2)
-             / ((double) s1.length() + s2.length());
+             / ((double) max(s1.length(), s2.length()));
+}
+
+double suitability(string s1, string s2) { //0 <= suitability <= 1; 1 if s1 contains s2 or s2 contains s1
+    return abs((double) s1.length() - s2.length()) / (double) DamerauLevenshteinDistance(s1, s2);
 }
 
 string getFirstName(string fullName) {
