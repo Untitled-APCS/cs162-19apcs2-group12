@@ -44,11 +44,11 @@ struct Student {
 	Student* next = NULL;
 };
 
-void savetxtCourse(ofstream& foutput,Course*& courseHead);
+void savetxtCourse(ofstream& foutput,Course*& courseHead, int countCourse);
 //3.1
 void readSemester(Semester*& semesterHead);
 void createSemester();
-void saveSemester(Semester* semesterHead);
+void saveSemester(Semester* semesterHead,int countSe);
 void deleteSemester();
 void viewSemester();
 //3.2
@@ -57,14 +57,14 @@ void importSchedule(); //import from csv
 Course* inputCourse(); //type to input course
 void addCourse();
 //3.4
-void readCourse(ifstream& finput, Course*& courseHead); //read course txt files
+void readCourse(ifstream& finput, Course*& courseHead,int &countCourse); //read course txt files
 void editCourse();
 //3.5
 void removeCourse();
 //3.6
-void readStudentCourse(ifstream& finput, Student*& studentHead); //read student from course txt files
+void readStudentCourse(ifstream& finput, Student*& studentHead,int &countStudentCourse); //read student from course txt files
 void removeStudentCourse();
-void saveStudentCourse(ofstream& foutput, Student* studentHead); //save student to course txt files
+void saveStudentCourse(ofstream& foutput, Student* studentHead,int countStudentCourse); //save student to course txt files
 //3.7
 void addStudentCourse();
 
