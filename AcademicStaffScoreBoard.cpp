@@ -6,7 +6,7 @@ void import_from_csv(BoardNode*& head, ifstream& fin, StudentNode* root, ofstrea
 	getline(cin, filename);
 	fin.open(filename);
 	if (!fin.is_open()) {
-		cout << "Cannot open this file ";
+		cout << "Cannot open this file " << endl;
 		return;
 	}
 	
