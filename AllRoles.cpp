@@ -4,23 +4,19 @@
 
 #include "AllRoles.h"
 
-void logIn(string &username, int &type) {
+void logIn() {
+    cout << "done";
+}
+
+void viewProfileInfo() {
 
 }
 
-void showMenu() {
+void changePassword() {
 
 }
 
-void viewProfileInfo(string &username, int type) {
-
-}
-
-void changePassword(string &username, int type) {
-
-}
-
-void logOut(string &username, int &type) {
+void logOut() {
 
 }
 
@@ -51,4 +47,28 @@ void unsigedCharToHexString(unsigned char *key, int keyLen, string &ans) {
         ans[2*i] = digit[(int) key[i] % 16];
         ans[2*i+1] = digit[(int) key[i] / 16];
     }
+}
+
+void logInMenu() {
+    cout << "Great to see you back! Have a nice day.\n";
+    cout << "[any + enter] Login you account so that we can identify you, or\n";
+    cout << "[ `  + enter] Exit the program if this is a mistake.\n";
+
+    char keyPress = cin.get();
+    cin.clear();
+
+    if (keyPress != '`') {
+        cout << endl;
+        logIn();
+    }
+}
+
+void logo() { // █
+    cout << "\n";
+    cout << " ██     ██   ███   ██   ████████   ██   ████████   ██        ███████   █████ \n";
+    cout << " ██     ██   ████  ██      ██      ██      ██      ██        ██        ██  ██\n";
+    cout << " ██     ██   ██ ██ ██      ██      ██      ██      ██        ███████   ██   ██\n";
+    cout << "  ██   ██    ██  ████      ██      ██      ██      ██        ██        ██  ██ \n";
+    cout << "    ███      ██   ███      ██      ██      ██      ███████   ███████   █████   \n";
+    cout << "\n";
 }

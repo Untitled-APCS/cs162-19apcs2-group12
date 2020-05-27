@@ -19,15 +19,17 @@
 
 using namespace std;
 
-void logIn(string &username, int &type);
+void logIn();
 
-void showMenu();
+void logInMenu();
 
-void viewProfileInfo(string &username, int type);
+void logo();
 
-void changePassword(string &username, int type);
+void viewProfileInfo();
 
-void logOut(string &username, int &type);
+void changePassword();
+
+void logOut();
 
 void unsigedCharToHexString(unsigned char *key, int keyLen, string &ans);
 

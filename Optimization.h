@@ -9,8 +9,12 @@
 #define STUDENT 0
 #define LECTURER 1
 #define STAFF 3
+
 #define MALE 0
 #define FEMALE 1
+
+#define ENTER (char) 13
+#define ESC (char) 27
 
 using namespace std;
 

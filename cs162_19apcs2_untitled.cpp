@@ -20,16 +20,19 @@ int main()
 //    string s2 = "cm101_student_2018_2019";
 //    cout << DamerauLevenshteinDistance(s1, s2) << endl;
 //    printf("%0.4f", suitability(s1, s2));
-    string s1, s2;
-    getline(cin, s1);
-    //getline(cin, s2, (char) 27);
-    cout << s1.length() << endl; bool ok = false;
-    for (int i = 0; i<s1.length(); i++) {
-        cout << s1[i] << endl;
-        if (s1[i] == (char) 27) ok = true;
-    }
+//    string s1, s2;
+//    getline(cin, s1);
+//    //getline(cin, s2, (char) 27);
+//    cout << s1.length() << endl; bool ok = false;
+//    for (int i = 0; i<s1.length(); i++) {
+//        cout << s1[i] << endl;
+//        if (s1[i] == (char) 27) ok = true;
+//    }
+//
+//    if (ok) cout << "This string contains esc character.\n";
 
-    if (ok) cout << "This string contains esc character.\n";
+    logo();
+    logInMenu();
 
     return 0;
 }
