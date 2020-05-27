@@ -1,208 +1,266 @@
 #include "AcademicStaffClass.h"
+//#include "AllRoles.h"
 
 stu* importstudent()
 {
     ifstream f;
-    f.open("19APCS1 - Student.csv");
+    f.open("19APCS1-Student.csv");
+    
     stu* student = nullptr;
-    stu* cur=nullptr;
-    int length;
-    f >> length;
-    for (int i = 0; i < length; i++)
+    if (!f.is_open())
+    {
+        cout << "Error";
+        return student;
+    }
+    stu* cur = nullptr;
+    string temp;
+    getline(f, temp, '\n');
+    while(f.good())
     {
         if (student == nullptr)
         {
             student = new stu;
-            f >> student->No
-                >> student->ID;
-            f.get(student->fullname, 99, ',');
-            f.ignore();
-            f.get(student->gender, 6, ',');
-            f.ignore();
-            f >> student->year
-                >> student->month
-                >> student->day;
-            f.get(student->clas, 10, ',');
-            f.ignore();
-            cur = student->pNext;
-            cur = nullptr;
+            getline(f, student->No, ',');
+            getline(f, student->ID, ',');
+            getline(f, student->fullname, ',');
+            //getline(f, student->gender, ',');
+            getline(f, student->date, ',');
+            getline(f, student->clas);
+            student->pNext = nullptr;
+            cur = student;
         }
         else
         {
-            cur = new stu;
-            f >> cur->No
-                >> cur->ID;
-            f.get(student->fullname, 99, ',');
-            f.ignore();
-            f.get(cur->gender, 6, ',');
-            f.ignore();
-            f >> cur->year
-                >> cur->month
-                >> cur->day;
-            f.get(student->clas, 10, ',');
-            f.ignore();
+            cur->pNext = new stu;
+
             cur = cur->pNext;
-            cur = nullptr;
+            getline(f, cur->No, ',');
+            getline(f, cur->ID, ',');
+            getline(f, cur->fullname, ',');
+            //getline(f, cur->gender, ',');
+            getline(f, cur->date, ',');
+            getline(f, cur->clas);
+            cur->pNext = nullptr;
         }
     }
+    f.close();
     return student;
 }
 void savedata(stu* student, ofstream& f)
 {
-    while (student != nullptr)
+    f << "No,Student ID,Fullname,DoB,Class\n";
+    while (student->pNext != nullptr)
     {
-        f << student->No
-            << student->ID;
-        f << student->fullname;
-        f << student->gender;
-        f << student->year
-            << student->month
-            << student->day;
-        f << student->clas;
+        f << student->No << ","
+            << student->ID << ","
+            << student->fullname << ","
+            //<< student->gender << ","
+            << student->date << ","
+            << student->clas << "\n";
         student = student->pNext;
     }
 }
+void delete_all(stu*& head) {
+    while (head) {
+        stu* tmp = head->pNext;
+        delete head;
+        head = tmp;
+    }
+}
+
 void changeclass()
 {
-    ofstream f;
-    f.open("19APCS1 - Student.csv");
-
     stu* student = importstudent();
+    stu* head = student;
+    if (student == nullptr)
+        return;
 
-    char  name[99];
+    string  name;
     cout << "Enter name of the student you want to change class: ";
-    cin.get(name, 99);
-    cin.ignore();
-    
+    cin.get();
+    getline(cin,  name);
+     
+
     while (student->pNext != nullptr)
     {
-        if (strcmp(student->fullname, name) == 0)
+        if (student->fullname == name)
         {
-            char check[9], classB[9];
-            cout << student->fullname << "ID:" << student->ID;
-            cout << "Is this the right student: ";
-            cin.get(check, 9);
-            cin.ignore();
+            string check;
+            cout << student->fullname << "\nID:" << student->ID;
+            cout << "\nIs this the right student: ";
+            getline(cin, check);
+             
             if (check == "no")
                 return;
             cout << "This student is currently in class" << student->clas
                 << "\nMove to class?";
-            cin.get(student->clas, 10);
-            cin.ignore();
-            savedata(student, f);
+            getline(cin, student->clas);
+             
+            ofstream f;
+            f.open("19APCS1-Student.csv");
+            savedata(head, f);
+            f.close();
         }
         student = student->pNext;
     }
+    delete student;
 }
 
 void editstudent()
 {
-    ofstream f;
-    f.open("19APCS1 - Student.csv");
 
     stu* student = importstudent();
+    if (student == nullptr)
+        return;
+    stu* head = student;
 
-    char  name[99];
+    string  name;
     cout << "Enter name of the student you want to edit information: ";
-    cin.get(name, 99);
-    cin.ignore();
+    cin.get();
+    getline(cin, name);
+     
 
     while (student != nullptr)
     {
-        if (strcmp(student->fullname, name) == 0)
+        if (student->fullname == name)
         {
+            string check;
+            cout << student->fullname << "\nID:" << student->ID;
+            cout << "\nIs this the right student: ";
+            getline(cin, check);
+
+            if (check == "no")
+                return;
+
             cout << "Please re_enter student information: \n"
                 << "Student full name: ";
-            cin.get(student->fullname, 99);
-            cin.ignore();
+            getline(cin,  student->fullname);
+             
             cout << "Student's ID:";
-            cin >> student->ID;
-            cout << "Student's day of birth:\n DD MM YYYY:";
-            cin >> student->day >> student->month >> student->year;
+            getline(cin, student->ID);
+            cout << "Student's day of birth:\n DD/MM/YYYY:";
+            getline(cin, student->date);
             cout << "Student's gender (Male/ Female): ";
-            cin.get(student->gender, 6);
-            cin.ignore();
+            getline(cin,  student->gender);
+             
             cout << "Student's class: ";
-            cin.get(student->clas, 10);
-            cin.ignore();
-            savedata(student, f);
+            getline(cin,  student->clas);
+            
+            cout << "Your password has been reset to default !!!";
+            //getHashedPassword(defaultPassword);
+            ofstream f;
+            f.open("19APCS1-Student.csv");
+            savedata(head, f);
+            f.close();
             return;
         }
         student = student->pNext;
     }
+
+
+    delete student;
 }
-void Int_to_Char(int n, char a[]) 
+string removeSpecialCharacter(string s)
 {
-    int len = strlen(a);
-    while (len>0)
+    for (int i = 0; i < s.size(); i++) 
     {
-        int temp;
-        temp = n % 10;
-        n = n / 10;
-        a[len] = temp;
-        --len;
+        if (s[i] < 'A' || s[i] > 'Z' && s[i] < 'a' || s[i] > 'z')
+        { 
+            s.erase(i, 1);
+            i--;
+        }
     }
+    return s;
 }
 void AddAStudent()
 {
-    ofstream f;
-    f.open("19APCS1 - Student.csv");
-
     stu* student = importstudent();
+    if (student == nullptr)
+    {
+        cout << "Error!!!\nThe file is empty\n";
+        return;
+    }
 
+    stu* head = student;
+    while (student->pNext != nullptr)
+        student = student->pNext;
     int choice;
     cout << "Do you want to enrole into any class: (yes = 1, no = 0) ";
     cin >> choice;
     if (choice == 1)
     {
+        
+        student->pNext = new stu;
+        student = student->pNext;
+        student->pNext = nullptr;
         cout << "Student full name: ";
-        cin.get(student->fullname, 99);
-        cin.ignore();
+        cin.get();
+        getline(cin, student->fullname, '\n');
+         
         cout << "Student's ID: ";
-        cin >> student->ID;
-        cout << "Student's day of birth:\n DD MM YYYY: ";
-        cin >> student->day >> student->month >> student->year;
+        getline(cin, student->ID, '\n');
+        cout << "Student's day of birth:\n DD/MM/YYYY:";
+        getline(cin, student->date, '\n');
         cout << "Student's gender (Male/ Female): ";
-        cin.get(student->gender, 6);
-        cin.ignore();
+        getline(cin,  student->gender, '\n');
+         
         cout << "Student's class: ";
-        cin.get(student->clas, 10);
-        cin.ignore();
-        Int_to_Char(student->ID, student->username);
-        int password = student->year * 10000 + student->month * 100 + student->day;
-        Int_to_Char(password, student->password);
+        getline(cin,  student->clas);
+         
+        student->username = student->ID;
+        student->password = student->date;
+        student->password = removeSpecialCharacter(student->password);
         cout << "Your username is: " << student->username << "\nYour password is: " << student->password;
-        cout << "\nYou should change your password!!!";
-        savedata(student, f);
+        cout << "\nYou should change your password to protect your account !!!\n";
+        ofstream f;
+        f.open("19APCS1-Student.csv");
+        savedata(head, f);
+        f.close();
 
     }
+    delete student;
 }
 void RemoveStudent()
 {
-    ofstream f;
-    f.open("19APCS1 - Student.csv");
+    
 
     stu* student = importstudent();
+    if (student == nullptr)
+        return;
+
+    stu* head = student;
 
     int choice;
-    cout << "Do you want to enrole into any class: (yes = 1, no = 0) ";
+    cout << "Do you want to remove any student : (yes = 1, no = 0) ";
     cin >> choice;
     if (choice == 1)
     {
-        int ID;
+        string ID;
         cout << "Enter the student's ID: ";
-        cin >> ID;
+        getline(cin, student->ID);
         while (student != nullptr)
         {
             if (student->ID == ID)
             {
+                string check;
+                cout << student->fullname << "\nID:" << student->ID;
+                cout << "\nIs this the right student: ";
+                getline(cin, check);
+
+                if (check == "no")
+                    return;
+
                 delete student;
-                savedata(student, f);
+                ofstream f;
+                f.open("19APCS1-Student.csv");
+                savedata(head, f);
+                f.close();
                 return;
             }
             student = student->pNext;
         }
     }
+    delete student;
 }
 void viewlistofclass()
 {
@@ -214,11 +272,10 @@ void viewlistofclass()
     {
         int n;
         classes >> n;
-        char a[8];
+        string a;
         for (int i = 0; i < n; i++)
         {
-            classes.get(a, 9);
-            classes.get();
+            getline(cin, a);
             cout << a;
         }
     }
@@ -226,15 +283,21 @@ void viewlistofclass()
 }
 void viewlistofstudent()
 {
-    ofstream f;
-    f.open("19APCS1 - Student.csv");
-
     stu* student = importstudent();
-
-    int i = 0;
-    while (student != nullptr)
+    if (student == nullptr)
     {
-        i++;
-        cout << "\nNo." << i << " Name: " << student->fullname << "\t ID: " << student->ID;
+        cout << "Error!!!\nThe list is empty\n";
+        return;
     }
+    while (student->pNext != nullptr)
+    {
+        cout << "\nNo." << student->No << " Name: " << student->fullname << "\t ID: " << student->ID << "\t Class: " << student->clas << "\t DoB: " << student->date;
+        student = student->pNext;
+    }
+    cout << endl;
+    
+    delete student;
 }
+
+
+

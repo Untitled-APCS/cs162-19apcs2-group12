@@ -10,9 +10,10 @@ using namespace std;
 
 struct stu
 {
-    int No, ID;
-    char fullname[100], gender[6], clas[10], username[10], password[10];
-    int  year, month, day;
+    string No, ID, fullname, gender, clas, username, password, date;
+	/*int No, ID;
+	char fullname[100], gender[6], clas[10], username[10], password[10];
+	int  year, month, day;*/
     stu* pNext;
 };
 stu* importstudent();
