@@ -4,6 +4,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "Optimization.h"
+
+
 using namespace std;
 
 
@@ -38,17 +41,21 @@ struct StudentNode {
 
 void input_list_courses(CourseNode*& head, ifstream& fin);
 void delete_all(CourseNode*& head);
-void input_list_student(StudentNode*& head, ifstream& fin, string& coursename);
+void input_list_student(StudentNode*& head, ifstream& fin, string& courseid);
 void delete_all(StudentNode*& head);
 void output_to_txt(StudentNode* head, ofstream& fout, string& coursename);
 int  size(StudentNode* head);
+bool valid_course(CourseNode* course, string courseid);
+void normalize_course(CourseNode* course);
+string get_courseid(CourseNode* course, string courseid);
 
 // Activities:
-void export_to_csv();
-void edit_attendance();
-void view_attendance_list();
+void export_to_csv(string courseid);
+void edit_attendance(string courseid);
+void view_attendance_list(string courseid);
 void view_list_courses();
-void view_list_student();
+void view_list_student(string courseid);
+
 
 
 

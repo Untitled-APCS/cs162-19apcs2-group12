@@ -21,10 +21,11 @@ void import_from_csv(BoardNode*& head, ifstream& fin,StudentNode* root, ofstream
 void update_grade(BoardNode* head, StudentNode* root);
 void delete_all(BoardNode*& head);
 // Activities:
-void view_scoreboard();
-void edit_grade();
-void import_scoreboard();
-
+void view_scoreboard(string courseid);
+void edit_grade(string courseid);
+void import_scoreboard(string courseid);
+void lecturer_options();
+void scoreboard_options();
 
 //Kiet's part
 void outputScoreboard(BoardNode* pHead);
