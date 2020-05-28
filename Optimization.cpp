@@ -4,9 +4,11 @@
 
 #include "Optimization.h"
 
-string global::username;
-int global::type;
-string global::workspace;
+string user::ID;
+int user::type;
+string user::workspace;
+string user::fullName;
+int user::gender;
 
 void normalize(string &s) {
     //Convert string to lowercase and remove space
@@ -125,4 +127,21 @@ string getTitle(string fullName, int type, int gender) {
 
 bool isStrongPassword(string password) {
     return true;
+}
+
+string getGreeting() {
+    time_t cur;
+    time(&cur);
+    tm *localTime = localtime(&cur);
+
+    int h = localTime->tm_hour;
+
+    if (h >= 6 && h < 12)
+        return "Good morning, ";
+    else if (h >= 12 && h < 17)
+        return "Good afternoon, ";
+    else if (h >= 17 && h < 20)
+        return "Good evening, ";
+    else
+        return "Good night, ";
 }

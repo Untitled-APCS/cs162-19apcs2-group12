@@ -94,34 +94,40 @@ void update_grade(BoardNode* head, StudentNode* root) {
 }*/
 
 //Kiet's part
-void outputScoreboard()
-{
-	StudentNode* root = nullptr;
-	
-	ifstream fin;
-	
-	input_list_student(root, fin, courseid);
 
-	StudentNode* pHead=root;
-    string ID;
-    cout << "Enter the ID of the student you want to view scoreboard";
-    getline(cin, ID);
-    while (pHead != nullptr)
-    {
-        if (pHead->id == ID)
-        {
-            cout << pHead->no << '\t' << pHead->student_id << '\t' << pHead->fullname << '\t' << pHead->class_
-                << '\t';
-            for (int i = 0; i < 4; i++) {
-                cout << pHead->grade[i];
-                if (i == 3) cout << endl;
-                else cout << '\t';
-            }
-        }
-        else
-            cout << endl;
-    }
-}
+
+
+//void outputScoreboard()
+//{
+//	StudentNode* root = nullptr;
+//
+//	ifstream fin;
+//
+//	input_list_student(root, fin, courseid);
+//
+//	StudentNode* pHead=root;
+//    string ID;
+//    cout << "Enter the ID of the student you want to view scoreboard";
+//    getline(cin, ID);
+//    while (pHead != nullptr)
+//    {
+//        if (pHead->id == ID)
+//        {
+//            cout << pHead->no << '\t' << pHead->student_id << '\t' << pHead->fullname << '\t' << pHead->class_
+//                << '\t';
+//            for (int i = 0; i < 4; i++) {
+//                cout << pHead->grade[i];
+//                if (i == 3) cout << endl;
+//                else cout << '\t';
+//            }
+//        }
+//        else
+//            cout << endl;
+//    }
+//}
+
+
+
 void exportscoreboard(BoardNode* pHead, ofstream& f)
 {
     f << "No,Student ID,Fullname,Class,Midterm,Final,Bonus,Total";

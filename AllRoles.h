@@ -19,9 +19,41 @@
 
 using namespace std;
 
+void mainMenu();
+
 void logIn();
 
 void logInMenu();
+
+void preferencesMenu();
+
+void viewProfileInfo();
+
+void changePassword();
+
+void turnOffRecommendation();
+
+void turnOffCorrection();
+
+void logOut();
+
+void staffMenu();
+
+void lecturerMenu();
+
+void studentMenu();
+
+void classMenu();
+
+void courseMenu();
+
+void testStaffClass();
+
+void testStaffCourse();
+
+void testLecturer();
+
+void testStudent();
 
 void logo();
 
