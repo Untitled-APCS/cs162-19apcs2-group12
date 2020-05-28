@@ -193,6 +193,8 @@ void edit_grade(string courseid) {
 	getline(cin, new_grade);
 	
 	head->grade[type] = new_grade;
+	ofstream fout;
+	output_to_txt(root, fout, courseid);
 	delete_all(root);
 
 }
@@ -262,6 +264,10 @@ void scoreboard_options() {
 		}
 		else if (choice == 5) {
 			view_scoreboard(courseid);
+		}
+		else {
+			cout << "Invalid" << endl;
+			return;
 		}
 	}
 }
