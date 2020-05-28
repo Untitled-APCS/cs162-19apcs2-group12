@@ -94,8 +94,15 @@ void update_grade(BoardNode* head, StudentNode* root) {
 }*/
 
 //Kiet's part
-void outputScoreboard(BoardNode* pHead)
+void outputScoreboard()
 {
+	StudentNode* root = nullptr;
+	
+	ifstream fin;
+	
+	input_list_student(root, fin, courseid);
+
+	StudentNode* pHead=root;
     string ID;
     cout << "Enter the ID of the student you want to view scoreboard";
     getline(cin, ID);
