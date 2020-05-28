@@ -233,7 +233,8 @@ void edit_attendance(string courseid) {
 		cur->al[week - 1][pos - 1] = '-';
 		cur->al[week - 1][pos] = '1';
 	}
-
+	ofstream fout;
+	output_to_txt(root, fout, courseid);
 	
 	delete_all(root);
 }
@@ -351,19 +352,3 @@ string get_courseid(CourseNode* course, string coursename) {
 	}
 	return "";
 }
-/*void lecturer_options() {
-	CourseNode* course=nullptr;
-	ifstream fin;
-	input_list_courses(course, fin);
-	string courseid;
-	cout << "Enter the course's id ";
-	getline(cin, courseid);	
-	
-	if (!valid_course(course, courseid)) {
-		cout << "You don't have permission to access this course " << endl;
-		return;
-	}
-	view_list_student(courseid);
-	delete_all(course);
-	return ;
-}*/

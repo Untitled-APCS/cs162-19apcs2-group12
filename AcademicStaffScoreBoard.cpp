@@ -94,8 +94,15 @@ void update_grade(BoardNode* head, StudentNode* root) {
 }*/
 
 //Kiet's part
-void outputScoreboard(BoardNode* pHead)
+void outputScoreboard()
 {
+	StudentNode* root = nullptr;
+	
+	ifstream fin;
+	
+	input_list_student(root, fin, courseid);
+
+	StudentNode* pHead=root;
     string ID;
     cout << "Enter the ID of the student you want to view scoreboard";
     getline(cin, ID);
@@ -193,6 +200,8 @@ void edit_grade(string courseid) {
 	getline(cin, new_grade);
 	
 	head->grade[type] = new_grade;
+	ofstream fout;
+	output_to_txt(root, fout, courseid);
 	delete_all(root);
 
 }
@@ -262,6 +271,10 @@ void scoreboard_options() {
 		}
 		else if (choice == 5) {
 			view_scoreboard(courseid);
+		}
+		else {
+			cout << "Invalid" << endl;
+			return;
 		}
 	}
 }
