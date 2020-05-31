@@ -13,19 +13,14 @@
 #include "cppcrypto/pbkdf2.h"
 #include "cppcrypto/cpuinfo.h"
 #include "cppcrypto/alignedarray.h"
+#include "Menu.h"
 //Sources: http://cppcrypto.sourceforge.net/
 //https://neurotechnics.com/tools/pbkdf2-test
 //https://asecuritysite.com/encryption/PBKDF2z
 
 using namespace std;
 
-void mainMenu();
-
 void logIn();
-
-void logInMenu();
-
-void preferencesMenu();
 
 void viewProfileInfo();
 
@@ -37,31 +32,23 @@ void turnOffCorrection();
 
 void logOut();
 
-void staffMenu();
-
-void lecturerMenu();
-
-void studentMenu();
-
-void classMenu();
-
-void courseMenu();
-
 void testStaffClass();
 
 void testStaffCourse();
+
+void testStaffSemester();
+
+void testStaffLecturer();
+
+void testStaffStudent();
 
 void testLecturer();
 
 void testStudent();
 
-void logo();
-
 void viewProfileInfo();
 
 void changePassword();
-
-void logOut();
 
 void unsigedCharToHexString(unsigned char *key, int keyLen, string &ans);
 

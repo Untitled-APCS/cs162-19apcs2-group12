@@ -6,7 +6,7 @@
 #define CS162_19APCS2_GROUP12_OPTIMIZATION_H
 
 #include <bits/stdc++.h>
-#include <time.h>
+#include "Engine.h"
 
 #define userTitle getTitle(user::fullName, user::type, user::gender)
 
@@ -19,6 +19,9 @@
 
 #define ENTER (char) 13
 #define ESC (char) 27
+
+#define EXITCODE(n) {exitProgram(n); return;}
+#define EXITCODE_V(n, return_value) {exitProgram(n); return return_value;}
 
 using namespace std;
 
@@ -47,5 +50,7 @@ string getTitle(string fullName, int type, int gender);
 bool isStrongPassword(string password);
 
 string getGreeting();
+
+void exitProgram(int code);
 
 #endif //CS162_19APCS2_GROUP12_OPTIMIZATION_H

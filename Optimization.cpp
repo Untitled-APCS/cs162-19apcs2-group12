@@ -5,10 +5,10 @@
 #include "Optimization.h"
 
 string user::ID;
-int user::type;
+int user::type = -1;
 string user::workspace;
 string user::fullName;
-int user::gender;
+int user::gender = -1;
 
 void normalize(string &s) {
     //Convert string to lowercase and remove space
@@ -126,15 +126,26 @@ string getTitle(string fullName, int type, int gender) {
 }
 
 bool isStrongPassword(string password) {
-    return true;
+    if (password.length() < 8) return false;
+
+    bool lower = false, upper = false,
+         special = false, forbidden = false;
+    for (int i = 0; i<password.size(); i++) {
+        if (password[i] >= 'a' && password[i] <= 'z')
+            lower = true;
+
+        if (password[i] >= 'A' && password[i] <= 'Z')
+            upper = true;
+    }
+    if (!lower || !upper || !special || forbidden) return false;
+
+
 }
 
 string getGreeting() {
-    time_t cur;
-    time(&cur);
-    tm *localTime = localtime(&cur);
+    Time cur;
 
-    int h = localTime->tm_hour;
+    int h = cur.h;
 
     if (h >= 6 && h < 12)
         return "Good morning, ";
@@ -144,4 +155,12 @@ string getGreeting() {
         return "Good evening, ";
     else
         return "Good night, ";
+}
+
+void exitProgram(int code) {
+    cout << "\n\nOops! Something went wrong. The program will be terminated. (Exit code: "<< code << ") [enter]\n";
+
+    char keyPress = cin.get();
+    fflush(stdin);
+    cout << "\n\n";
 }
