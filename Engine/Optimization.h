@@ -6,7 +6,7 @@
 #define CS162_19APCS2_GROUP12_OPTIMIZATION_H
 
 #include <bits/stdc++.h>
-#include "Engine.h"
+#include "DateTime.h"
 
 #define userTitle getTitle(user::fullName, user::type, user::gender)
 
@@ -14,8 +14,8 @@
 #define LECTURER 1
 #define STAFF 2
 
-#define MALE 0
-#define FEMALE 1
+#define MALE 1
+#define FEMALE 0
 
 #define ENTER (char) 13
 #define ESC (char) 27
@@ -24,6 +24,9 @@
 #define EXITCODE_V(n, return_value) {exitProgram(n); return return_value;}
 
 using namespace std;
+
+//string fileLocation;
+//string staffListLocation;
 
 struct user {
     static string ID;

@@ -1,39 +1,35 @@
 //#include "AcademicStaffCourse.h"
 //#include "AcademicStaffClass.h"
-#include "AcademicStaffScoreBoard.h"
-#include "Lecturer.h"
+//#include "AcademicStaffScoreBoard.h"
+//#include "Lecturer.h"
 #include "Student.h"
 #include "AllRoles.h"
 #include "Engine.h"
 
-int main()
-{
-//    string s = "     chu    dUc    aN    ";
-//    normalizeFullName(s);
-//    cout << s << " " << getFirstName(s) << endl;
-//    cout << getTitle(s, LECTURER, MALE) << endl;
-//    cout << getHashedPassword("tui rat dep trai hahaha");
-
-//    string s;
-//    getline(cin, s);
-//    cout << s << endl;
-//    string s1 = "CM105";
-//    string s2 = "cm101_student_2018_2019";
-//    cout << DamerauLevenshteinDistance(s1, s2) << endl;
-//    printf("%0.4f", suitability(s1, s2));
-//    string s1, s2;
-//    getline(cin, s1);
-//    //getline(cin, s2, (char) 27);
-//    cout << s1.length() << endl; bool ok = false;
-//    for (int i = 0; i<s1.length(); i++) {
-//        cout << s1[i] << endl;
-//        if (s1[i] == (char) 27) ok = true;
-//    }
-//
-//    if (ok) cout << "This string contains esc character.\n";
+int main(int argc, const char **argv) {
+//    fileLocation = argv[0];
+//    while (fileLocation.size() > 0 && fileLocation[fileLocation.size()-1] != '/')
+//        fileLocation.pop_back();
 
     logo();
     logInMenu();
+
+    //cout << getHashedPassword("ltathao");
+
+//    StudentList studentList;
+//    studentList.load();
+//    studentList.print();
+//
+//    StudentNode *studentNode = studentList.find("httu", ACTIVE);
+//    if (studentNode != nullptr)
+//        studentNode->print();
+
+//    studentNode = new StudentNode {"19125050", getHashedPassword("19125050"), "Ta Huynh Tuan Kiet",
+//                              {2001, 02, 02}, "19CTT2", true, nullptr};
+//
+//    studentList.pushBack(studentNode);
+
+//    studentList.save();
 
     return 0;
 }

@@ -2,7 +2,8 @@
 // Created by Duc An Chu on 5/31/20.
 //
 
-#include "Engine.h"
+#include "DateTime.h"
+
 
 Date::Date(int year, int month, int day) {
     y = year;
@@ -29,6 +30,12 @@ void Date::nextWeek() {
 bool Date::wrongFormat() {
     return (Date::m < 1 || Date::m > 12 || Date::d < 1 ||
             Date::d > numDaysInMonth(Date::y, Date::m));
+}
+
+Date::Date() {
+    y = 2000;
+    m = 1;
+    d = 1;
 }
 
 
@@ -83,6 +90,62 @@ int numDaysInMonth(int y, int m) {
         case 2:
             return (isLeapYear(y) ? 29 : 28);
         default:
-            EXITCODE_V(1, 0)
+        EXITCODE_V(1, 0)
     }
+}
+
+bool operator > (const Date &a, const Date &b) {
+    if (a.y != b.y)
+        return a.y > b.y;
+    if (a.m != b.m)
+        return a.m > b.m;
+    return a.d > b.d;
+}
+
+bool operator < (const Date &a, const Date &b) {
+    if (a.y != b.y)
+        return a.y < b.y;
+    if (a.m != b.m)
+        return a.m < b.m;
+    return a.d < b.d;
+}
+
+bool operator == (const Date &a, const Date &b) {
+    return (a.y == b.y && a.m == b.m && a.d == b.d);
+}
+
+bool operator >= (const Date &a, const Date &b) {
+    return (a > b || a == b);
+}
+
+bool operator <= (const Date &a, const Date &b) {
+    return (a < b || a == b);
+}
+
+bool operator > (const Time &a, const Time &b) {
+    if (a.h != b.h)
+        return a.h > b.h;
+    if (a.m != b.m)
+        return a.m > b.m;
+    return a.s > b.s;
+}
+
+bool operator < (const Time &a, const Time &b) {
+    if (a.h != b.h)
+        return a.h < b.h;
+    if (a.m != b.m)
+        return a.m < b.m;
+    return a.s < b.s;
+}
+
+bool operator == (const Time &a, const Time &b) {
+    return (a.h == b.h && a.m == b.m && a.s == b.s);
+}
+
+bool operator >= (const Time &a, const Time &b) {
+    return (a > b || a == b);
+}
+
+bool operator <= (const Time &a, const Time &b) {
+    return (a < b || a == b);
 }

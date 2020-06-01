@@ -5,17 +5,104 @@
 #include "AllRoles.h"
 
 void logIn() {
-    user::ID = "19125001";
-    cin >> user::type;
-    user::gender = MALE;
-    user::fullName = "Chu Duc An";
+//    user::ID = "19125001";
+//    cin >> user::type;
+//    user::gender = MALE;
+//    user::fullName = "Chu Duc An";
 
-    cout << "Login successfully. [enter]\n";
+    string ID, fullName, password, hashedPassword;
+    int type, gender;
 
-    fflush(stdin);
-    char keyPress = cin.get();
-    fflush(stdin);
-    mainMenu();
+    cout << "\n\nPlease type in your account ID.\n";
+    cout << "[` + enter] Back to the entrance.\n";
+    cout << "Your ID: ";
+
+    getline(cin, ID);
+
+    if (ID.find('`') != string::npos) {
+        cout << "\n\nGetting you back to the entrance... [enter]";
+
+        fflush(stdin);
+        char keyPress = cin.get();
+        fflush(stdin);
+        logInMenu();
+        return;
+    }
+
+    StaffList staffList;
+    staffList.load();
+    StaffNode *staffNode = staffList.find(ID);
+    if (staffNode != nullptr) {
+        fullName = staffNode->staffName;
+        hashedPassword = staffNode->password;
+        type = STAFF;
+        gender = staffNode->gender;
+    } else {
+        LecturerList lecturerList;
+        lecturerList.load();
+        LecturerNode *lecturerNode = lecturerList.find(ID, ACTIVE);
+        if (lecturerNode != nullptr) {
+            fullName = lecturerNode->lecturerName;
+            hashedPassword = lecturerNode->password;
+            type = LECTURER;
+            gender = lecturerNode->gender;
+        } else {
+            StudentList studentList;
+            studentList.load();
+            StudentNode *studentNode = studentList.find(ID, ACTIVE);
+            if (studentNode != nullptr) {
+                fullName = studentNode->studentName;
+                hashedPassword = studentNode->password;
+                type = STUDENT;
+                gender = MALE;
+            } else {
+                cout << "\n\nSorry, we could not find you. Let's try one more time. [enter]";
+
+                fflush(stdin);
+                char keyPress = cin.get();
+                fflush(stdin);
+                logIn();
+                return;
+            }
+        }
+    }
+
+    cout << "\n\nWe found you, " << getTitle(fullName, type, gender) << ". Type in your password and go ahead.\n";
+    cout << "In this version, the password is not hidden on the screen. Please avoid any attention around you and close "
+         << "the program after finishing your work.\n";
+    cout << "[` + enter] This isn't you? Try again.\n";
+
+
+    while (true) {
+        cout << "Your password: ";
+
+        getline(cin, password);
+
+        if (password.find('`') != string::npos) {
+            cout << "\n\nGetting you back to the entrance... [enter]";
+
+            fflush(stdin);
+            char keyPress = cin.get();
+            fflush(stdin);
+            logInMenu();
+            return;
+        }
+
+        if (getHashedPassword(password) == hashedPassword) {
+            user::ID = ID;
+            user::fullName = fullName;
+            user::type = type;
+
+            cout << "\n\nLogin successfully. [enter]\n";
+
+            fflush(stdin);
+            char keyPress = cin.get();
+            fflush(stdin);
+            mainMenu();
+            return;
+        } else
+            cout << "Your password is incorrect. Please try again.\n";
+    }
 }
 
 void logOut() {

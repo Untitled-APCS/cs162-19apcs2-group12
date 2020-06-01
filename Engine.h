@@ -5,34 +5,16 @@
 #ifndef CS162_19APCS2_GROUP12_ENGINE_H
 #define CS162_19APCS2_GROUP12_ENGINE_H
 
-#include "Optimization.h"
-#include "StudentList.h"
-#include "LecturerList.h"
-#include "StaffList.h"
-#include "ClassList.h"
-#include "SemesterList.h"
-#include "ClassStudentList.h"
-#include "CourseList.h"
-#include "CourseStudentList.h"
-#include <time.h>
-
-struct Date {
-    int y, m, d;
-    Date(int year, int month, int day);
-    void nextWeek(); //move to next week
-    bool wrongFormat();
-};
-
-struct Time {
-    int h, m, s;
-    Time(); //Default value is the current time
-    Time(int hour, int minute, int second);
-    void capture(); //Capture the current time
-    bool wrongFormat();
-};
-
-bool isLeapYear(int y);
-
-int numDaysInMonth(int y, int m); //return the number of days in month m of year y
+#include "Engine/Optimization.h"
+#include "Engine/StudentList.h"
+#include "Engine/LecturerList.h"
+#include "Engine/StaffList.h"
+#include "Engine/ClassList.h"
+#include "Engine/SemesterList.h"
+#include "Engine/ClassStudentList.h"
+#include "Engine/CourseList.h"
+#include "Engine/CourseStudentList.h"
+#include "Engine/DateTime.h"
+#include "Engine/InputData.h"
 
 #endif //CS162_19APCS2_GROUP12_ENGINE_H

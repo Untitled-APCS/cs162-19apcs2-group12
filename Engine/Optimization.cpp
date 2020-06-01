@@ -129,17 +129,21 @@ bool isStrongPassword(string password) {
     if (password.length() < 8) return false;
 
     bool lower = false, upper = false,
-         special = false, forbidden = false;
+         special = false, forbidden = false, number = false;
+
     for (int i = 0; i<password.size(); i++) {
         if (password[i] >= 'a' && password[i] <= 'z')
             lower = true;
-
-        if (password[i] >= 'A' && password[i] <= 'Z')
+        else if (password[i] >= 'A' && password[i] <= 'Z')
             upper = true;
+        else
+            special = true;
+
+        if (password[i] == '`')
+            forbidden = true;
     }
-    if (!lower || !upper || !special || forbidden) return false;
 
-
+    return (lower && upper && special && !forbidden);
 }
 
 string getGreeting() {
@@ -158,7 +162,8 @@ string getGreeting() {
 }
 
 void exitProgram(int code) {
-    cout << "\n\nOops! Something went wrong. The program will be terminated. (Exit code: "<< code << ") [enter]\n";
+    cout << "\n\nOops! Something went wrong. The program will be terminated. If not, please close the program and restart "
+         << "it later, or the system files would be damaged. (Exit code: "<< code << ") [enter]\n";
 
     char keyPress = cin.get();
     fflush(stdin);

@@ -23,16 +23,15 @@ void mainMenu() {
 void logInMenu() {
     cout << "\n\nGreat to see you back! Will you...\n";
     cout << "[   enter   ] Login you account so that we can identify you, or\n";
-    cout << "[ `  + enter] Exit the program if your work has been done or this is a mistake?\n\n";
+    cout << "[ `  + enter] Exit the program if your work has been done or this is a mistake?\n";
 
     char keyPress = cin.get();
     fflush(stdin);
 
-    if (keyPress != '`') {
-        cout << endl;
+    if (keyPress != '`')
         logIn();
-    } else {
-        cout << "\nYour effort was appreciated. Have a nice day.\n\n";
+    else {
+        cout << "\n\nYour effort was appreciated. Have a nice day.\n\n";
     }
 }
 
@@ -47,7 +46,7 @@ void logo() { // █
 }
 
 void preferencesMenu() {
-    cout << "\n\n" << userTitle << ", this is the place you can adjust your preferences. So, what next?\n";
+    cout << "\n\n" << userTitle << ", this is the place you can adjust your preferences. So, what's next?\n";
     cout << "[1 + enter] View my profile information.\n";
     cout << "[2 + enter] Change my password.\n";
     cout << "[3 + enter] Turn off Recommendation System.\n";
@@ -123,6 +122,7 @@ void staffMenu() {
                 break;
             case '5':
                 staffStudentMenu();
+                break;
             case 'P':
             case 'p':
                 preferencesMenu();
