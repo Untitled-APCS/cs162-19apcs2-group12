@@ -13,7 +13,7 @@ int main(int argc, const char **argv) {
 //        fileLocation.pop_back();
 
     logo();
-    //logInMenu();
+    logInMenu();
 
     //cout << getHashedPassword("ltathao");
 

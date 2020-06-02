@@ -52,7 +52,7 @@ void getRecStudent(string *Rec, string hint) {
         if (tmp == -1) continue;
 
         stringList[tmp].weight = weight;
-        stringList[tmp].s =
+        //stringList[tmp].s =
     }
 }
 
