@@ -34,6 +34,7 @@ struct user {
     static string workspace;
     static string fullName;
     static int gender;
+    //
 };
 
 void normalize(string &s);

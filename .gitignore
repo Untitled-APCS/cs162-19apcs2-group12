@@ -5,5 +5,10 @@
 .vcxproj.user
 Debug
 CMakeLists.txt
-cmake-build-debug
+cmake-build-debug/CMakeFiles
+cmake-build-debug/cmake_install.cmake
+cmake-build-debug/CMakeCache.txt
+cmake-build-debug/cs162_19apcs2_group12
+cmake-build-debug/cs162_19apcs2_group12.cbp
+cmake-build-debug/Makefile
 Project Data
