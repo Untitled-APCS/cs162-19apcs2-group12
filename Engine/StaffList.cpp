@@ -94,7 +94,7 @@ StaffNode *StaffList::find(string staffID) {
 }
 
 void StaffList::print() {
-    StaffNode *Tail = nullptr = nullptr;
+    StaffNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?
