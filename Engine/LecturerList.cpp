@@ -44,7 +44,7 @@ LecturerList::~LecturerList() {
 
 void LecturerList::load() {
     ifstream fin;
-    fin.open("data/lecturer.txt");
+    fin.open(getLocation() + "data/lecturer.txt");
 
     //check if the file is missing?
     if (!fin.is_open())
@@ -88,7 +88,7 @@ void LecturerList::load() {
 
 void LecturerList::save() {
     ofstream fout;
-    fout.open("data/lecturer.txt");
+    fout.open(getLocation() + "data/lecturer.txt");
 
     //check if the file is missing?
     if (!fout.is_open())

@@ -5,6 +5,7 @@
 #include "Student.h"
 #include "AllRoles.h"
 #include "Engine.h"
+#include <filesystem>
 
 int main(int argc, const char **argv) {
 //    fileLocation = argv[0];
@@ -12,7 +13,7 @@ int main(int argc, const char **argv) {
 //        fileLocation.pop_back();
 
     logo();
-    logInMenu();
+    //logInMenu();
 
     //cout << getHashedPassword("ltathao");
 
@@ -30,6 +31,17 @@ int main(int argc, const char **argv) {
 //    studentList.pushBack(studentNode);
 
 //    studentList.save();
+
+//    PathList pathList;
+//    string *hint = new string [3];
+//    hint[0] = "2019-2020";
+//    hint[1] = "19ctt2";
+//    hint[2] = "cm101";
+//    pathList.getDirectoryList("/Users/ducanchu/Documents/Assignments/CS162/cs162-19apcs2-group12/", isLecturerListCSV, hint, 3);
+//    for (int i = 0; i<pathList.cnt; i++)
+//        cout << pathList.c[i].path << endl;
+
+    //cout << isClassListCSV(getLocation() + "CSVTemplate/ClassListCSVTemplate.csv");
 
     return 0;
 }

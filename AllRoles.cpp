@@ -68,8 +68,7 @@ void logIn() {
     }
 
     cout << "\n\nWe found you, " << getTitle(fullName, type, gender) << ". Type in your password and go ahead.\n";
-    cout << "In this version, the password is not hidden on the screen. Please avoid any attention around you and close "
-         << "the program after finishing your work.\n";
+    cout << "In this version, the password is not hidden on the screen. Please be aware of intentional glances of people around you.\n";
     cout << "[` + enter] This isn't you? Try again.\n";
 
 

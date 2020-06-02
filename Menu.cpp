@@ -31,7 +31,11 @@ void logInMenu() {
     if (keyPress != '`')
         logIn();
     else {
-        cout << "\n\nYour effort was appreciated. Have a nice day.\n\n";
+        cout << "\n\nYour effort was appreciated. Have a nice day. [enter]\n";
+
+        fflush(stdin);
+        char keyPress = cin.get();
+        fflush(stdin);
     }
 }
 

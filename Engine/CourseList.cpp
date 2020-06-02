@@ -47,7 +47,7 @@ CourseList::~CourseList() {
 
 void CourseList::load(string semesterID, string classID) {
     ifstream fin;
-    fin.open("data/" + semesterID + "-" + classID + "-course.txt");
+    fin.open(getLocation() + "data/" + semesterID + "-" + classID + "-course.txt");
 
     //check if the file is missing?
     if (!fin.is_open())
@@ -117,7 +117,7 @@ void CourseList::load(string semesterID, string classID) {
 
 void CourseList::save(string semesterID, string classID) {
     ofstream fout;
-    fout.open("data/" + semesterID + "-" + classID + "-course.txt");
+    fout.open(getLocation() + "data/" + semesterID + "-" + classID + "-course.txt");
 
     //check if the file is missing?
     if (!fout.is_open())

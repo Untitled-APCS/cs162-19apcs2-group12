@@ -44,7 +44,7 @@ StudentList::~StudentList() {
 
 void StudentList::load() {
     ifstream fin;
-    fin.open("data/student.txt");
+    fin.open(getLocation() + "data/student.txt");
 
     //check if the file is missing?
     if (!fin.is_open())
@@ -94,7 +94,7 @@ void StudentList::load() {
 
 void StudentList::save() {
     ofstream fout;
-    fout.open("data/student.txt");
+    fout.open(getLocation() + "data/student.txt");
 
     //check if the file is missing?
     if (!fout.is_open())

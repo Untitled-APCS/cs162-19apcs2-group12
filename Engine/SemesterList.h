@@ -26,6 +26,8 @@ struct SemesterNode {
 struct SemesterList {
     SemesterNode *Head;
     int cnt;
+    static string currentSemester; //current semester, each semester considered to be current ONE time ONLY in program's life-time
+                                   //updated whenever either load() or save() is called
 
     SemesterList();
     ~SemesterList();

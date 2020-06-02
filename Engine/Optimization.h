@@ -7,6 +7,7 @@
 
 #include <bits/stdc++.h>
 #include "DateTime.h"
+#include "AppLocation.h"
 
 #define userTitle getTitle(user::fullName, user::type, user::gender)
 

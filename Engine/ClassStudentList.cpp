@@ -35,7 +35,7 @@ ClassStudentList::~ClassStudentList() {
 
 void ClassStudentList::load(string classID) {
     ifstream fin;
-    fin.open("data/" + classID + "-student.txt");
+    fin.open(getLocation() + "data/" + classID + "-student.txt");
 
     //check if the file is missing?
     if (!fin.is_open())
@@ -66,7 +66,7 @@ void ClassStudentList::load(string classID) {
 
 void ClassStudentList::save(string classID) {
     ofstream fout;
-    fout.open("data/" + classID + "-student.txt");
+    fout.open(getLocation() + "data/" + classID + "-student.txt");
 
     //check if the file is missing?
     if (!fout.is_open())

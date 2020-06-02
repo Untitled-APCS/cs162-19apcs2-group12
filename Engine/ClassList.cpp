@@ -35,7 +35,7 @@ ClassList::~ClassList() {
 
 void ClassList::load() {
     ifstream fin;
-    fin.open("data/class.txt");
+    fin.open(getLocation() + "data/class.txt");
 
     //check if the file is missing?
     if (!fin.is_open())
@@ -66,7 +66,7 @@ void ClassList::load() {
 
 void ClassList::save() {
     ofstream fout;
-    fout.open("data/class.txt");
+    fout.open(getLocation() + "data/class.txt");
 
     //check if the file is missing?
     if (!fout.is_open())

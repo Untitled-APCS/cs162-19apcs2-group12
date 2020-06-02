@@ -4,6 +4,8 @@
 
 #include "SemesterList.h"
 
+string SemesterList::currentSemester = "";
+
 SemesterNode::SemesterNode() {
     Next = nullptr;
 }
@@ -36,7 +38,7 @@ SemesterList::~SemesterList() {
 
 void SemesterList::load() {
     ifstream fin;
-    fin.open("data/semester.txt");
+    fin.open(getLocation() + "data/semester.txt");
 
     //check if the file is missing?
     if (!fin.is_open())
@@ -64,6 +66,9 @@ void SemesterList::load() {
         CHECKDAMAGED
         fin >> Tail->current;
         getline(fin, tmp);
+
+        if (Tail->current)
+            currentSemester = Tail->semesterID;
     }
 
     fin.close();
@@ -71,7 +76,7 @@ void SemesterList::load() {
 
 void SemesterList::save() {
     ofstream fout;
-    fout.open("data/student.txt");
+    fout.open(getLocation() + "data/student.txt");
 
     //check if the file is missing?
     if (!fout.is_open())
@@ -89,6 +94,9 @@ void SemesterList::save() {
         fout << Tail->semesterID << endl;
         fout << Tail->active << endl;
         fout << Tail->current << endl;
+
+        if (Tail->current)
+            currentSemester = Tail->semesterID;
     }
 
     //check the actual length of the list > cnt?

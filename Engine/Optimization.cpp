@@ -6,7 +6,7 @@
 
 string user::ID;
 int user::type = -1;
-string user::workspace;
+string user::workspace = "/";
 string user::fullName;
 int user::gender = -1;
 
@@ -105,7 +105,10 @@ double similarity(string s1, string s2) { // 0 <= similarity <= 1
 }
 
 double suitability(string s1, string s2) { //0 <= suitability <= 1; 1 if s1 contains s2 or s2 contains s1
-    return abs((double) s1.length() - s2.length()) / (double) DamerauLevenshteinDistance(s1, s2);
+    double DLD = DamerauLevenshteinDistance(s1, s2);
+    if (DLD == 0) return numeric_limits<double>::max();
+
+    return abs((double) s1.length() - s2.length()) / DLD;
 }
 
 string getFirstName(string fullName) {

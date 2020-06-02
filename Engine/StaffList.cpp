@@ -39,10 +39,9 @@ StaffList::~StaffList() {
 
 void StaffList::load() {
     ifstream fin;
-    fin.open("data/staff.txt");
+    fin.open(getLocation() + "data/staff.txt");
 
     //check if the file is missing?
-    cout << fin.is_open();
     if (!fin.is_open())
         EXITCODE(4)
 
