@@ -1,4 +1,7 @@
 .vs
+.sln
+.vcxproj.filter
+.vcxproj.user
 Debug
 CMakeLists.txt
 cmake-build-debug
