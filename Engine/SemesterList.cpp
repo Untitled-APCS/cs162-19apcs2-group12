@@ -47,7 +47,7 @@ void SemesterList::load() {
     fin >> cnt;
     string tmp;
     getline(fin, tmp);
-    SemesterNode *Tail;
+    SemesterNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //create a new node
@@ -83,7 +83,7 @@ void SemesterList::save() {
     EXITCODE(4);
 
     fout << cnt << endl;
-    SemesterNode *Tail;
+    SemesterNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?
@@ -105,7 +105,7 @@ void SemesterList::save() {
 }
 
 void SemesterList::pushBack(SemesterNode *semesterNode) {
-    SemesterNode *Tail;
+    SemesterNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?
@@ -124,7 +124,7 @@ void SemesterList::pushBack(SemesterNode *semesterNode) {
 }
 
 SemesterNode *SemesterList::find(string semesterID, bool mode) {
-    SemesterNode *Tail;
+    SemesterNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?
@@ -145,7 +145,7 @@ SemesterNode *SemesterList::find(string semesterID, bool mode) {
 }
 
 void SemesterList::print() {
-    SemesterNode *Tail;
+    SemesterNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?

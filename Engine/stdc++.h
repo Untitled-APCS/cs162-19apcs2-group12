@@ -28,12 +28,13 @@
 
 // Also writing "using namespace std;" here so that you dont need to write it everytime you start a cpp file
 
-using namespace std;
+
 
 
 // 17.4.1.2 Headers
 
 // C
+
 #ifndef _GLIBCXX_NO_ASSERT
 #include <cassert>
 #endif
@@ -52,6 +53,7 @@ using namespace std;
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+//#define _HAS_STD_BYTE 0
 
 #if __cplusplus >= 201103L
 #include <ccomplex>
@@ -97,6 +99,8 @@ using namespace std;
 #include <utility>
 #include <valarray>
 #include <vector>
+#define _HAS_STD_BYTE 0
+#include <filesystem>
 
 #if __cplusplus >= 201103L
 #include <array>
@@ -119,3 +123,4 @@ using namespace std;
 #include <unordered_map>
 #include <unordered_set>
 #endif
+//using namespace std;

@@ -33,7 +33,7 @@ void getRecStudent(string *Rec, string hint) {
 
     StudentList studentList;
     studentList.load();
-    StudentNode *Tail;
+    StudentNode *Tail = nullptr;
     int tmp;
     double weight;
 

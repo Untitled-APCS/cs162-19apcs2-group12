@@ -19,8 +19,6 @@
 #define FEMALE 0
 
 #define ENTER (char) 13
-#define ESC (char) 27
-
 #define EXITCODE(n) {exitProgram(n); return;}
 #define EXITCODE_V(n, return_value) {exitProgram(n); return return_value;}
 

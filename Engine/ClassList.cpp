@@ -44,7 +44,7 @@ void ClassList::load() {
     fin >> cnt;
     string tmp;
     getline(fin, tmp);
-    ClassNode *Tail;
+    ClassNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //create a new node
@@ -73,7 +73,7 @@ void ClassList::save() {
     EXITCODE(4);
 
     fout << cnt << endl;
-    ClassNode *Tail;
+    ClassNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?
@@ -91,7 +91,7 @@ void ClassList::save() {
 }
 
 void ClassList::pushBack(ClassNode *classNode) {
-    ClassNode *Tail;
+    ClassNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?
@@ -110,7 +110,7 @@ void ClassList::pushBack(ClassNode *classNode) {
 }
 
 ClassNode *ClassList::find(string classID, bool mode) {
-    ClassNode *Tail;
+    ClassNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?
@@ -131,7 +131,7 @@ ClassNode *ClassList::find(string classID, bool mode) {
 }
 
 void ClassList::print() {
-    ClassNode *Tail;
+    ClassNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?

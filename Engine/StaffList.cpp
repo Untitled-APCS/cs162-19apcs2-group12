@@ -48,7 +48,7 @@ void StaffList::load() {
     fin >> cnt;
     string tmp;
     getline(fin, tmp);
-    StaffNode *Tail;
+    StaffNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //create a new node
@@ -75,7 +75,7 @@ void StaffList::load() {
 }
 
 StaffNode *StaffList::find(string staffID) {
-    StaffNode *Tail;
+    StaffNode* Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?
@@ -94,7 +94,7 @@ StaffNode *StaffList::find(string staffID) {
 }
 
 void StaffList::print() {
-    StaffNode *Tail;
+    StaffNode *Tail = nullptr = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?

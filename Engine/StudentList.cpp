@@ -53,7 +53,7 @@ void StudentList::load() {
     fin >> cnt;
     string tmp;
     getline(fin, tmp);
-    StudentNode *Tail;
+    StudentNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //create a new node
@@ -101,7 +101,7 @@ void StudentList::save() {
         EXITCODE(4);
 
     fout << cnt << endl;
-    StudentNode *Tail;
+    StudentNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?
@@ -123,7 +123,7 @@ void StudentList::save() {
 }
 
 void StudentList::pushBack(StudentNode *studentNode) {
-    StudentNode *Tail;
+    StudentNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?
@@ -142,7 +142,7 @@ void StudentList::pushBack(StudentNode *studentNode) {
 }
 
 StudentNode* StudentList::find(string studentID, bool mode) {
-    StudentNode *Tail;
+    StudentNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?
@@ -163,7 +163,7 @@ StudentNode* StudentList::find(string studentID, bool mode) {
 }
 
 void StudentList::print() {
-    StudentNode *Tail;
+    StudentNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?

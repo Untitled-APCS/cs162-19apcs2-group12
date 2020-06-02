@@ -4,6 +4,7 @@
 
 #ifndef CS162_19APCS2_GROUP12_DATETIME_H
 #define CS162_19APCS2_GROUP12_DATETIME_H
+#define _CRT_SECURE_NO_WARNINGS
 
 #include "Optimization.h"
 #include <time.h>
