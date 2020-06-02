@@ -7,6 +7,8 @@
 
 #include "Optimization.h"
 
+using namespace std;
+
 string getLocation();
 
 #endif //CS162_19APCS2_GROUP12_APPLOCATION_H

@@ -5,7 +5,10 @@
 #ifndef CS162_19APCS2_GROUP12_OPTIMIZATION_H
 #define CS162_19APCS2_GROUP12_OPTIMIZATION_H
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <math.h>
 #include "DateTime.h"
 #include "AppLocation.h"
 
