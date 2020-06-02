@@ -24,7 +24,7 @@ namespace cppcrypto
 			uint32_t ir = swap_uint32(i + 1);
 			hmac.update((const unsigned char*)&ir, sizeof(ir));
 			hmac.final(temp1);
-			size_t sz = (std::min)(hlen, remaining);
+			size_t sz = std::min(hlen, remaining);
 			memcpy(res, temp1, sz);
 			for (int c = 1; c < iterations; c++)
 			{
