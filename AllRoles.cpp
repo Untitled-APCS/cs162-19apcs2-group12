@@ -133,7 +133,7 @@ string getHashedPassword(string password) {
 //    delete [] key;
 //    return ans;
 
-    return "";
+    return password;
 }
 
 void unsigedCharToHexString(unsigned char *key, int keyLen, string &ans) {
