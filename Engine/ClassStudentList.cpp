@@ -91,6 +91,12 @@ void ClassStudentList::save(string classID) {
 }
 
 void ClassStudentList::pushBack(ClassStudentNode *classStudentNode) {
+    if (Head == nullptr && cnt == 0) {
+        Head = classStudentNode;
+        cnt++;
+        return;
+    }
+
     ClassStudentNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {

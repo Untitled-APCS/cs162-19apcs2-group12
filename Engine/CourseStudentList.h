@@ -27,7 +27,7 @@ struct CourseStudentNode {
     CourseStudentNode *Next;
 
     CourseStudentNode();
-    CourseStudentNode(string studentID_, Score score_, int *attendance_, bool active_, CourseStudentNode *Next_);
+    CourseStudentNode(string studentID_, Score score_, int *attendance_, bool active_, CourseStudentNode *Next_ = nullptr);
     void print(); //ONLY use for debugging
 };
 

@@ -19,7 +19,7 @@ struct SemesterNode {
     SemesterNode *Next;
 
     SemesterNode();
-    SemesterNode(string semesterID_, bool active_, bool current_, SemesterNode *Next_);
+    SemesterNode(string semesterID_, bool active_, bool current_, SemesterNode *Next_ = nullptr);
     void print(); //ONLY use for debugging
 };
 

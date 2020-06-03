@@ -128,6 +128,12 @@ void CourseStudentList::save(string semesterID, string classID, string courseID)
 }
 
 void CourseStudentList::pushBack(CourseStudentNode *courseStudentNode) {
+    if (Head == nullptr && cnt == 0) {
+        Head = courseStudentNode;
+        cnt++;
+        return;
+    }
+
     CourseStudentNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {

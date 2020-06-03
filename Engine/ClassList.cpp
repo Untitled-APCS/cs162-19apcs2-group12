@@ -91,6 +91,13 @@ void ClassList::save() {
 }
 
 void ClassList::pushBack(ClassNode *classNode) {
+    if (Head == nullptr && cnt == 0) {
+        Head = classNode;
+        cnt++;
+        return;
+    }
+
+
     ClassNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {

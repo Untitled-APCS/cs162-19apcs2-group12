@@ -23,7 +23,7 @@ struct CourseNode {
 
     CourseNode();
     CourseNode(string courseID_, string courseName_, string lecturerID_,
-                Date startingDate_, Time startingTime_, Time endingTime_, string room_, bool active_, CourseNode *Next_);
+                Date startingDate_, Time startingTime_, Time endingTime_, string room_, bool active_, CourseNode *Next_ = nullptr);
     void print(); //ONLY use for debugging
 };
 

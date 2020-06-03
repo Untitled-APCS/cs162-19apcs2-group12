@@ -22,7 +22,7 @@ struct StudentNode {
 
     StudentNode();
     StudentNode(string studentID_, string password_, string studentName_,
-                Date DOB_, string classID_, bool active_, StudentNode *Next_);
+                Date DOB_, string classID_, bool active_, StudentNode *Next_ = nullptr);
     void print(); //ONLY use for debugging
 };
 

@@ -105,6 +105,12 @@ void SemesterList::save() {
 }
 
 void SemesterList::pushBack(SemesterNode *semesterNode) {
+    if (Head == nullptr && cnt == 0) {
+        Head = semesterNode;
+        cnt++;
+        return;
+    }
+
     SemesterNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {

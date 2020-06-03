@@ -123,6 +123,12 @@ void StudentList::save() {
 }
 
 void StudentList::pushBack(StudentNode *studentNode) {
+    if (Head == nullptr && cnt == 0) {
+        Head = studentNode;
+        cnt++;
+        return;
+    }
+
     StudentNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {

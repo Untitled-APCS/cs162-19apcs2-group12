@@ -117,6 +117,12 @@ void LecturerList::save() {
 }
 
 void LecturerList::pushBack(LecturerNode *lecturerNode) {
+    if (Head == nullptr && cnt == 0) {
+        Head = lecturerNode;
+        cnt++;
+        return;
+    }
+
     LecturerNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {

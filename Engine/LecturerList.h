@@ -19,7 +19,7 @@ struct LecturerNode {
 
     LecturerNode();
     LecturerNode(string lecturerID_, string password_, string lecturerName_,
-                 string academicTitle_, bool gender_, bool active_, LecturerNode *Next_);
+                 string academicTitle_, bool gender_, bool active_, LecturerNode *Next_ = nullptr);
     void print(); //ONLY use for debugging
 };
 

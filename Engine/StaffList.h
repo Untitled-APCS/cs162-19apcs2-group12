@@ -20,7 +20,7 @@ struct StaffNode {
 
     StaffNode();
     StaffNode(string staffID_, string password_, string staffName_,
-              bool gender_, StaffNode *Next_);
+              bool gender_, StaffNode *Next_ = nullptr);
     void print(); //ONLY use for debugging
 };
 

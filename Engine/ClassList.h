@@ -19,7 +19,7 @@ struct ClassNode {
     ClassNode *Next;
 
     ClassNode();
-    ClassNode(string classID_, bool active_, ClassNode *Next_);
+    ClassNode(string classID_, bool active_, ClassNode *Next_ = nullptr);
     void print(); //ONLY use for debugging
 };
 
