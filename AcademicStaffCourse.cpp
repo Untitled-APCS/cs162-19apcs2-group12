@@ -4,7 +4,6 @@ bool checkSample() {
     return true;
 }
 
-
 void sample() {
     //input semester, class, course
 //    string *s = new string[3]{"", "", ""};

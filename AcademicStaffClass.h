@@ -24,24 +24,4 @@ bool checkStaff_2_4();
 
 bool checkStaff_2_5();
 
-//using namespace std;
-//
-//struct stu
-//{
-//    string No, ID, fullname, gender, clas, username, password, date;
-//	/*int No, ID;
-//	char fullname[100], gender[6], clas[10], username[10], password[10];
-//	int  year, month, day;*/
-//    stu* pNext;
-//};
-//stu* importstudent();
-//void savedata(stu* student, ofstream& f);
-//void changeclass();
-//void editstudent();
-//void Int_to_Char();
-//void AddAStudent();
-//void RemoveStudent();
-//void viewlistofclass();
-//void viewlistofstudent();
-
 #endif
