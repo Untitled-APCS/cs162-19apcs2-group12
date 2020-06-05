@@ -1,6 +1,25 @@
-//#pragma once
-//#ifndef _ACADEMICSTAFFCOURSE_H_
-//#define _ACADEMICSTAFFCOURSE_H_
+#pragma once
+#ifndef _ACADEMICSTAFFCOURSE_H_
+#define _ACADEMICSTAFFCOURSE_H_
+
+#include "Engine.h"
+
+void staff_1_1();
+
+void staff_1_2();
+
+void staff_1_3();
+
+void staff_1_4();
+
+bool checkStaff_1_1();
+
+bool checkStaff_1_2();
+
+bool checkStaff_1_3();
+
+bool checkStaff_1_4();
+
 //
 //struct Date
 //{
@@ -71,4 +90,4 @@
 //void emptyStudent(Student*& studentHead);
 //void emptyCourse(Course*& courseHead);
 //void emptySemester(Semester*& semesterHead);
-//#endif
+#endif

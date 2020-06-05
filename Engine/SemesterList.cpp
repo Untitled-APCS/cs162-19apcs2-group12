@@ -10,7 +10,7 @@ SemesterNode::SemesterNode() {
     Next = nullptr;
 }
 
-SemesterNode::SemesterNode(string semesterID_, bool active_, bool current_, SemesterNode *Next_) {
+SemesterNode::SemesterNode(string semesterID_, bool active_, int current_, SemesterNode *Next_) {
     semesterID = semesterID_;
     active = active_;
     current = current_;
@@ -36,17 +36,19 @@ SemesterList::~SemesterList() {
     }
 }
 
-void SemesterList::load() {
+bool SemesterList::load() {
     ifstream fin;
     fin.open(getLocation() + "data/semester.txt");
 
     //check if the file is missing?
     if (!fin.is_open())
-    EXITCODE(4);
+    EXITCODE_V(4, false);
 
     fin >> cnt;
     string tmp;
     getline(fin, tmp);
+    SemesterList::currentSemester = "";
+
     SemesterNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
@@ -67,35 +69,36 @@ void SemesterList::load() {
         fin >> Tail->current;
         getline(fin, tmp);
 
-        if (Tail->current)
+        if (Tail->current == CURRENT)
             currentSemester = Tail->semesterID;
     }
 
     fin.close();
 }
 
-void SemesterList::save() {
+bool SemesterList::save() {
     ofstream fout;
     fout.open(getLocation() + "data/student.txt");
 
     //check if the file is missing?
     if (!fout.is_open())
-    EXITCODE(4);
+    EXITCODE_V(4, false);
 
     fout << cnt << endl;
+    SemesterList::currentSemester = "";
     SemesterNode *Tail = nullptr;
 
     for (int i = 0; i<cnt; i++) {
         //check the actual length of the list < cnt?
         Tail = (i == 0 ? Head : Tail->Next);
         if (Tail == nullptr)
-        EXITCODE(6)
+        EXITCODE_V(6, false)
 
         fout << Tail->semesterID << endl;
         fout << Tail->active << endl;
         fout << Tail->current << endl;
 
-        if (Tail->current)
+        if (Tail->current == CURRENT)
             currentSemester = Tail->semesterID;
     }
 
