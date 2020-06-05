@@ -3,6 +3,8 @@
 //
 
 #include "AllRoles.h"
+//#include <openssl/sha.h>
+//#include <openssl/evp.h>
 
 void logIn() {
 //    user::ID = "19125001";
@@ -132,6 +134,19 @@ string getHashedPassword(string password) {
 //    unsigedCharToHexString(key, keyLen, ans);
 //    delete [] key;
 //    return ans;
+
+//    const unsigned int keyLen = 50;
+//    unsigned char key[keyLen];
+//    const char *pass = password.c_str();
+//    PKCS5_PBKDF2_HMAC(pass, keyLen, (const unsigned char*)"Untitled_APCS_2020", 18, 20000, EVP_sha256(), keyLen, key);
+////    for (unsigned int i = 0; i < sizeof(key); i++)
+////    {
+////        sprintf(hexResult + (i * 2), "%02x", 255 & digest[i]);
+////        binResult[i] = digest[i];
+////    };
+//
+//    for (int i = 0; i<keyLen; i++)
+//        cout << key[i] << endl;
 
     return password;
 }
