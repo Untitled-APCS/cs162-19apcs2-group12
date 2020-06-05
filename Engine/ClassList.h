@@ -11,7 +11,7 @@
 #define ACTIVE 0
 #define ALL 1
 
-#define CHECKDAMAGED {if (!fin.good()) EXITCODE(5)};
+#define CHECKDAMAGED {if (!fin.good()) EXITCODE_V(5, false)};
 
 struct ClassNode {
     string classID;
@@ -29,9 +29,9 @@ struct ClassList {
 
     ClassList();
     ~ClassList();
-    void load(); //load data from data/class.txt
-    void save(); //save data to data/class.txt
-    void pushBack(ClassNode *classNode); //add the node to the end of the list (not create any new node)
+    bool load(); //load data from data/class.txt
+    bool save(); //save data to data/class.txt
+    bool pushBack(ClassNode *classNode); //add the node to the end of the list (not create any new node)
     ClassNode* find(string classID, bool mode); //mode is either ALL (find both active and inactive) or ACTIVE)
 
     void print(); //ONLY use for debugging

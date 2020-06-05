@@ -33,13 +33,13 @@ ClassList::~ClassList() {
     }
 }
 
-void ClassList::load() {
+bool ClassList::load() {
     ifstream fin;
     fin.open(getLocation() + "data/class.txt");
 
     //check if the file is missing?
     if (!fin.is_open())
-    EXITCODE(4);
+    EXITCODE_V(4, false);
 
     fin >> cnt;
     string tmp;
@@ -62,15 +62,16 @@ void ClassList::load() {
     }
 
     fin.close();
+    return true;
 }
 
-void ClassList::save() {
+bool ClassList::save() {
     ofstream fout;
     fout.open(getLocation() + "data/class.txt");
 
     //check if the file is missing?
     if (!fout.is_open())
-    EXITCODE(4);
+    EXITCODE_V(4, false);
 
     fout << cnt << endl;
     ClassNode *Tail = nullptr;
@@ -79,7 +80,7 @@ void ClassList::save() {
         //check the actual length of the list < cnt?
         Tail = (i == 0 ? Head : Tail->Next);
         if (Tail == nullptr)
-        EXITCODE(6)
+        EXITCODE_V(6, false)
 
         fout << Tail->classID << endl;
         fout << Tail->active << endl;
@@ -87,14 +88,16 @@ void ClassList::save() {
 
     //check the actual length of the list > cnt?
     if (Tail->Next != nullptr)
-    EXITCODE(6)
+    EXITCODE_V(6, false)
+
+    return true;
 }
 
-void ClassList::pushBack(ClassNode *classNode) {
+bool ClassList::pushBack(ClassNode *classNode) {
     if (Head == nullptr && cnt == 0) {
         Head = classNode;
         cnt++;
-        return;
+        return true;
     }
 
 
@@ -104,16 +107,18 @@ void ClassList::pushBack(ClassNode *classNode) {
         //check the actual length of the list < cnt?
         Tail = (i == 0 ? Head : Tail->Next);
         if (Tail == nullptr)
-        EXITCODE(6)
+        EXITCODE_V(6, false)
     }
 
     //check the actual length of the list > cnt?
     if (Tail->Next != nullptr)
-    EXITCODE(6)
+    EXITCODE_V(6, false)
     else {
         Tail->Next = classNode;
         cnt++;
     }
+
+    return true;
 }
 
 ClassNode *ClassList::find(string classID, bool mode) {

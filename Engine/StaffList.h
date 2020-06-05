@@ -11,7 +11,7 @@
 #define ACTIVE 0
 #define ALL 1
 
-#define CHECKDAMAGED {if (!fin.good()) EXITCODE(5)};
+#define CHECKDAMAGED {if (!fin.good()) EXITCODE_V(5, false)};
 
 struct StaffNode {
     string staffID, password, staffName;
@@ -30,7 +30,7 @@ struct StaffList {
 
     StaffList();
     ~StaffList();
-    void load(); //load data from data/staff.txt
+    bool load(); //load data from data/staff.txt
     StaffNode* find(string staffID); //mode is either ALL (find both active and inactive) or ACTIVE)
 
     void print(); //ONLY use for debugging

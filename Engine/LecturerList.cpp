@@ -42,13 +42,13 @@ LecturerList::~LecturerList() {
     }
 }
 
-void LecturerList::load() {
+bool LecturerList::load() {
     ifstream fin;
     fin.open(getLocation() + "data/lecturer.txt");
 
     //check if the file is missing?
     if (!fin.is_open())
-    EXITCODE(4);
+    EXITCODE_V(4, false);
 
     fin >> cnt;
     string tmp;
@@ -84,15 +84,16 @@ void LecturerList::load() {
     }
 
     fin.close();
+    return true;
 }
 
-void LecturerList::save() {
+bool LecturerList::save() {
     ofstream fout;
     fout.open(getLocation() + "data/lecturer.txt");
 
     //check if the file is missing?
     if (!fout.is_open())
-    EXITCODE(4);
+    EXITCODE_V(4, false);
 
     fout << cnt << endl;
     LecturerNode *Tail = nullptr;
@@ -101,7 +102,7 @@ void LecturerList::save() {
         //check the actual length of the list < cnt?
         Tail = (i == 0 ? Head : Tail->Next);
         if (Tail == nullptr)
-        EXITCODE(6)
+        EXITCODE_V(6, false)
 
         fout << Tail->lecturerID << endl;
         fout << Tail->password << endl;
@@ -113,14 +114,16 @@ void LecturerList::save() {
 
     //check the actual length of the list > cnt?
     if (Tail->Next != nullptr)
-    EXITCODE(6)
+    EXITCODE_V(6, false)
+
+    return true;
 }
 
-void LecturerList::pushBack(LecturerNode *lecturerNode) {
+bool LecturerList::pushBack(LecturerNode *lecturerNode) {
     if (Head == nullptr && cnt == 0) {
         Head = lecturerNode;
         cnt++;
-        return;
+        return true;
     }
 
     LecturerNode *Tail = nullptr;
@@ -129,16 +132,18 @@ void LecturerList::pushBack(LecturerNode *lecturerNode) {
         //check the actual length of the list < cnt?
         Tail = (i == 0 ? Head : Tail->Next);
         if (Tail == nullptr)
-        EXITCODE(6)
+        EXITCODE_V(6, false)
     }
 
     //check the actual length of the list > cnt?
     if (Tail->Next != nullptr)
-    EXITCODE(6)
+    EXITCODE_V(6, false)
     else {
         Tail->Next = lecturerNode;
         cnt++;
     }
+
+    return true;
 }
 
 LecturerNode *LecturerList::find(string lecturerID, bool mode) {

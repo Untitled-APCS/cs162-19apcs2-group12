@@ -45,13 +45,13 @@ CourseList::~CourseList() {
     }
 }
 
-void CourseList::load(string semesterID, string classID) {
+bool CourseList::load(string semesterID, string classID) {
     ifstream fin;
     fin.open(getLocation() + "data/" + semesterID + "-" + classID + "-course.txt");
 
     //check if the file is missing?
     if (!fin.is_open())
-    EXITCODE(4);
+    EXITCODE_V(4, false);
 
     fin >> cnt;
     string tmp;
@@ -81,7 +81,7 @@ void CourseList::load(string semesterID, string classID) {
         CHECKDAMAGED
         fin >> Tail->startingDate.d;
         if (Tail->startingDate.wrongFormat())
-        EXITCODE(5)
+        EXITCODE_V(5, false)
         getline(fin, tmp);
 
         CHECKDAMAGED
@@ -91,7 +91,7 @@ void CourseList::load(string semesterID, string classID) {
         CHECKDAMAGED
         fin >> Tail->startingTime.s;
         if (Tail->startingTime.wrongFormat())
-        EXITCODE(5)
+        EXITCODE_V(5, false)
         getline(fin, tmp);
 
         CHECKDAMAGED
@@ -101,7 +101,7 @@ void CourseList::load(string semesterID, string classID) {
         CHECKDAMAGED
         fin >> Tail->endingTime.s;
         if (Tail->endingTime.wrongFormat())
-        EXITCODE(5)
+        EXITCODE_V(5, false)
         getline(fin, tmp);
 
         CHECKDAMAGED
@@ -113,15 +113,16 @@ void CourseList::load(string semesterID, string classID) {
     }
 
     fin.close();
+    return true;
 }
 
-void CourseList::save(string semesterID, string classID) {
+bool CourseList::save(string semesterID, string classID) {
     ofstream fout;
     fout.open(getLocation() + "data/" + semesterID + "-" + classID + "-course.txt");
 
     //check if the file is missing?
     if (!fout.is_open())
-    EXITCODE(4);
+    EXITCODE_V(4, false);
 
     fout << cnt << endl;
     CourseNode *Tail = nullptr;
@@ -130,7 +131,7 @@ void CourseList::save(string semesterID, string classID) {
         //check the actual length of the list < cnt?
         Tail = (i == 0 ? Head : Tail->Next);
         if (Tail == nullptr)
-        EXITCODE(6)
+        EXITCODE_V(6, false)
 
         fout << Tail->courseID << endl;
         fout << Tail->courseName << endl;
@@ -144,14 +145,16 @@ void CourseList::save(string semesterID, string classID) {
 
     //check the actual length of the list > cnt?
     if (Tail->Next != nullptr)
-    EXITCODE(6)
+    EXITCODE_V(6, false)
+
+    return true;
 }
 
-void CourseList::pushBack(CourseNode *courseNode) {
+bool CourseList::pushBack(CourseNode *courseNode) {
     if (Head == nullptr && cnt == 0) {
         Head = courseNode;
         cnt++;
-        return;
+        return true;
     }
 
     CourseNode *Tail = nullptr;
@@ -160,16 +163,18 @@ void CourseList::pushBack(CourseNode *courseNode) {
         //check the actual length of the list < cnt?
         Tail = (i == 0 ? Head : Tail->Next);
         if (Tail == nullptr)
-        EXITCODE(6)
+        EXITCODE_V(6, false)
     }
 
     //check the actual length of the list > cnt?
     if (Tail->Next != nullptr)
-    EXITCODE(6)
+    EXITCODE_V(6, false)
     else {
         Tail->Next = courseNode;
         cnt++;
     }
+
+    return true;
 }
 
 CourseNode *CourseList::find(string courseID, bool mode) {

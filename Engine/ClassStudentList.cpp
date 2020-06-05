@@ -33,13 +33,13 @@ ClassStudentList::~ClassStudentList() {
     }
 }
 
-void ClassStudentList::load(string classID) {
+bool ClassStudentList::load(string classID) {
     ifstream fin;
     fin.open(getLocation() + "data/" + classID + "-student.txt");
 
     //check if the file is missing?
     if (!fin.is_open())
-    EXITCODE(4);
+    EXITCODE_V(4, false);
 
     fin >> cnt;
     string tmp;
@@ -62,15 +62,16 @@ void ClassStudentList::load(string classID) {
     }
 
     fin.close();
+    return true;
 }
 
-void ClassStudentList::save(string classID) {
+bool ClassStudentList::save(string classID) {
     ofstream fout;
     fout.open(getLocation() + "data/" + classID + "-student.txt");
 
     //check if the file is missing?
     if (!fout.is_open())
-    EXITCODE(4);
+    EXITCODE_V(4, false);
 
     fout << cnt << endl;
     ClassStudentNode *Tail = nullptr;
@@ -79,7 +80,7 @@ void ClassStudentList::save(string classID) {
         //check the actual length of the list < cnt?
         Tail = (i == 0 ? Head : Tail->Next);
         if (Tail == nullptr)
-        EXITCODE(6)
+        EXITCODE_V(6, false)
 
         fout << Tail->studentID << endl;
         fout << Tail->active << endl;
@@ -87,14 +88,16 @@ void ClassStudentList::save(string classID) {
 
     //check the actual length of the list > cnt?
     if (Tail->Next != nullptr)
-    EXITCODE(6)
+    EXITCODE_V(6, false)
+
+    return true;
 }
 
-void ClassStudentList::pushBack(ClassStudentNode *classStudentNode) {
+bool ClassStudentList::pushBack(ClassStudentNode *classStudentNode) {
     if (Head == nullptr && cnt == 0) {
         Head = classStudentNode;
         cnt++;
-        return;
+        return true;
     }
 
     ClassStudentNode *Tail = nullptr;
@@ -103,16 +106,18 @@ void ClassStudentList::pushBack(ClassStudentNode *classStudentNode) {
         //check the actual length of the list < cnt?
         Tail = (i == 0 ? Head : Tail->Next);
         if (Tail == nullptr)
-        EXITCODE(6)
+        EXITCODE_V(6, false)
     }
 
     //check the actual length of the list > cnt?
     if (Tail->Next != nullptr)
-    EXITCODE(6)
+    EXITCODE_V(6, false)
     else {
         Tail->Next = classStudentNode;
         cnt++;
     }
+
+    return true;
 }
 
 ClassStudentNode *ClassStudentList::find(string studentID, bool mode) {

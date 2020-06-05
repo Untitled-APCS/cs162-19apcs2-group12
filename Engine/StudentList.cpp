@@ -42,13 +42,13 @@ StudentList::~StudentList() {
     }
 }
 
-void StudentList::load() {
+bool StudentList::load() {
     ifstream fin;
     fin.open(getLocation() + "data/student.txt");
 
     //check if the file is missing?
     if (!fin.is_open())
-        EXITCODE(4);
+        EXITCODE_V(4, false);
 
     fin >> cnt;
     string tmp;
@@ -78,7 +78,7 @@ void StudentList::load() {
         CHECKDAMAGED
         fin >> Tail->DOB.d;
         if (Tail->DOB.wrongFormat())
-            EXITCODE(5)
+            EXITCODE_V(5, false)
         getline(fin, tmp);
 
         CHECKDAMAGED
@@ -90,15 +90,16 @@ void StudentList::load() {
     }
 
     fin.close();
+    return true;
 }
 
-void StudentList::save() {
+bool StudentList::save() {
     ofstream fout;
     fout.open(getLocation() + "data/student.txt");
 
     //check if the file is missing?
     if (!fout.is_open())
-        EXITCODE(4);
+        EXITCODE_V(4, false);
 
     fout << cnt << endl;
     StudentNode *Tail = nullptr;
@@ -107,7 +108,7 @@ void StudentList::save() {
         //check the actual length of the list < cnt?
         Tail = (i == 0 ? Head : Tail->Next);
         if (Tail == nullptr)
-            EXITCODE(6)
+            EXITCODE_V(6, false)
 
         fout << Tail->studentID << endl;
         fout << Tail->password << endl;
@@ -119,14 +120,16 @@ void StudentList::save() {
 
     //check the actual length of the list > cnt?
     if (Tail->Next != nullptr)
-        EXITCODE(6)
+        EXITCODE_V(6, false)
+
+    return true;
 }
 
-void StudentList::pushBack(StudentNode *studentNode) {
+bool StudentList::pushBack(StudentNode *studentNode) {
     if (Head == nullptr && cnt == 0) {
         Head = studentNode;
         cnt++;
-        return;
+        return true;
     }
 
     StudentNode *Tail = nullptr;
@@ -135,16 +138,18 @@ void StudentList::pushBack(StudentNode *studentNode) {
         //check the actual length of the list < cnt?
         Tail = (i == 0 ? Head : Tail->Next);
         if (Tail == nullptr)
-            EXITCODE(6)
+            EXITCODE_V(6, false)
     }
 
     //check the actual length of the list > cnt?
     if (Tail->Next != nullptr)
-        EXITCODE(6)
+        EXITCODE_V(6, false)
     else {
         Tail->Next = studentNode;
         cnt++;
     }
+
+    return true;
 }
 
 StudentNode* StudentList::find(string studentID, bool mode) {

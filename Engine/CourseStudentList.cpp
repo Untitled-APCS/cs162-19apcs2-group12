@@ -51,13 +51,13 @@ CourseStudentList::~CourseStudentList() {
     }
 }
 
-void CourseStudentList::load(string semesterID, string classID, string courseID) {
+bool CourseStudentList::load(string semesterID, string classID, string courseID) {
     ifstream fin;
     fin.open(getLocation() + "data/" + semesterID + "-" + classID + "-" + courseID + "-student.txt");
 
     //check if the file is missing?
     if (!fin.is_open())
-    EXITCODE(4);
+    EXITCODE_V(4, false);
 
     fin >> cnt;
     string tmp;
@@ -95,15 +95,16 @@ void CourseStudentList::load(string semesterID, string classID, string courseID)
     }
 
     fin.close();
+    return true;
 }
 
-void CourseStudentList::save(string semesterID, string classID, string courseID) {
+bool CourseStudentList::save(string semesterID, string classID, string courseID) {
     ofstream fout;
     fout.open(getLocation() + "data/" + semesterID + "-" + classID + "-" + courseID + "-student.txt");
 
     //check if the file is missing?
     if (!fout.is_open())
-    EXITCODE(4);
+    EXITCODE_V(4, false);
 
     fout << cnt << endl;
     CourseStudentNode *Tail = nullptr;
@@ -112,7 +113,7 @@ void CourseStudentList::save(string semesterID, string classID, string courseID)
         //check the actual length of the list < cnt?
         Tail = (i == 0 ? Head : Tail->Next);
         if (Tail == nullptr)
-        EXITCODE(6)
+        EXITCODE_V(6, false)
 
         fout << Tail->studentID << endl;
         fout << Tail->score.midterm << " " << Tail->score.final << " " << Tail->score.bonus << " " << Tail->score.total << endl;
@@ -124,14 +125,16 @@ void CourseStudentList::save(string semesterID, string classID, string courseID)
 
     //check the actual length of the list > cnt?
     if (Tail->Next != nullptr)
-    EXITCODE(6)
+    EXITCODE_V(6, false)
+
+    return true;
 }
 
-void CourseStudentList::pushBack(CourseStudentNode *courseStudentNode) {
+bool CourseStudentList::pushBack(CourseStudentNode *courseStudentNode) {
     if (Head == nullptr && cnt == 0) {
         Head = courseStudentNode;
         cnt++;
-        return;
+        return true;
     }
 
     CourseStudentNode *Tail = nullptr;
@@ -140,16 +143,18 @@ void CourseStudentList::pushBack(CourseStudentNode *courseStudentNode) {
         //check the actual length of the list < cnt?
         Tail = (i == 0 ? Head : Tail->Next);
         if (Tail == nullptr)
-        EXITCODE(6)
+        EXITCODE_V(6, false)
     }
 
     //check the actual length of the list > cnt?
     if (Tail->Next != nullptr)
-    EXITCODE(6)
+    EXITCODE_V(6, false)
     else {
         Tail->Next = courseStudentNode;
         cnt++;
     }
+
+    return true;
 }
 
 CourseStudentNode *CourseStudentList::find(string studentID, bool mode) {

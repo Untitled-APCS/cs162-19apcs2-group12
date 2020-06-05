@@ -74,6 +74,7 @@ bool SemesterList::load() {
     }
 
     fin.close();
+    return true;
 }
 
 bool SemesterList::save() {
@@ -104,14 +105,16 @@ bool SemesterList::save() {
 
     //check the actual length of the list > cnt?
     if (Tail->Next != nullptr)
-    EXITCODE(6)
+    EXITCODE_V(6, false)
+
+    return true;
 }
 
-void SemesterList::pushBack(SemesterNode *semesterNode) {
+bool SemesterList::pushBack(SemesterNode *semesterNode) {
     if (Head == nullptr && cnt == 0) {
         Head = semesterNode;
         cnt++;
-        return;
+        return true;
     }
 
     SemesterNode *Tail = nullptr;
@@ -120,16 +123,18 @@ void SemesterList::pushBack(SemesterNode *semesterNode) {
         //check the actual length of the list < cnt?
         Tail = (i == 0 ? Head : Tail->Next);
         if (Tail == nullptr)
-        EXITCODE(6)
+        EXITCODE_V(6, false)
     }
 
     //check the actual length of the list > cnt?
     if (Tail->Next != nullptr)
-    EXITCODE(6)
+    EXITCODE_V(6, false)
     else {
         Tail->Next = semesterNode;
         cnt++;
     }
+
+    return true;
 }
 
 SemesterNode *SemesterList::find(string semesterID, bool mode) {

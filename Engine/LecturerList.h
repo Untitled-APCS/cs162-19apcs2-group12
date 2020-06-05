@@ -10,7 +10,7 @@
 #define ACTIVE 0
 #define ALL 1
 
-#define CHECKDAMAGED {if (!fin.good()) EXITCODE(5)};
+#define CHECKDAMAGED {if (!fin.good()) EXITCODE_V(5, false)};
 
 struct LecturerNode {
     string lecturerID, password, lecturerName, academicTitle;
@@ -29,9 +29,9 @@ struct LecturerList {
 
     LecturerList();
     ~LecturerList();
-    void load(); //load data from data/lecturer.txt
-    void save(); //save data to data/lecturer.txt
-    void pushBack(LecturerNode *lecturerNode); //add the node to the end of the list (not create any new node)
+    bool load(); //load data from data/lecturer.txt
+    bool save(); //save data to data/lecturer.txt
+    bool pushBack(LecturerNode *lecturerNode); //add the node to the end of the list (not create any new node)
     LecturerNode* find(string lecturerID, bool mode); //mode is either ALL (find both active and inactive) or ACTIVE)
 
     void print(); //ONLY use for debugging

@@ -37,13 +37,13 @@ StaffList::~StaffList() {
     }
 }
 
-void StaffList::load() {
+bool StaffList::load() {
     ifstream fin;
     fin.open(getLocation() + "data/staff.txt");
 
     //check if the file is missing?
     if (!fin.is_open())
-        EXITCODE(4)
+        EXITCODE_V(4, false)
 
     fin >> cnt;
     string tmp;
@@ -72,6 +72,7 @@ void StaffList::load() {
     }
 
     fin.close();
+    return true;
 }
 
 StaffNode *StaffList::find(string staffID) {

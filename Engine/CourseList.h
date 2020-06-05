@@ -11,7 +11,7 @@
 #define ACTIVE 0
 #define ALL 1
 
-#define CHECKDAMAGED {if (!fin.good()) EXITCODE(5)};
+#define CHECKDAMAGED {if (!fin.good()) EXITCODE_V(5, false)};
 
 struct CourseNode {
     string courseID, courseName, lecturerID;
@@ -33,9 +33,9 @@ struct CourseList {
 
     CourseList();
     ~CourseList();
-    void load(string semesterID, string classID); //load data from data/[semesterID]-[classID]-course.txt, semesterID and classID MUST exist in class.txt and semester.txt respectively
-    void save(string semesterID, string classID); //save data to data/[semesterID]-[classID]-course.txt, semesterID and classID MUST exist and be active in class.txt and semester.txt respectively
-    void pushBack(CourseNode *courseNode); //add the node to the end of the list (not create any new node)
+    bool load(string semesterID, string classID); //load data from data/[semesterID]-[classID]-course.txt, semesterID and classID MUST exist in class.txt and semester.txt respectively
+    bool save(string semesterID, string classID); //save data to data/[semesterID]-[classID]-course.txt, semesterID and classID MUST exist and be active in class.txt and semester.txt respectively
+    bool pushBack(CourseNode *courseNode); //add the node to the end of the list (not create any new node)
     CourseNode* find(string courseID, bool mode); //mode is either ALL (find both active and inactive) or ACTIVE)
 
     void print(); //ONLY use for debugging

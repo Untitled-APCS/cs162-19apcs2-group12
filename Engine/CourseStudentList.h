@@ -11,7 +11,7 @@
 #define ACTIVE 0
 #define ALL 1
 
-#define CHECKDAMAGED {if (!fin.good()) EXITCODE(5)};
+#define CHECKDAMAGED {if (!fin.good()) EXITCODE_V(5, false)};
 
 struct Score {
     double midterm, final, bonus, total;
@@ -37,12 +37,12 @@ struct CourseStudentList {
 
     CourseStudentList();
     ~CourseStudentList();
-    void load(string semesterID, string classID, string courseID); //load data from data/[semesterID]-[classID]-[courseID]-student.txt,
+    bool load(string semesterID, string classID, string courseID); //load data from data/[semesterID]-[classID]-[courseID]-student.txt,
                                                                    //semesterID, classID and courseID MUST exist in semester.txt, class.txt and [semesterID]-[classID]-course.txt respectively
-    void save(string semesterID, string classID, string courseID); //save data to data/[semesterID]-[classID]-[courseID]-student.txt,
+    bool save(string semesterID, string classID, string courseID); //save data to data/[semesterID]-[classID]-[courseID]-student.txt,
                  //semesterID, classID and courseID MUST exist and be active in semester.txt, class.txt and [semesterID]-[classID]-course.txt respectively and
                  //semesterID MUST be the currentSemester
-    void pushBack(CourseStudentNode *courseStudentNode); //add the node to the end of the list (not create any new node)
+    bool pushBack(CourseStudentNode *courseStudentNode); //add the node to the end of the list (not create any new node)
     CourseStudentNode* find(string studentID, bool mode); //mode is either ALL (find both active and inactive) or ACTIVE)
 
     void print(); //ONLY use for debugging
