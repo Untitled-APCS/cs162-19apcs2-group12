@@ -16,6 +16,7 @@ void sample() {
 //            courseID = s[2];
 
 
+
 //    //Syntax
 //    SemesterList semesterList;
 //    if (!semesterList.load())
@@ -30,13 +31,27 @@ void sample() {
 
 void staff_1_1() {
     //Create a new semester
-
     //Input nothing
-
+    
     //input semesterID not exist in semester list
     //until getting valid data
-
+    
     //create new node and pushBack --> save
+    
+    SemesterList semesterList;
+    if (!semesterList.load())
+        EXITCODE(6);
+    cout << "\n\n";
+    SemesterNode* semesterNode = new SemesterNode;
+    string* s = new string[1]{ "" };
+    //fPtr* p = new fPtr[1]{ inputSemester};
+    //inputData(s, p, 0, 1, checkStaff_1_1);
+    semesterNode->active = 1;
+    semesterNode->semesterID = s[0];
+    semesterList.pushBack(semesterNode);
+    semesterList.save();
+    staffSemesterMenu();
+    return;
 }
 
 void staff_1_2() {
@@ -55,15 +70,30 @@ void staff_1_2() {
     //if newSemesterID is not current and is active,
     //ask user whether he wants to make it currentSemester, type newSemesterID to confirm,
     //after confirmation, make currentSemester PREV and make newSemesterID CURRENT
+    staffSemesterMenu();
+    return;
 }
 
 void staff_1_3() {
+    
     //Remove a specific semester
-
+    
     //Input semesterID
     //semesterID is not current but is active
-
+    
+    
     //remove semesterID: active -> 0
+
+    SemesterList semesterList;
+    if (!semesterList.load())
+        EXITCODE(6);
+    cout << "\n\n";
+    string* s = new string[1]{ "" };
+    //fPtr* p = new fPtr[1]{ inputSemester};
+    //inputData(s, p, 0, 1, checkStaff_1_3);
+    semesterList.find(s[0], ALL)->active = 0;
+    staffSemesterMenu();
+    return;
 }
 
 void staff_1_4() {
@@ -72,6 +102,24 @@ void staff_1_4() {
     //Input nothing
 
     //View list of active semesters
+    SemesterList semesterList;
+    if (!semesterList.load())
+        EXITCODE(6);
+    cout << "\n\n";
+    SemesterNode* cur = semesterList.Head;
+    SemesterNode* temp = new SemesterNode[semesterList.cnt];
+    int n = 0;
+    while (cur != nullptr)
+    {
+        temp[0].semesterID = cur->semesterID;
+        ++n;
+        cur = cur->Next;
+    }
+    sort(sizeof(temp), sizeof(temp[0]));
+    //output: PENDING!
+    delete[]temp;
+    staffSemesterMenu();
+    return;
 }
 
 bool checkStaff_1_1() {
@@ -83,6 +131,7 @@ bool checkStaff_1_2() {
 }
 
 bool checkStaff_1_3() {
+    
     return false;
 }
 
