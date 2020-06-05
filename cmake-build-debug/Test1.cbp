@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Test1"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="F:/hsshsh/Test1/Test1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Test1">
+				<Option output="F:/hsshsh/Test1/Test1/cmake-build-debug/Test1.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="F:/hsshsh/Test1/Test1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="F:/hsshsh/Test1/Test1/."/>
+					<Add directory="F:/hsshsh/Test1/Test1/Engine"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include/c++"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include/c++/i686-w64-mingw32"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include/c++/backward"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/../../../../i686-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 Test1"/>
+					<CompileFile command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Test1/fast">
+				<Option output="F:/hsshsh/Test1/Test1/cmake-build-debug/Test1.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="F:/hsshsh/Test1/Test1/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="F:/hsshsh/Test1/Test1/."/>
+					<Add directory="F:/hsshsh/Test1/Test1/Engine"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include/c++"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include/c++/i686-w64-mingw32"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include/c++/backward"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="C:/Program Files (x86)/mingw-w64/i686-8.1.0-posix-dwarf-rt_v6-rev0/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/../../../../i686-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 Test1/fast"/>
+					<CompileFile command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="F:/hsshsh/Test1/Test1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="F:/hsshsh/Test1/Test1/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/MINGW-~1/I686-8~1.0-P/mingw32/bin/mingw32-make.exe -f &quot;F:/hsshsh/Test1/Test1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="F:/hsshsh/Test1/Test1/AcademicStaffClass.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/AcademicStaffClass.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/AcademicStaffCourse.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/AcademicStaffCourse.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/AcademicStaffScoreBoard.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/AcademicStaffScoreBoard.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/AllRoles.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/AllRoles.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/AppLocation.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/AppLocation.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/ClassList.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/ClassList.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/ClassStudentList.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/ClassStudentList.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/CourseList.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/CourseList.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/CourseStudentList.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/CourseStudentList.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/DateTime.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/DateTime.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/FileManagement.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/FileManagement.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/InputData.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/InputData.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/LecturerList.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/LecturerList.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/Optimization.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/Optimization.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/RecommendationSystem.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/RecommendationSystem.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/SemesterList.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/SemesterList.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/StaffList.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/StaffList.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/StudentList.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/StudentList.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Engine/stdc++.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Lecturer.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Lecturer.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Menu.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Menu.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Student.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/Student.h">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/cs162_19apcs2_untitled.cpp">
+			<Option target="Test1"/>
+		</Unit>
+		<Unit filename="F:/hsshsh/Test1/Test1/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
