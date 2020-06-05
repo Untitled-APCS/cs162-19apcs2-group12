@@ -20,20 +20,34 @@ bool checkStaff_1_3();
 
 bool checkStaff_1_4();
 
+
+
 void lecturer_1();
+
 void lecturer_2();
+
 void lecturer_3();
+
 void lecturer_4();
+
 void lecturer_5();
+
 void lecturer_6();
+
 void lecturer_7();
 
 bool checkLecturer_1();
+
 bool checkLecturer_2();
+
 bool checkLecturer_3();
+
 bool checkLecturer_4();
+
 bool checkLecturer_5();
+
 bool checkLecturer_6();
+
 bool checkLecturer_7();
 
 
