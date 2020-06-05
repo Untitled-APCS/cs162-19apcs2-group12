@@ -1,4 +1,4 @@
-/*#pragma once
+#pragma once
 #ifndef __AcademicStaffScoreBoard__
 #define __AcademicStaffScoreBoard__
 #include <iostream>
@@ -19,7 +19,7 @@ struct BoardNode {
 //**** Khang's part: ****
 void import_from_csv(BoardNode*& head, ifstream& fin,StudentNode* root, ofstream &fout, string& coursename);
 void update_grade(BoardNode* head, StudentNode* root);
-void delete_all(BoardNode*& head);*/
+void delete_all(BoardNode*& head);
 
 // Activities:
 void view_scoreboard(string courseid);
