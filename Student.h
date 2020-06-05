@@ -39,3 +39,21 @@ bool checkStaff_5_3();
 bool checkStaff_5_4();
 
 bool checkStaff_5_5();
+
+
+
+void student_1();
+
+void student_2();
+
+void student_3();
+
+void student_4();
+
+bool checkStudent_1();
+
+bool checkStudent_2();
+
+bool checkStudent_3();
+
+bool checkStudent_4();
