@@ -90,3 +90,168 @@ bool checkStaff_1_4() {
     return false;
 }
 
+void staff_3_1() {
+    //Import list of courses from file
+
+    //Input semesterID, classID, filepath
+
+    //load
+    //loadCSV
+    //save
+}
+
+void staff_3_2() {
+    //Create a new courses
+
+    //Input semesterID, classID
+
+    //Input courseID, courseName, lecturerID, startingDate, startingTime, endingTime, room
+    //courseID not exist, lecturerID must exist
+
+    
+}
+
+void staff_3_3() {
+
+}
+
+void staff_3_4() {
+
+}
+
+void staff_3_5() {
+
+}
+
+void staff_3_6() {
+
+}
+
+void staff_3_7() {
+
+}
+
+void staff_3_8() {
+
+}
+
+void staff_3_9() {
+
+}
+
+void staff_3_10() {
+
+}
+
+void staff_3_11() {
+
+}
+
+void staff_3_12() {
+
+}
+
+bool checkStaff_3_1() {
+    return false;
+}
+
+bool checkStaff_3_2() {
+    return false;
+}
+
+bool checkStaff_3_3() {
+    return false;
+}
+
+bool checkStaff_3_4() {
+    return false;
+}
+
+bool checkStaff_3_5() {
+    return false;
+}
+
+bool checkStaff_3_6() {
+    return false;
+}
+
+bool checkStaff_3_7() {
+    return false;
+}
+
+bool checkStaff_3_8() {
+    return false;
+}
+
+bool checkStaff_3_9() {
+    return false;
+}
+
+bool checkStaff_3_10() {
+    return false;
+}
+
+bool checkStaff_3_11() {
+    return false;
+}
+
+bool checkStaff_3_12() {
+    return false;
+}
+
+void lecturer_1() {
+
+}
+
+void lecturer_2() {
+
+}
+
+void lecturer_3() {
+
+}
+
+void lecturer_4() {
+
+}
+
+void lecturer_5() {
+
+}
+
+void lecturer_6() {
+
+}
+
+void lecturer_7() {
+
+}
+
+bool checkLecturer_1() {
+    return false;
+}
+
+bool checkLecturer_2() {
+    return false;
+}
+
+bool checkLecturer_3() {
+    return false;
+}
+
+bool checkLecturer_4() {
+    return false;
+}
+
+bool checkLecturer_5() {
+    return false;
+}
+
+bool checkLecturer_6() {
+    return false;
+}
+
+bool checkLecturer_7() {
+    return false;
+}
+
