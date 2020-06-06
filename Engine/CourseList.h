@@ -36,6 +36,7 @@ struct CourseList {
     bool load(string semesterID, string classID); //load data from data/[semesterID]-[classID]-course.txt, semesterID and classID MUST exist in class.txt and semester.txt respectively
     bool save(string semesterID, string classID); //save data to data/[semesterID]-[classID]-course.txt, semesterID and classID MUST exist and be active in class.txt and semester.txt respectively
     bool pushBack(CourseNode *courseNode); //add the node to the end of the list (not create any new node)
+    void destroy();
     CourseNode* find(string courseID, bool mode); //mode is either ALL (find both active and inactive) or ACTIVE)
 
     void print(); //ONLY use for debugging

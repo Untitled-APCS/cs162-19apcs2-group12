@@ -37,6 +37,10 @@ CourseList::CourseList() {
 }
 
 CourseList::~CourseList() {
+    destroy();
+}
+
+void CourseList::destroy() {
     CourseNode *tmp;
     while (Head != nullptr) {
         tmp = Head;
