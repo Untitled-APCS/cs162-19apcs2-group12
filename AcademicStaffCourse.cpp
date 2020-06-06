@@ -113,8 +113,8 @@ void staff_1_4() {
     int n = 0;
     while (cur != nullptr)
     {
-        temp[0].semesterID = cur->semesterID;
-        temp[0].active = cur->active;
+        temp[n].semesterID = cur->semesterID;
+        temp[n].active = cur->active;
         ++n;
         cur = cur->Next;
     }
@@ -157,6 +157,20 @@ void staff_3_1() {
     //load
     //loadCSV
     //save
+    SemesterList semesterList;
+    if (!semesterList.load())
+        EXITCODE(6);
+    ClassList classList;
+    if (!classList.load())
+        EXITCODE(6);
+//    string *s = new string[3]{"", "", ""};
+//    fPtr *p = new fPtr[3]{inputSemester, inputClass, filepath};
+//    inputData(s, p, 0, 3, checkStaff_3_1);
+
+//    semesterID = s[0];
+//    classID = s[1];
+//    filepath = s[2];
+
 }
 
 void staff_3_2() {
@@ -166,24 +180,99 @@ void staff_3_2() {
 
     //Input courseID, courseName, lecturerID, startingDate, startingTime, endingTime, room
     //courseID not exist, lecturerID must exist
+    SemesterList semesterList;
+    if (!semesterList.load())
+        EXITCODE(6);
+    ClassList classList;
+    if (!classList.load())
+        EXITCODE(6);
+//    string *s = new string[2]{"", ""};
+//    fPtr *p = new fPtr[2]{inputSemester, inputClass};
+//    inputData(s, p, 0, 2, checkStaff_3_2);
 
+//    semesterID = s[0];
+//    classID = s[1];
     
 }
 
 void staff_3_3() {
+    SemesterList semesterList;
+    if (!semesterList.load())
+        EXITCODE(6);
+    ClassList classList;
+    if (!classList.load())
+        EXITCODE(6);
+    
+    //    string *s = new string[2]{"", ""};
+    //    fPtr *p = new fPtr[2]{inputSemester, inputClass};
+    //    inputData(s, p, 0, 2, checkStaff_3_3);
 
+    string semesterID, classID;
+    //    semesterID = s[0];
+    //    classID = s[1];
+    CourseList courseList;
+    if (!courseList.load(semesterID,classID))
+        EXITCODE(6);
 }
 
 void staff_3_4() {
+    SemesterList semesterList;
+    if (!semesterList.load())
+        EXITCODE(6);
+    ClassList classList;
+    if (!classList.load())
+        EXITCODE(6);
 
+    //    string *s = new string[2]{"", ""};
+    //    fPtr *p = new fPtr[2]{inputSemester, inputClass};
+    //    inputData(s, p, 0, 2, checkStaff_3_4);
+
+    string semesterID, classID;
+    //    semesterID = s[0];
+    //    classID = s[1];
+    CourseList courseList;
+    if (!courseList.load(semesterID, classID))
+        EXITCODE(6);
 }
 
 void staff_3_5() {
+    SemesterList semesterList;
+    if (!semesterList.load())
+        EXITCODE(6);
+    ClassList classList;
+    if (!classList.load())
+        EXITCODE(6);
 
+    //    string *s = new string[2]{"", ""};
+//    fPtr *p = new fPtr[2]{inputSemester, inputClass};
+//    inputData(s, p, 0, 2, checkStaff_3_5);
+
+    string semesterID, classID;
+    //    semesterID = s[0];
+    //    classID = s[1];
+    CourseList courseList;
+    if (!courseList.load(semesterID, classID))
+        EXITCODE(6);
 }
 
 void staff_3_6() {
+    SemesterList semesterList;
+    if (!semesterList.load())
+        EXITCODE(6);
+    ClassList classList;
+    if (!classList.load())
+        EXITCODE(6);
 
+//    string *s = new string[2]{"", ""};
+//    fPtr *p = new fPtr[2]{inputSemester, inputClass};
+//    inputData(s, p, 0, 2, checkStaff_3_5);
+
+    string semesterID, classID;
+    //    semesterID = s[0];
+    //    classID = s[1];
+    CourseList courseList;
+    if (!courseList.load(semesterID, classID))
+        EXITCODE(6);
 }
 
 void staff_3_7() {

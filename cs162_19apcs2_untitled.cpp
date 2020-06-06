@@ -1,4 +1,4 @@
-//#include "AcademicStaffCourse.h"
+#include "AcademicStaffCourse.h"
 //#include "AcademicStaffClass.h"
 //#include "AcademicStaffScoreBoard.h"
 //#include "Lecturer.h"
@@ -11,7 +11,6 @@ int main(int argc, const char **argv) {
 //    fileLocation = argv[0];
 //    while (fileLocation.size() > 0 && fileLocation[fileLocation.size()-1] != '/')
 //        fileLocation.pop_back();
-
     logo();
     logInMenu();
 
