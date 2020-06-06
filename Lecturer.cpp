@@ -1,5 +1,13 @@
 #include "Lecturer.h"
 
+
+void setAttendanceCourse() {
+	// inputData: semesterID, classID, courseID
+	// AttendanceCode
+
+	// Enter the week. Recommend.
+}
+
 bool isPermissible(string courseID) {
 	return courseID == user::ID;
 }
@@ -85,6 +93,17 @@ void lecturer_1_() {
 	
 
 	
+}
+void saveCSV(CourseStudentList llist, string filePath) {
+	int index = 1;
+	cout << "No,Student ID,Midterm,Final,Bonus,Total" << endl;
+	CourseStudentNode* node = llist.Head;
+	while (node) {
+		cout << index << "," << node->studentID << "," << node->score.midterm << "," << node->score.final
+			<< "," << node->score.bonus << "," << node->score.total << endl;
+		node = node->Next;
+		index++;
+	}
 }
 //---------------------------------------------------------------------------------------------------
 void lecturer_2_() {
@@ -173,6 +192,8 @@ void lecturer_4_() {
 	SemesterList sems; ClassList classes; CourseList courses;
 	if (!sems.load()|| !classes.load()) EXITCODE(6);
 	if (stuList.find(studentID, ACTIVE)== nullptr) EXITCODE(6);
+	
+	// An's part 
 
 	if (sems.find(semesterID, ACTIVE)==nullptr || classes.find(classID, ACTIVE)==nullptr) EXITCODE(6);
 
@@ -182,15 +203,15 @@ void lecturer_4_() {
 	int index=1;
 	CourseStudentList llist;
 	if (!llist.load(semesterID, classID, courseID) EXITCODE(6);
+	bool* attendance = // An'parts.
 */
 /*
-	int weekChoice, status;
-	cout << "\n\nPlease enter a week to edit ";
-	cin >> weekChoice;
-	cout <<"\n\nPlease enter new status ";
-	cin >> status;
-	llist.find(studentID, ACTIVE)->attendance[weekChoice] = status;
-*/
+	CourseStudentNode* node = llist.find(studentID, ALL);
+	for (int i=0; i < 10; i++){
+		node->attendance[i] = attendance[i];
+	}
+	llist.save(semeseterID, classID, courseID);
+*/	
 
 	
 }
@@ -250,16 +271,12 @@ void lecturer_6_() {
 	int index=1;
 	CourseStudentList llist;
 	if (!llist.load(semesterID, classID, courseID) EXITCODE(6);
+
+	Score newScore = An's part
 */
 /*
 	CourseStudentNode* node = llist.find(studentID, ALL);
-	if (node == nullptr) EXITCODE(6);
-	
-	string typeGrade;
-	cout << "\n\nPlease enter a type of grade to edit ";
-	getline(cin, typeGrade);
-	cout << "\n\nPlease enter the new grade ";
-	cin >> node->score.typeGrade;
+	node->score = newScore;
 	
 */
 }

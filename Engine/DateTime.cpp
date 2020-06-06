@@ -32,12 +32,16 @@ bool Date::wrongFormat() {
             Date::d > numDaysInMonth(Date::y, Date::m));
 }
 
-Date::Date() {
-    y = 2000;
-    m = 1;
-    d = 1;
-}
 
+void Time::capture() {
+    time_t cur;
+    time(&cur);
+    tm* localTime = localtime(&cur);
+
+    h = localTime->tm_hour;
+    m = localTime->tm_min;
+    s = localTime->tm_sec;
+}
 
 Time::Time() {
     capture();

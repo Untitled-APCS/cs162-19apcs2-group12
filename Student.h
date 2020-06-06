@@ -7,6 +7,7 @@
 
 #include "Engine/stdc++.h"
 #include "Engine/Optimization.h"
+#include "Engine.h"
 
 using namespace std;
 
@@ -57,3 +58,9 @@ bool checkStudent_2();
 bool checkStudent_3();
 
 bool checkStudent_4();
+
+
+
+// Activities:
+
+string getDay(Date date);

@@ -280,7 +280,11 @@ void staff_3_7() {
 }
 
 void staff_3_8() {
-
+    // inputData: semesterID, classID, courseID, filePath
+    CourseStudentList llist;
+    
+    if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
+    saveCSV(llist, filePath);
 }
 
 void staff_3_9() {
@@ -347,33 +351,7 @@ bool checkStaff_3_12() {
     return false;
 }
 
-void lecturer_1() {
 
-}
-
-void lecturer_2() {
-
-}
-
-void lecturer_3() {
-
-}
-
-void lecturer_4() {
-
-}
-
-void lecturer_5() {
-
-}
-
-void lecturer_6() {
-
-}
-
-void lecturer_7() {
-
-}
 
 bool checkLecturer_1() {
     return false;

@@ -1,5 +1,5 @@
 #include "Engine.h"
-
+#include "AllRoles.h"
 void staff_4_1();
 
 void staff_4_2();
@@ -34,4 +34,7 @@ void printCourse(CourseNode* node, int&index);
 void printStudent(StudentNode* node, int &index);
 void printArray(int* arr, int n);
 void printScoreboard(StudentList llist, CourseStudentList llist2);
+void saveCSV(CourseStudentList llist, string filePath);
+void setTime();
+void setAttendanceCode();
 
