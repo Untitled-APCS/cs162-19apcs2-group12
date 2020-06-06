@@ -7,6 +7,184 @@ void setAttendanceCourse() {
 
 	// Enter the week. Recommend.
 }
+bool checklecturer_1(string* s, int n) {
+	SemesterList llist;
+	if (!llist.load()) {
+		EXITCODE_V(6, false);
+	}
+	if (s[0] != llist.currentSemester) {
+		cout << "\nThis is not current semester " << endl;
+		return false;
+	}
+	return true;
+
+}
+bool checklecturer_2(string* s, int n) {
+	ClassList classes;
+	SemesterList semesters;
+	CourseList courses;
+	if (!semesters.load() || !classes.load()) {
+		EXITCODE_V(6, false);
+	}
+	for (SemesterNode* semNode = semesters.Head; semNode; semNode = semNode->Next) {
+		for (ClassNode* classNode = classes.Head; classNode; classNode = classNode->Next) {
+			courses.load(semNode->semesterID, classNode->classID);
+			if (courses.find(s[n - 1], ALL)) return true;
+		}
+	}
+	cout << "\n\nThis course does not exist." << endl;
+	return false;
+}
+bool checklecturer_3(string* s, int n) {
+	ClassList classes;
+	SemesterList semesters;
+	CourseList courses;
+	if (!semesters.load() || !classes.load()) {
+		EXITCODE_V(6, false);
+	}
+	for (SemesterNode* semNode = semesters.Head; semNode; semNode = semNode->Next) {
+		for (ClassNode* classNode = classes.Head; classNode; classNode = classNode->Next) {
+			if (!courses.load(semNode->semesterID, classNode->classID)) EXITCODE_V(6,false);
+			if (courses.find(s[n - 1], ALL)) return true;
+		}
+	}
+	cout << "\n\nThis course does not exist." << endl;
+	return false;
+}
+bool checklecturer_4(string* s, int n) {
+	ClassList classes;
+	SemesterList semesters;
+	CourseList courses;
+	CourseStudentList stuList;
+	if (!semesters.load() || !classes.load()) {
+		EXITCODE_V(6, false);
+	}
+	if (s[0] != semesters.currentSemester) {
+		cout << "\n\nYou are not allowed to make changes in this semester" << endl;
+		return false;
+	}
+	if (classes.find(s[1], ACTIVE) == nullptr) {
+		cout << "\n\nThis class does not exist" << endl;
+		return false;
+	}
+	bool flag = false;
+	for (SemesterNode* semNode = semesters.Head; semNode; semNode = semNode->Next) {
+		for (ClassNode* classNode = classes.Head; classNode; classNode = classNode->Next) {
+			if(!courses.load(semNode->semesterID, classNode->classID)) EXITCODE_V(6, false);
+			CourseNode* courseNode = courses.find(s[2], ACTIVE);
+			if (courseNode == nullptr) {
+				cout << "\n\nThis course does not exist" << endl;
+				return false;
+			}
+			if (!stuList.load(semNode->semesterID, classNode->classID, courseNode->courseID)) EXITCODE(6, false);
+			CourseStudentNode* stuNode = stuList.find(s[n - 1], ACTIVE);
+			if (stuNode == nullptr) {
+				cout << "\n\nThis student does not exist" << endl;
+				return false;
+			}
+			
+
+		}
+	}
+	return true;
+
+}
+bool checklecturer_5(string* s, int n) {
+	
+	ClassList classes;
+	SemesterList semesters;
+	CourseList courses;
+	CourseStudentList stuList;
+	if (!semesters.load() || !classes.load()) {
+		EXITCODE_V(6, false);
+	}
+	if (s[0] != semesters.currentSemester) {
+		cout << "\n\nYou are not allowed to make changes in this semester" << endl;
+		return false;
+	}
+	if (classes.find(s[1], ACTIVE) == nullptr) {
+		cout << "\n\nThis class does not exist" << endl;
+		return false;
+	}
+	bool flag = false;
+	for (SemesterNode* semNode = semesters.Head; semNode; semNode = semNode->Next) {
+		for (ClassNode* classNode = classes.Head; classNode; classNode = classNode->Next) {
+			if (!courses.load(semNode->semesterID, classNode->classID)) EXITCODE_V(6, false);
+			CourseNode* courseNode = courses.find(s[2], ACTIVE);
+			if (courseNode == nullptr) {
+				cout << "\n\nThis course does not exist" << endl;
+				return false;
+			}
+			if (!stuList.load(semNode->semesterID, classNode->classID, courseNode->courseID)) EXITCODE(6, false);
+			CourseStudentNode* stuNode = stuList.find(s[3], ACTIVE);
+			if (stuNode == nullptr) {
+				cout << "\n\nThis student does not exist" << endl;
+				return false;
+			}
+
+
+		}
+		if (!isScoreBoardListCSV(s[n - 1])) {
+			cout << "\n\nThis is not a csv file" << endl;
+			return false;
+		}
+	}
+	return true;
+}
+	
+bool checklecturer_6(string * s, int n) {
+	ClassList classes;
+	SemesterList semesters;
+	CourseList courses;
+	CourseStudentList stuList;
+	if (!semesters.load() || !classes.load()) {
+		EXITCODE_V(6, false);
+	}
+	if (s[0] != semesters.currentSemester) {
+		cout << "\n\nYou are not allowed to make changes in this semester" << endl;
+		return false;
+	}
+	if (classes.find(s[1], ACTIVE) == nullptr) {
+		cout << "\n\nThis class does not exist" << endl;
+		return false;
+	}
+	bool flag = false;
+	for (SemesterNode* semNode = semesters.Head; semNode; semNode = semNode->Next) {
+		for (ClassNode* classNode = classes.Head; classNode; classNode = classNode->Next) {
+			if (!courses.load(semNode->semesterID, classNode->classID)) EXITCODE_V(6, false);
+			CourseNode* courseNode = courses.find(s[2], ACTIVE);
+			if (courseNode == nullptr) {
+				cout << "\n\nThis course does not exist" << endl;
+				return false;
+			}
+			if (!stuList.load(semNode->semesterID, classNode->classID, courseNode->courseID)) EXITCODE(6, false);
+			CourseStudentNode* stuNode = stuList.find(s[n - 1], ACTIVE);
+			if (stuNode == nullptr) {
+				cout << "\n\nThis student does not exist" << endl;
+				return false;
+			}
+
+
+		}
+	}
+	return true;
+}
+bool checklecturer_7(string* s, int n) {
+	ClassList classes;
+	SemesterList semesters;
+	CourseList courses;
+	if (!semesters.load() || !classes.load()) {
+		EXITCODE_V(6, false);
+	}
+	for (SemesterNode* semNode = semesters.Head; semNode; semNode = semNode->Next) {
+		for (ClassNode* classNode = classes.Head; classNode; classNode = classNode->Next) {
+			courses.load(semNode->semesterID, classNode->classID);
+			if (courses.find(s[n - 1], ALL)) return true;
+		}
+	}
+	cout << "\n\nThis course does not exist." << endl;
+	return false;
+}
 
 bool isPermissible(string courseID) {
 	return courseID == user::ID;
@@ -58,6 +236,8 @@ void printStudent(StudentNode* node, int &index) {
 
 //---
 void lecturer_1_() {
+	//inputData : semesterID
+	// checklecturer(string *s, 1);
 	CourseList allCourses;
 	SemesterList Sems;
 	ClassList classes;
@@ -88,9 +268,7 @@ void lecturer_1_() {
 		}
 
 		classNode = classNode->Next;
-	}
-
-	
+	}	
 
 	
 }
@@ -109,13 +287,13 @@ void saveCSV(CourseStudentList llist, string filePath) {
 void lecturer_2_() {
 //	input semester, class, course
 //  string *s = new string[3]{"", "", ""};
-//  fptr *p = new fptr[3]{inputSemester, inputCourse, inputClass};
+//  fptr *p = new fptr[3]{inputSemester, inputClass, inputCourse};
 //  inputdata(s, p, 0, 3, checkstaff_1_1);
 
 //	StudentList stuList;
 //	if (!stuList.load()) EXITCODE(6);
 //	
-//  string semesterID = s[0], courseID = s[1], classID = s[2];
+//  string semesterID = s[0], courseID = s[2], classID = s[1];
 //	SemesterList sems; ClassList classes; CourseList courses;
 //	if (!sems.load()|| !classes.load()) EXITCODE(6);
 
@@ -132,8 +310,8 @@ void lecturer_2_() {
 //		StudentNode* stuNode = stuList.find(node->studentID, ACTIVE);
 //		printStudent(stuNode, index);
 //	}
-//	
-//	
+//	delete [] s;
+//	delete[] p;
 	
 }
 
@@ -141,13 +319,13 @@ void lecturer_2_() {
 void lecturer_3_() {
 //	input semester, class, course
 //  string *s = new string[3]{"", "", ""};
-//  fptr *p = new fptr[3]{inputSemester, inputCourse, inputClass};
+//  fptr *p = new fptr[3]{inputSemester, inputClass, inputCourse};
 //  inputdata(s, p, 0, 3, checkstaff_1_1);
 
 //	StudentList stuList;
 //	if (!stuList.load()) EXITCODE(6);
 //	
-//  string semesterID = s[0], courseID = s[1], classID = s[2];
+//  string semesterID = s[0], courseID = s[2], classID = s[1];
 //	SemesterList sems; ClassList classes; CourseList courses;
 //	if (!sems.load()|| !classes.load()) EXITCODE(6);
 
@@ -171,7 +349,11 @@ void lecturer_3_() {
 		cout << index << "\t" << node->studentName << "\t" << node->studentID << "\t";
 		printArray(stuNode->attendance, 10);
 		stuNode = stuNode->Next;
+		
 	}
+
+	delete[]s;
+	delete[]p;
 */
 
 
@@ -182,7 +364,7 @@ void lecturer_3_() {
 void lecturer_4_() {
 /*	input semester, class, course
 	string *s = new string[4]{"", "", "",""};
-	fptr *p = new fptr[4]{inputSemester, inputCourse, inputClass, inputStudent};
+	fptr *p = new fptr[4]{inputSemester, inputClass, inputCourse, inputStudent};
 	inputdata(s, p, 0, 4, checkstaff_1_1);
 
 	StudentList stuList;
@@ -211,6 +393,9 @@ void lecturer_4_() {
 		node->attendance[i] = attendance[i];
 	}
 	llist.save(semeseterID, classID, courseID);
+
+	delete[]s;
+	detete[]p;
 */	
 
 	
@@ -221,13 +406,13 @@ void lecturer_5_() {
 /*
 	input semester, class, course
 	string *s = new string[4]{"", "", "","",""};
-	fptr *p = new fptr[4]{inputSemester, inputCourse, inputClass, filePath};
+	fptr *p = new fptr[4]{inputSemester, inputClass, inputCourse, filePath};
 	inputdata(s, p, 0, 4, checkstaff_1_1);
 
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
 		
-	string semesterID = s[0], courseID = s[1], classID = s[2], filePath = s[3];
+	string semesterID = s[0], courseID = s[2], classID = s[1], filePath = s[3];
 	SemesterList sems; ClassList classes; CourseList courses;
 	if (!sems.load()|| !classes.load()) EXITCODE(6);
 	if (stuList.find(studentID, ACTIVE)== nullptr) EXITCODE(6);
@@ -242,6 +427,8 @@ void lecturer_5_() {
 	if (!llist.load(semesterID, classID, courseID) EXITCODE(6);
 	ScoreboardList board;
 	if (!board.loadCSV()) 
+	delete []s;
+	delete[]p;
 	
 */
 
@@ -252,7 +439,7 @@ void lecturer_6_() {
 /*
 	input semester, class, course
 	string *s = new string[4]{"", "", "",""};
-	fptr *p = new fptr[4]{inputSemester, inputCourse, inputClass, inputStudent};
+	fptr *p = new fptr[4]{inputSemester, inputClass, inputCourse, inputStudent};
 	inputdata(s, p, 0, 4, checkstaff_1_1);
 
 	StudentList stuList;
@@ -279,6 +466,8 @@ void lecturer_6_() {
 	node->score = newScore;
 	
 */
+	//delete[] s;
+	// delete[]p;
 }
 
 
@@ -316,5 +505,7 @@ void lecturer_7_() {
 	printScoreboard(stulist, llist);
 	
 */
+	//delete[] s;
+	//delete[] p;
 }
 

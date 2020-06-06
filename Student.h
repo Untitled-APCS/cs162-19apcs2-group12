@@ -64,3 +64,5 @@ bool checkStudent_4();
 // Activities:
 
 string getDay(Date date);
+void printCourse(CourseNode* node);
+bool isInRange(CourseNode* node);

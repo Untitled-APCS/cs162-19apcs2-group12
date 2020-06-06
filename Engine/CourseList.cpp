@@ -24,6 +24,7 @@ void CourseNode::print() {
     cout << "Course ID: " << courseID << endl;
     cout << "Course Name: " << courseName << endl;
     cout << "Starting Date: " << startingDate.y << " " << startingDate.m << " " << startingDate.d << endl;
+    cout << endl;
     cout << "Starting Time: " << startingTime.h << " " << startingTime.m << " " << startingTime.s << endl;
     cout << "Ending Time: " << endingTime.h << " " << endingTime.m << " " << endingTime.s << endl;
     cout << "Room: " << room << endl;

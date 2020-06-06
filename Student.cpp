@@ -38,6 +38,15 @@ void student_2() {
 
 }
 
+void printCourse(CourseNode* node) {
+	cout << "Course ID: " << node->courseID << endl;
+	cout << "Course Name: " << node->courseName << endl;
+	cout << "Starting Date: " << node->startingDate.y << " " << node->startingDate.m << " " << node->startingDate.d << endl;
+	cout << "Day: " << getDay(node->startingDate) << endl;
+	cout << "Starting Time: " << node->startingTime.h << " " << node->startingTime.m << " " << node->startingTime.s << endl;
+	cout << "Ending Time: " << node->endingTime.h << " " << node->endingTime.m << " " << node->endingTime.s << endl;
+	cout << "Room: " << node->room << endl;
+}
 
 
 void student_3() {
@@ -54,20 +63,44 @@ void student_3() {
 		for (CourseNode* courseNode = courses.Head; courseNode; courseNode = courseNode->Next) {
 			if (courses.find(courseNode->courseID, ACTIVE)){
 				if (!stuList.load(semesterID, classNode->classID, courseNode->courseID)) EXITCODE(6);
-				if (stuList.find(studentID, ACTIVE)) {
-
+				if (stuList.find(studentID, ACTIVE) && isInRange(courseNode)) {
+					printCourse(courseNode);
 				}
+				stuList.destroy();
 
 			}
 		}
 
 		courses.destroy();
-
-
-
 	}
 
-	
-	
-	
+}
+
+
+void student_4() {
+	// inputData: semesterID, studentID
+	CourseStudentList llist;
+	CourseList courses;
+	ClassList classes;
+	CourseStudentList stuList;
+	cout << "Course Name\tCourse ID\tMidterm\tFinal\tBonus\tTotal" << endl;
+	if (!classes.load()) EXITCODE(6);
+	for (ClassNode* classNode = classes.Head; classNode; classNode = classNode->Next) {
+		if (!courses.load(semesterID, classNode->classID)) EXITCODE(6);
+		for (CourseNode* courseNode = courses.Head; courseNode; courseNode = courseNode->Next) {
+			if (courses.find(courseNode->courseID, ACTIVE)) {
+				if (!stuList.load(semesterID, classNode->classID, courseNode->courseID)) EXITCODE(6);
+				CourseStudentNode* stuNode = stuList.find(studentID, ACTIVE);
+				if ( stuNode ) {
+					cout << courseNode->courseName << "\t" << courseNode->courseID << "\t" << stuNode->score.midterm
+						<< "\t" << stuNode->score.final << "\t" << stuNode->score.bonus << "\t" << stuNode->score.total << endl;
+				}
+				stuList.destroy();
+
+			}
+		}
+
+		courses.destroy();
+	}
+
 }
