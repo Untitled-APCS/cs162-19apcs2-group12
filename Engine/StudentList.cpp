@@ -34,12 +34,18 @@ StudentList::StudentList() {
 }
 
 StudentList::~StudentList() {
+    destroy();
+}
+
+void StudentList::destroy() {
     StudentNode *tmp;
     while (Head != nullptr) {
         tmp = Head;
         Head = Head->Next;
         delete tmp;
     }
+
+    cnt = 0;
 }
 
 bool StudentList::load() {

@@ -41,6 +41,10 @@ CourseStudentList::CourseStudentList() {
 }
 
 CourseStudentList::~CourseStudentList() {
+    destroy();
+}
+
+void CourseStudentList::destroy() {
     CourseStudentNode *tmp;
     while (Head != nullptr) {
         tmp = Head;
@@ -49,6 +53,8 @@ CourseStudentList::~CourseStudentList() {
         delete [] tmp->attendance;
         delete tmp;
     }
+
+    cnt = 0;
 }
 
 bool CourseStudentList::load(string semesterID, string classID, string courseID) {

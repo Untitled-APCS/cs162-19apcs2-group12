@@ -32,6 +32,7 @@ struct LecturerList {
     bool load(); //load data from data/lecturer.txt
     bool save(); //save data to data/lecturer.txt
     bool pushBack(LecturerNode *lecturerNode); //add the node to the end of the list (not create any new node)
+    void destroy();
     LecturerNode* find(string lecturerID, bool mode); //mode is either ALL (find both active and inactive) or ACTIVE)
 
     void print(); //ONLY use for debugging

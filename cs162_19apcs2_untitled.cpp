@@ -13,12 +13,8 @@ int main(int argc, const char **argv) {
 //        fileLocation.pop_back();
 
     logo();
-    //logInMenu();
+    logInMenu();
 
-    StudentList studentList;
-    studentList.load();
-
-    forNode(StudentNode, i, studentList);
     //cout << getHashedPassword("ltathao");
 
 //    StudentList studentList;
