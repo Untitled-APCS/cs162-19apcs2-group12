@@ -38,6 +38,7 @@ struct SemesterList {
     bool load(); //load data from data/semester.txt
     bool save(); //save data to data/semester.txt
     bool pushBack(SemesterNode *semesterNode); //add the node to the end of the list (not create any new node)
+    void destroy();
     SemesterNode* find(string semesterID, bool mode); //mode is either ALL (find both active and inactive) or ACTIVE)
 
     void print(); //ONLY use for debugging

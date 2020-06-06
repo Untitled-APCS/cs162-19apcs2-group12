@@ -34,12 +34,18 @@ LecturerList::LecturerList() {
 }
 
 LecturerList::~LecturerList() {
+    destroy();
+}
+
+void LecturerList::destroy() {
     LecturerNode *tmp;
     while (Head != nullptr) {
         tmp = Head;
         Head = Head->Next;
         delete tmp;
     }
+
+    cnt = 0;
 }
 
 bool LecturerList::load() {

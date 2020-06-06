@@ -43,6 +43,7 @@ struct CourseStudentList {
                  //semesterID, classID and courseID MUST exist and be active in semester.txt, class.txt and [semesterID]-[classID]-course.txt respectively and
                  //semesterID MUST be the currentSemester
     bool pushBack(CourseStudentNode *courseStudentNode); //add the node to the end of the list (not create any new node)
+    void destroy();
     CourseStudentNode* find(string studentID, bool mode); //mode is either ALL (find both active and inactive) or ACTIVE)
 
     void print(); //ONLY use for debugging

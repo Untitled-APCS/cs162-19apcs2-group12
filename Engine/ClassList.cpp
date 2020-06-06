@@ -25,12 +25,18 @@ ClassList::ClassList() {
 }
 
 ClassList::~ClassList() {
+    destroy();
+}
+
+void ClassList::destroy() {
     ClassNode *tmp;
     while (Head != nullptr) {
         tmp = Head;
         Head = Head->Next;
         delete tmp;
     }
+
+    cnt = 0;
 }
 
 bool ClassList::load() {

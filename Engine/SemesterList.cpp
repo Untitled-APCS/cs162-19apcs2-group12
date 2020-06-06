@@ -28,12 +28,18 @@ SemesterList::SemesterList() {
 }
 
 SemesterList::~SemesterList() {
+    destroy();
+}
+
+void SemesterList::destroy() {
     SemesterNode *tmp;
     while (Head != nullptr) {
         tmp = Head;
         Head = Head->Next;
         delete tmp;
     }
+
+    cnt = 0;
 }
 
 bool SemesterList::load() {

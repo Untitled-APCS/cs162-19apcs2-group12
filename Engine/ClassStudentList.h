@@ -32,6 +32,7 @@ struct ClassStudentList {
     bool load(string classID); //load data from data/[classID]-student.txt, classID MUST exist in class.txt
     bool save(string classID); //save data to data/[classID]-student.txt, classID MUST exist and be active in class.txt
     bool pushBack(ClassStudentNode *classStudentNode); //add the node to the end of the list (not create any new node)
+    void destroy();
     ClassStudentNode* find(string studentID, bool mode); //mode is either ALL (find both active and inactive) or ACTIVE)
 
     void print(); //ONLY use for debugging

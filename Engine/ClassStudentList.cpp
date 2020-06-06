@@ -25,12 +25,18 @@ ClassStudentList::ClassStudentList() {
 }
 
 ClassStudentList::~ClassStudentList() {
+    destroy();
+}
+
+void ClassStudentList::destroy() {
     ClassStudentNode *tmp;
     while (Head != nullptr) {
         tmp = Head;
         Head = Head->Next;
         delete tmp;
     }
+
+    cnt = 0;
 }
 
 bool ClassStudentList::load(string classID) {

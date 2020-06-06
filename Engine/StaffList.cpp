@@ -29,12 +29,18 @@ StaffList::StaffList() {
 }
 
 StaffList::~StaffList() {
+    destroy();
+}
+
+void StaffList::destroy() {
     StaffNode *tmp;
     while (Head != nullptr) {
         tmp = Head;
         Head = Head->Next;
         delete tmp;
     }
+
+    cnt = 0;
 }
 
 bool StaffList::load() {

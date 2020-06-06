@@ -35,6 +35,7 @@ struct StudentList {
     bool load(); //load data from data/student.txt
     bool save(); //save data to data/student.txt
     bool pushBack(StudentNode *studentNode); //add the node to the end of the list (not create any new node)
+    void destroy();
     StudentNode* find(string studentID, bool mode); //mode is either ALL (find both active and inactive) or ACTIVE)
 
     void print(); //ONLY use for debugging

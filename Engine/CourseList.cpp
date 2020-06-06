@@ -47,6 +47,8 @@ void CourseList::destroy() {
         Head = Head->Next;
         delete tmp;
     }
+
+    cnt = 0;
 }
 
 bool CourseList::load(string semesterID, string classID) {
