@@ -96,6 +96,8 @@ void staff_1_3() {
     return;
 }
 
+bool cmpSemesterList(const SemesterNode& a, const SemesterNode& b) { return a.semesterID < b.semesterID; }
+
 void staff_1_4() {
     //View list of semester
 
@@ -112,11 +114,19 @@ void staff_1_4() {
     while (cur != nullptr)
     {
         temp[0].semesterID = cur->semesterID;
+        temp[0].active = cur->active;
         ++n;
         cur = cur->Next;
     }
-    sort(sizeof(temp), sizeof(temp[0]));
-    //output: PENDING!
+    sort(temp, temp + semesterList.cnt, cmpSemesterList);
+    //output:
+    for (int i = 0; i < semesterList.cnt; ++i)
+    {
+        if (temp[i].active == 1)
+            cout << temp[i].semesterID;
+        if (i != semesterList.cnt - 1)
+            cout << endl;
+    }
     delete[]temp;
     staffSemesterMenu();
     return;
