@@ -4,18 +4,17 @@ bool isPermissible(string courseID) {
 	return courseID == user::ID;
 }
 
-void printCourseList(CourseList courses) {
-	CourseNode* node = courses.Head;
-	cout << "\n\n" << "No\t" << "Course Name\t" << "Course ID\t" << "Starting Date\t" << "Starting time\t" << "Ending time\t" << "Room" << endl;
-	int i = 1;
-	while (node) {
-		cout << i << "\t" << node->courseName << "\t" << node->courseID << "\t"
-			<< node->startingDate.y << "/" << node->startingDate.m << "/" << node->startingDate.d << "\t"
-			<< node->startingTime.h << ":" << node->startingTime.m << ":" << node->startingTime.s << "\t"
-			<< node->endingTime.h << ":" << node->endingTime.m << ":" << node->endingTime.s << "\t"
-			<< node->room << endl;
+void printCourse(CourseNode* node, int& index) {
+	
+	cout << index << "\t" << node->courseName << "\t" << node->courseID << "\t"
+		<< node->startingDate.y << "/" << node->startingDate.m << "/" << node->startingDate.d << "\t"
+		<< node->startingTime.h << ":" << node->startingTime.m << ":" << node->startingTime.s << "\t"
+		<< node->endingTime.h << ":" << node->endingTime.m << ":" << node->endingTime.s << "\t"
+		<< node->room << endl;
 		node = node->Next;
-  	}
+		index++;
+
+  	
 }
 
 CourseList Permissions(CourseList courses) {
@@ -61,22 +60,24 @@ void lecturer_1_() {
 
 	// Find all active classes:
 	ClassNode* classNode = classes.Head;
-	ClassList activeClass;
+	CourseList courseList;
+	int index = 1;
+	cout << "\n\n" << "No\t" << "Course Name\t" << "Course ID\t" << "Starting Date\t" << "Starting time\t" << "Ending time\t" << "Room" << endl;
 	while (classNode) {
-		if (classNode->active) activeClass.pushBack(classNode);
+		if (classNode->active) {
+			if (!courseList.load(node->semesterID, classNode->classID)) EXITCODE(6);
+			for (CourseNode* coursenode = courseList.Head; coursenode; coursenode = coursenode->Next) {
+				if (isPermissible(coursenode->courseID)) {
+					printCourse(coursenode, index);
+				}
+			}
+			//courseList.destroy();
+		}
+
 		classNode = classNode->Next;
 	}
 
-	// Load all courses from all active classes.
-	classNode = activeClass.Head;
-	while (classNode) {
-		if (!allCourses.load(node->semesterID, classNode->classID)) EXITCODE(6);
-		classNode = classNode->Next;
-	}
-
-	CourseList permissions = Permissions(allCourses);
-
-	printCourseList(permissions);
+	//printCourseList(permissions);
 
 	
 }

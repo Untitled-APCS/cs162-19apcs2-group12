@@ -121,6 +121,7 @@
     <ClCompile Include="engine\SemesterList.cpp" />
     <ClCompile Include="engine\StaffList.cpp" />
     <ClCompile Include="engine\StudentList.cpp" />
+    <ClCompile Include="Lecturer.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Student.cpp" />
   </ItemGroup>
@@ -143,6 +144,7 @@
     <ClInclude Include="engine\StaffList.h" />
     <ClInclude Include="engine\stdc++.h" />
     <ClInclude Include="engine\StudentList.h" />
+    <ClInclude Include="Lecturer.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Student.h" />
   </ItemGroup>
