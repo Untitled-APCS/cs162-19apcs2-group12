@@ -33,6 +33,7 @@ bool Date::wrongFormat() {
 }
 
 
+<<<<<<< HEAD
 void Time::capture() {
     time_t cur;
     time(&cur);
@@ -42,6 +43,18 @@ void Time::capture() {
     m = localTime->tm_min;
     s = localTime->tm_sec;
 }
+=======
+void Date::capture() {
+    time_t cur;
+    time(&cur);
+    tm *localTime = localtime(&cur);
+
+    y = localTime->tm_year + 1900;
+    m = localTime->tm_mon + 1;
+    d = localTime->tm_mday;
+}
+
+>>>>>>> 2167c4143fe059a9f8df1b27408771e5baac04d5
 
 Time::Time() {
     capture();

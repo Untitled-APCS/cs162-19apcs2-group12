@@ -9,14 +9,14 @@ Score::Score() {
 }
 
 CourseStudentNode::CourseStudentNode() {
-    attendance = new int [10];
+    attendance = new bool [10];
     for (int i = 0; i<10; i++)
-        attendance[i] = -1;
+        attendance[i] = false;
 
     Next = nullptr;
 }
 
-CourseStudentNode::CourseStudentNode(string studentID_, Score score_, int *attendance_, bool active_,
+CourseStudentNode::CourseStudentNode(string studentID_, Score score_, bool *attendance_, bool active_,
                                      CourseStudentNode *Next_) {
     studentID = studentID_;
     score = score_;

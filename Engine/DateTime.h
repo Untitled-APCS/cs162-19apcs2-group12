@@ -14,6 +14,7 @@ struct Date {
     Date(int year, int month, int day);
     Date(); //default date is Jan 1st, 2000
     void nextWeek(); //move to next week
+    void capture();
     bool wrongFormat();
 };
 
