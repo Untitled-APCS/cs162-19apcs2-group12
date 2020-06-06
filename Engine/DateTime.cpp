@@ -38,6 +38,16 @@ Date::Date() {
     d = 1;
 }
 
+void Date::capture() {
+    time_t cur;
+    time(&cur);
+    tm *localTime = localtime(&cur);
+
+    y = localTime->tm_year + 1900;
+    m = localTime->tm_mon + 1;
+    d = localTime->tm_mday;
+}
+
 
 Time::Time() {
     capture();

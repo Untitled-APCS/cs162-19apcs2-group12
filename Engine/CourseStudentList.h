@@ -22,12 +22,12 @@ struct Score {
 struct CourseStudentNode {
     string studentID;
     Score score;
-    int *attendance;
+    bool *attendance;
     bool active;
     CourseStudentNode *Next;
 
     CourseStudentNode();
-    CourseStudentNode(string studentID_, Score score_, int *attendance_, bool active_, CourseStudentNode *Next_ = nullptr);
+    CourseStudentNode(string studentID_, Score score_, bool *attendance_, bool active_, CourseStudentNode *Next_ = nullptr);
     void print(); //ONLY use for debugging
 };
 
