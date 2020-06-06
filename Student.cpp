@@ -4,3 +4,7 @@
 
 #include "Student.h"
 
+void student_1() {
+	Time checkinTime;
+
+}
