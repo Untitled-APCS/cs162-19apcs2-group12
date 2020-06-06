@@ -30,8 +30,8 @@ void lecturer_7_();
 
 // Activities:
 bool isPermissible(string courseID);
-void printCourseList(CourseList courses);
-CourseList Permissions(CourseList courses);
-void printStudents(CourseStudentList llist);
+void printCourse(CourseNode* node, int&index);
+void printStudent(StudentNode* node, int &index);
 void printArray(int* arr, int n);
+void printScoreboard(StudentList llist, CourseStudentList llist2);
 
