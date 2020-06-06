@@ -11,6 +11,8 @@
 #define ACTIVE 0
 #define ALL 1
 
+#define forNode(NodeType, i, List) for(TypeNode i = List.Head, i, i = i->Next)
+
 #define CHECKDAMAGED {if (!fin.good()) EXITCODE_V(5, false)};
 
 struct ClassNode {
