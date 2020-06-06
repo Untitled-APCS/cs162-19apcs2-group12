@@ -104,6 +104,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AcademicStaffCourse.cpp" />
     <ClCompile Include="AllRoles.cpp" />
     <ClCompile Include="cs162_19apcs2_untitled.cpp" />
     <ClCompile Include="engine\AppLocation.cpp" />
@@ -124,6 +125,7 @@
     <ClCompile Include="Student.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AcademicStaffCourse.h" />
     <ClInclude Include="AllRoles.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="engine\AppLocation.h" />

@@ -3,6 +3,7 @@
 #define _ACADEMICSTAFFCOURSE_H_
 
 #include "Engine.h"
+#include "Menu.h"
 
 void staff_1_1();
 
