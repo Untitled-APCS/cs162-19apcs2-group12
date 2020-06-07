@@ -75,6 +75,9 @@
     <ClCompile Include="Lecturer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AcademicStaffClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -138,6 +141,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Lecturer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AcademicStaffClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

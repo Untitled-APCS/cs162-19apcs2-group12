@@ -333,24 +333,168 @@ void staff_3_7() {
 
 void staff_3_8() {
     //View list of students of a course.
+    // inputData : semesterID, classID, courseID
+    
+   
+    StudentList stuList;
+    if (!stuList.load()) EXITCODE(6);
+    
+    string semesterID = "", classID = "", courseID = ""; // Data for testing.
+    SemesterList sems; ClassList classes; CourseList courses;
+  
+	if (!sems.load()|| !classes.load()) EXITCODE(6);
+
+	if (sems.find(semesterID, ACTIVE)==nullptr || classes.find(classID, ACTIVE)==nullptr) EXITCODE(6);
+
+	if (!courses.load(semesterID, classID)) EXITCODE(6);
+	CourseNode* node = courses.find(courseID, ACTIVE);
+	if (node == nullptr) EXITCODE(6);
+	int index=1;
+	CourseStudentList llist;
+	if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
+
+	for(CourseStudentNode* node= llist.Head; node; node = node->Next){
+		StudentNode* stuNode = stuList.find(node->studentID, ACTIVE);
+		printStudent(stuNode, index);
+	}
+    // Remember to de allocate s and p
+	//delete [] s;
+	//delete[] p;
+
 
 }
 
 void staff_3_9() {
     //View a scoreboard
+    //inputData: semesterID, classID, courseID
 
+    string semesterID = "", courseID = "", classID = ""; 
+    
+    SemesterList sems; ClassList classes; CourseList courses;
+    if (!sems.load() || !classes.load()) EXITCODE(6);
+
+
+    if (sems.find(semesterID, ACTIVE) == nullptr || classes.find(classID, ACTIVE) == nullptr) EXITCODE(6);
+
+    if (!courses.load(semesterID, classID)) EXITCODE(6);
+
+    CourseNode* node = courses.find(courseID, ACTIVE);
+    if (node == nullptr) EXITCODE(6);
+   
+    CourseStudentList llist;
+    if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
+        
+        
+    StudentList stuList;
+    if (!stuList.load()) EXITCODE(6);
+    cout << "\n\nNo\t" << "Student Name\t" << "Student ID\t" << "Midterm\t" << "Final\t" << "Bonus\t" << "Total" << endl;
+    int index = 1;
+    for (CourseStudentNode* node = llist.Head; node; node = node->Next) {
+        StudentNode* tmp = stuList.find(node->studentID, ACTIVE);
+        if (tmp) {
+            cout << index << "\t" << tmp->studentName << "\t" << tmp->studentID << "\t" << node->score.midterm
+                << "\t" << node->score.final << "\t" << node->score.bonus << "\t" << node->score.total << endl;
+            index++;
+        }
+    }
+
+        
+        //delete[] s;
+        //delete[] p;
 }
 
 void staff_3_10() {
     //Export a scoreboard to file.
+    // inputData: semesterID, classID, courseID, filePath
+    string semesterID = "", courseID = "", classID = "", filePath="";
+
+    SemesterList sems; ClassList classes; CourseList courses;
+    if (!sems.load() || !classes.load()) EXITCODE(6);
+
+
+    if (sems.find(semesterID, ALL) == nullptr || classes.find(classID, ALL) == nullptr) EXITCODE(6);
+
+    if (!courses.load(semesterID, classID)) EXITCODE(6);
+
+    CourseNode* node = courses.find(courseID, ACTIVE);
+    if (node == nullptr) EXITCODE(6);
+    int index = 1;
+    CourseStudentList llist;
+    if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
+    
+    saveCSV(llist, filePath, ScoreBoard);
 }
 
 void staff_3_11() {
     //View an attendance list
+    // inputData: semesterID, classID, courseID
+
+    StudentList stuList;
+	if (!stuList.load()) EXITCODE(6);
+	
+    string semesterID = "", courseID = "", classID = "";
+
+    SemesterList sems; ClassList classes; CourseList courses;
+	if (!sems.load()|| !classes.load()) EXITCODE(6);
+
+	if (sems.find(semesterID, ACTIVE)==nullptr || classes.find(classID, ACTIVE)==nullptr) EXITCODE(6);
+
+	if (!courses.load(semesterID, classID)) EXITCODE(6);
+	CourseNode* node = courses.find(courseID, ACTIVE);
+	if (node == nullptr) EXITCODE(6);
+
+	CourseStudentList llist;
+	if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
+
+
+
+    CourseStudentNode* stuNode = llist.Head;
+    cout << "\n\n" << "No\t" <<"Student Name\t" << "Student ID\t" << "W01\t" << "W02\t" << "W03\t" << "W04\t"
+         << "W05\t" << "W06\t"<< "W07\t" << "W08\t" << "W09\t" << "W10" << endl;
+    int index = 1;
+    while (stuNode) {
+        StudentNode* node = stuList.find(stuNode->studentID, ACTIVE);
+        if (node) {
+            cout << index << "\t" << node->studentName << "\t" << node->studentID << "\t";
+            for (int i = 0; i < 10; i++) {
+                if (i == 9) cout << stuNode->attendance[i] << endl;
+                else cout << stuNode->attendance[i] << ",";
+            }
+            index++;
+        }
+        stuNode = stuNode->Next;
+        
+
+    }
+    // Remember to de allocate:
+   // delete[]s;
+    //delete[]p;
+
+
+
 }
+
+
 
 void staff_3_12() {
     //Export an attendance list to file.
+    string semesterID = "", courseID = "", classID = "", filePath = "";
+
+    SemesterList sems; ClassList classes; CourseList courses;
+    if (!sems.load() || !classes.load()) EXITCODE(6);
+
+
+    if (sems.find(semesterID, ALL) == nullptr || classes.find(classID, ALL) == nullptr) EXITCODE(6);
+
+    if (!courses.load(semesterID, classID)) EXITCODE(6);
+
+    CourseNode* node = courses.find(courseID, ACTIVE);
+    if (node == nullptr) EXITCODE(6);
+    int index = 1;
+    CourseStudentList llist;
+    if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
+
+    saveCSV(llist, filePath, AttendanceList);
 }
 
 bool checkStaff_3_1() {
@@ -455,5 +599,49 @@ bool checkLecturer_6() {
 
 bool checkLecturer_7() {
     return false;
+}
+
+//---------------------------
+
+void ScoreBoardFormat(CourseStudentList llist, ofstream &fout) {
+    StudentList stuList;
+    if (!stuList.load()) EXITCODE(6);
+    fout << "\n\nNo," <<  "Student Name," << "Student ID," << "Midterm," << "Final," << "Bonus," << "Total" << endl;
+    int index = 1;
+    for (CourseStudentNode* node = llist.Head; node; node = node->Next) {
+        StudentNode* tmp = stuList.find(node->studentID, ACTIVE);
+        fout << index << "," << tmp->studentName << "," << tmp->studentID << "," << node->score.midterm
+            << "," << node->score.final << "," << node->score.bonus << "," << node->score.total << endl;
+        index++;
+    }
+}
+
+void AttendanceListFormat(CourseStudentList llist, ofstream& fout) {
+    StudentList stuList;
+    if (!stuList.load()) EXITCODE(6);
+    fout << "No, Student Name, Student ID, W01, W02, W03, W04, W05, W06, W07, W08, W09, W10" << endl;
+    int index = 1;
+    for (CourseStudentNode* node = llist.Head; node; node = node->Next) {
+        StudentNode* tmp = stuList.find(node->studentID, ACTIVE);
+        fout << index << "," << tmp->studentName << "," << tmp->studentID << ",";
+        for (int i = 0; i < 10; i++) {
+            if (i == 9) fout << node->attendance[i] << endl;
+            else fout << node->attendance[i] << ",";
+        }
+        index++;
+    }
+
+}
+
+void saveCSV(CourseStudentList llist, string filePath, bool mode) {
+    ofstream fout;
+    fout.open(filePath);
+    if (!fout.is_open()) {
+        cout << "\n\nCannot open this file" << endl;
+        return;
+    }
+    if (mode == ScoreBoard) ScoreBoardFormat(llist, fout);
+    else if (mode == AttendanceList) AttendanceListFormat(llist, fout);
+    fout.close();
 }
 

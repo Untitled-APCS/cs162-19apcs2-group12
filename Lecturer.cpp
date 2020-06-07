@@ -294,6 +294,10 @@ void lecturer_2_() {
 //	if (!stuList.load()) EXITCODE(6);
 //	
 //  string semesterID = s[0], courseID = s[2], classID = s[1];
+//	if (!isPermissible(courseID)) {
+//		cout << "\n\nYou are not allowed to access this course" << endl;
+//		return;
+//	}
 //	SemesterList sems; ClassList classes; CourseList courses;
 //	if (!sems.load()|| !classes.load()) EXITCODE(6);
 
@@ -326,6 +330,10 @@ void lecturer_3_() {
 //	if (!stuList.load()) EXITCODE(6);
 //	
 //  string semesterID = s[0], courseID = s[2], classID = s[1];
+//	if (!isPermissible(courseID)) {
+//		cout << "\n\nYou are not allowed to access this course" << endl;
+//		return;
+//  }
 //	SemesterList sems; ClassList classes; CourseList courses;
 //	if (!sems.load()|| !classes.load()) EXITCODE(6);
 
@@ -502,7 +510,7 @@ void lecturer_7_() {
 /*
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
-	printScoreboard(stulist, llist);
+	printScoreboard(stuList, llist);
 	
 */
 	//delete[] s;

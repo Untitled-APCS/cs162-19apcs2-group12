@@ -7,6 +7,7 @@
 
 #include "Optimization.h"
 
+
 const string ClassListHeader = "No,Class ID";
 const int numCommaClassList = 1;
 
@@ -52,6 +53,9 @@ bool isStudentListCSV(string filePath);
 bool isScoreBoardListCSV(string filePath);
 
 int numComma(string s);
+
+
+
 
 
 #endif //CS162_19APCS2_GROUP12_FILEMANAGEMENT_H

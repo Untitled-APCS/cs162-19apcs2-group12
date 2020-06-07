@@ -6,6 +6,9 @@
 #include "Menu.h"
 #include "Lecturer.h"
 
+#define ScoreBoard 1
+#define AttendanceList 0
+
 void staff_1_1();
 
 void staff_1_2();
@@ -69,6 +72,11 @@ bool checkStaff_1_2();
 bool checkStaff_1_3();
 
 bool checkStaff_1_4();
+
+
+void ScoreBoardFormat(CourseStudentList llist, ofstream& fout);
+void AttendanceListFormat(CourseStudentList llist, ofstream& fout);
+void saveCSV(CourseStudentList llist, string filePath, bool mode);
 
 
 #endif
