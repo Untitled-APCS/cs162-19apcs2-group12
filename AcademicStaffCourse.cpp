@@ -155,9 +155,9 @@ bool checkStaff_1_3(string* s,int n) {
     }
     if (semesterList.find(s[0],ACTIVE)->active == 1) {
         cout << "Cannot delete a current semester.";
-        EXITCODE_V(6, false);
+        return false;
     }
-    return false;
+    return true;
 }
 
 bool checkStaff_1_4() {
@@ -192,7 +192,7 @@ void staff_3_1() {
     courseList.save(semesterID, classID);
     CourseNode* courseNode = courseList.Head;
     while (courseNode != nullptr) {
-        courseStudentList.load(semesterID, classID, courseNode->courseID);
+        //courseStudentList.load(semesterID, classID, courseNode->courseID);
         courseStudentList.save(semesterID, classID, courseNode->courseID);
         if (!lecturerList.find(courseNode->lecturerID, ACTIVE)){
             if (!lecturerList.find(courseNode->lecturerID, ALL)){
@@ -210,6 +210,7 @@ void staff_3_1() {
     lecturerList.save();
     //delete[]s;
     //delete[]p;
+    cout << "Import successfully";
     staffCourseMenu();
     return;
 }
@@ -236,7 +237,7 @@ void staff_3_2() {
     if (!courseList.load(semesterID, classID))
         EXITCODE(6);
     //p[0]={inputCourse}
-    s[0] = "";
+    //s[0] = "";
     //inputData(s,p,0,1,checkStaff_3_2);
     CourseNode *courseNode = new CourseNode;
     courseList.pushBack(courseNode);
@@ -264,17 +265,22 @@ void staff_3_4() {
     //Remove a specific course
     SemesterList semesterList;
     ClassList classList;
-    if (!semesterList.load()||!!classList.load())
+    if (!semesterList.load()||!classList.load())
         EXITCODE(6);
-    //    string *s = new string[2]{"", ""};
-    //    fPtr *p = new fPtr[2]{inputSemester, inputClass};
-    //    inputData(s, p, 0, 2, checkStaff_3_4);
-    string semesterID, classID;
+    //    string *s = new string[3]{"", "",""};
+    //    fPtr *p = new fPtr[2]{inputSemester, inputClass,inputCourse};
+    //    inputData(s, p, 0, 3, checkStaff_3_4);
+    string semesterID, classID,courseID;
     //    semesterID = s[0];
     //    classID = s[1];
+    //    courseID = s[3];
     CourseList courseList;
     if (!courseList.load(semesterID, classID))
         EXITCODE(6);
+    courseList.find(courseID, ACTIVE)->active = 0;
+    cout << "Successfully deleted course";
+    staffCourseMenu();
+    return;
 }
 
 void staff_3_5() {
@@ -302,16 +308,20 @@ void staff_3_6() {
     ClassList classList;
     if (!semesterList.load()|| !classList.load())
         EXITCODE(6);
-//    string *s = new string[2]{"", ""};
-//    fPtr *p = new fPtr[2]{inputSemester, inputClass};
-//    inputData(s, p, 0, 2, checkStaff_3_5);
-    string semesterID, classID;
+//    string *s = new string[4]{"", "", "", ""};
+//    fPtr *p = new fPtr[4]{inputSemester, inputClass,inputCourse, inputStudent};
+//    inputData(s, p, 0, 4, checkStaff_3_5);
+    string semesterID, classID,courseID,studentID;
     //    semesterID = s[0];
     //    classID = s[1];
+    //    courseID=s[2];
+    //    studentID=s[3];
     CourseList courseList;
-    if (!courseList.load(semesterID, classID))
+    CourseStudentList courseStudentList;
+    if (!courseList.load(semesterID, classID)||!courseStudentList.load(semesterID,classID,courseID))
         EXITCODE(6);
-
+    courseStudentList.find(studentID, ACTIVE)->active = 0;
+    cout << "/n/nSuccessfully deleted student " << studentID;
 }
 
 void staff_3_7() {
@@ -509,7 +519,20 @@ bool checkStaff_3_3() {
     return false;
 }
 
-bool checkStaff_3_4() {
+bool checkStaff_3_4(string* s,int n) {
+    string semesterID, classID, courseID;
+    //    semesterID = s[0];
+    //    classID = s[1];
+    //    courseID = s[3];
+    CourseList courseList;
+    if (!courseList.load(semesterID, classID)) {
+        EXITCODE_V(6, false);
+    }
+    if (courseList.find(courseID, ACTIVE) == nullptr) {
+        cout << "Course not found.";
+        return false;
+    }
+    else return true;
     return false;
 }
 
@@ -517,8 +540,22 @@ bool checkStaff_3_5() {
     return false;
 }
 
-bool checkStaff_3_6() {
-    return false;
+bool checkStaff_3_6(string* s,int n) {
+    string semesterID, classID, courseID, studentID;
+    semesterID = s[0];
+    classID = s[1];
+    courseID=s[2];
+    studentID=s[3];
+    SemesterList semesterList;
+    ClassList classList;
+    CourseStudentList courseStudentList;
+    if (!courseStudentList.load(semesterID,classID,courseID))
+        EXITCODE_V(6,false);
+    if (courseStudentList.find(studentID, ACTIVE)==nullptr) {
+        cout << "Student not found";
+        return false;
+    }
+    return true;
 }
 
 bool checkStaff_3_7() {
