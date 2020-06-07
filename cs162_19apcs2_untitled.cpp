@@ -11,8 +11,9 @@ int main(int argc, const char **argv) {
 //    fileLocation = argv[0];
 //    while (fileLocation.size() > 0 && fileLocation[fileLocation.size()-1] != '/')
 //        fileLocation.pop_back();
-    logo();
-    logInMenu();
+    //logo();
+    //logInMenu();
+    lecturer_1_();
 
     //cout << getHashedPassword("ltathao");
 

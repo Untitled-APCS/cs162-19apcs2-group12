@@ -50,7 +50,7 @@ void printCourse(CourseNode* node) {
 
 
 void student_3() {
-	//inputData : semesterID, studentID;
+/*	//inputData : semesterID, studentID;
 	// Print courseName, courseID, Day, starting time, ending time, rooms
 	CourseStudentList llist;
 	CourseList courses;
@@ -73,12 +73,12 @@ void student_3() {
 
 		courses.destroy();
 	}
-
+	*/
 }
 
 
 void student_4() {
-	// inputData: semesterID, studentID
+/*	// inputData: semesterID, studentID
 	CourseStudentList llist;
 	CourseList courses;
 	ClassList classes;
@@ -102,5 +102,5 @@ void student_4() {
 
 		courses.destroy();
 	}
-
+	*/
 }

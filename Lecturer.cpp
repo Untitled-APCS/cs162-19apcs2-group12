@@ -76,7 +76,7 @@ bool checklecturer_4(string* s, int n) {
 				cout << "\n\nThis course does not exist" << endl;
 				return false;
 			}
-			if (!stuList.load(semNode->semesterID, classNode->classID, courseNode->courseID)) EXITCODE(6, false);
+			if (!stuList.load(semNode->semesterID, classNode->classID, courseNode->courseID)) EXITCODE_V(6, false);
 			CourseStudentNode* stuNode = stuList.find(s[n - 1], ACTIVE);
 			if (stuNode == nullptr) {
 				cout << "\n\nThis student does not exist" << endl;
@@ -115,7 +115,7 @@ bool checklecturer_5(string* s, int n) {
 				cout << "\n\nThis course does not exist" << endl;
 				return false;
 			}
-			if (!stuList.load(semNode->semesterID, classNode->classID, courseNode->courseID)) EXITCODE(6, false);
+			if (!stuList.load(semNode->semesterID, classNode->classID, courseNode->courseID)) EXITCODE_V(6, false);
 			CourseStudentNode* stuNode = stuList.find(s[3], ACTIVE);
 			if (stuNode == nullptr) {
 				cout << "\n\nThis student does not exist" << endl;
@@ -157,7 +157,7 @@ bool checklecturer_6(string * s, int n) {
 				cout << "\n\nThis course does not exist" << endl;
 				return false;
 			}
-			if (!stuList.load(semNode->semesterID, classNode->classID, courseNode->courseID)) EXITCODE(6, false);
+			if (!stuList.load(semNode->semesterID, classNode->classID, courseNode->courseID)) EXITCODE_V(6, false);
 			CourseStudentNode* stuNode = stuList.find(s[n - 1], ACTIVE);
 			if (stuNode == nullptr) {
 				cout << "\n\nThis student does not exist" << endl;

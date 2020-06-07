@@ -5,6 +5,13 @@
 #include "DateTime.h"
 
 
+Date::Date() {
+   /* y = year;
+    m = month;
+    d = day;
+    */
+    capture();
+}
 Date::Date(int year, int month, int day) {
     y = year;
     m = month;
@@ -33,7 +40,7 @@ bool Date::wrongFormat() {
 }
 
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 void Time::capture() {
     time_t cur;
     time(&cur);
@@ -43,7 +50,7 @@ void Time::capture() {
     m = localTime->tm_min;
     s = localTime->tm_sec;
 }
-=======
+//=======
 void Date::capture() {
     time_t cur;
     time(&cur);
@@ -54,13 +61,13 @@ void Date::capture() {
     d = localTime->tm_mday;
 }
 
->>>>>>> 2167c4143fe059a9f8df1b27408771e5baac04d5
+//>>>>>>> 2167c4143fe059a9f8df1b27408771e5baac04d5
 
 Time::Time() {
     capture();
 }
 
-void Time::capture() {
+/*void Time::capture() {
     time_t cur;
     time(&cur);
     tm *localTime = localtime(&cur);
@@ -68,7 +75,7 @@ void Time::capture() {
     h = localTime->tm_hour;
     m = localTime->tm_min;
     s = localTime->tm_sec;
-}
+}*/
 
 Time::Time(int hour, int minute, int second) {
     h = hour;

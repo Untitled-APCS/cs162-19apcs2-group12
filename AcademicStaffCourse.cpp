@@ -148,7 +148,7 @@ bool checkStaff_1_2() {
 bool checkStaff_1_3(string* s,int n) {
     SemesterList semesterList;
     if (!semesterList.load())
-        EXITCODE(6);
+        EXITCODE_V(6, false);
     if (!semesterList.find(s[0], ACTIVE)){
         cout << "Semester does not exist";
         EXITCODE_V(6, false);
