@@ -272,17 +272,7 @@ void lecturer_1_() {
 
 	
 }
-void saveCSV(CourseStudentList llist, string filePath) {
-	int index = 1;
-	cout << "No,Student ID,Midterm,Final,Bonus,Total" << endl;
-	CourseStudentNode* node = llist.Head;
-	while (node) {
-		cout << index << "," << node->studentID << "," << node->score.midterm << "," << node->score.final
-			<< "," << node->score.bonus << "," << node->score.total << endl;
-		node = node->Next;
-		index++;
-	}
-}
+
 //---------------------------------------------------------------------------------------------------
 void lecturer_2_() {
 //	input semester, class, course
@@ -308,7 +298,7 @@ void lecturer_2_() {
 //	if (node == nullptr) EXITCODE(6);
 //	int index=1;
 //	CourseStudentList llist;
-//	if (!llist.load(semesterID, classID, courseID) EXITCODE(6);
+//	if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
 
 //	for(CourseStudentNode* node= llist.Head; node; node = node->next){
 //		StudentNode* stuNode = stuList.find(node->studentID, ACTIVE);
@@ -421,6 +411,7 @@ void lecturer_5_() {
 	if (!stuList.load()) EXITCODE(6);
 		
 	string semesterID = s[0], courseID = s[2], classID = s[1], filePath = s[3];
+	
 	SemesterList sems; ClassList classes; CourseList courses;
 	if (!sems.load()|| !classes.load()) EXITCODE(6);
 	if (stuList.find(studentID, ACTIVE)== nullptr) EXITCODE(6);
@@ -433,8 +424,10 @@ void lecturer_5_() {
 	int index=1;
 	CourseStudentList llist;
 	if (!llist.load(semesterID, classID, courseID) EXITCODE(6);
-	ScoreboardList board;
-	if (!board.loadCSV()) 
+
+	if (!llist.loadCSV()) return ;
+	llist.save();
+
 	delete []s;
 	delete[]p;
 	
