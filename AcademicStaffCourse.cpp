@@ -172,17 +172,20 @@ void staff_3_1() {
     //load
     //loadCSV
     //save
+
+    string semesterID, classID, filepath;
     SemesterList semesterList;
     ClassList classList;
     CourseList courseList;
     CourseStudentList courseStudentList;
     LecturerList lecturerList;
+   
     if (!semesterList.load()|| !classList.load(),!lecturerList.load())
         EXITCODE(6);
 //    string *s = new string[3]{"", "", ""};
 //    fPtr *p = new fPtr[3]{inputSemester, inputClass, filepath};
 //    inputData(s, p, 0, 3, checkStaff_3_1);
-    string semesterID, classID, filepath;
+   
 //    semesterID = s[0];
 //    classID = s[1];
 //    filepath = s[2];
@@ -223,17 +226,20 @@ void staff_3_2() {
     //Input courseID, courseName, lecturerID, startingDate, startingTime, endingTime, room
     //courseID not exist, lecturerID must exist
     
+    string semesterID, classID;
     SemesterList semesterList;
     ClassList classList;
+    CourseList courseList;
+   
     if (!semesterList.load()|| !classList.load())
         EXITCODE(6);
     string *s = new string[2]{"", ""};
     //fPtr *p = new fPtr[2]{inputSemester, inputClass};
     //inputData(s, p, 0, 2, checkStaff_1_1);
-    string semesterID, classID;
+    
     semesterID = s[0];
     classID = s[1];
-    CourseList courseList;
+    
     if (!courseList.load(semesterID, classID))
         EXITCODE(6);
     //p[0]={inputCourse}
@@ -246,35 +252,41 @@ void staff_3_2() {
 
 void staff_3_3() {
     //Update a specific course
+    string semesterID, classID;
     SemesterList semesterList;
     ClassList classList;
+    CourseList courseList;
+    
     if (!semesterList.load()||!classList.load())
         EXITCODE(6);
     //    string *s = new string[2]{"", ""};
     //    fPtr *p = new fPtr[2]{inputSemester, inputClass};
     //    inputData(s, p, 0, 2, checkStaff_3_3);
-    string semesterID, classID;
+    
     //    semesterID = s[0];
     //    classID = s[1];
-    CourseList courseList;
+    
     if (!courseList.load(semesterID,classID))
         EXITCODE(6);
 }
 
 void staff_3_4() {
     //Remove a specific course
+    string semesterID, classID, courseID;
     SemesterList semesterList;
     ClassList classList;
+    CourseList courseList;
+    
     if (!semesterList.load()||!classList.load())
         EXITCODE(6);
     //    string *s = new string[3]{"", "",""};
     //    fPtr *p = new fPtr[2]{inputSemester, inputClass,inputCourse};
     //    inputData(s, p, 0, 3, checkStaff_3_4);
-    string semesterID, classID,courseID;
+    
     //    semesterID = s[0];
     //    classID = s[1];
     //    courseID = s[3];
-    CourseList courseList;
+    
     if (!courseList.load(semesterID, classID))
         EXITCODE(6);
     courseList.find(courseID, ACTIVE)->active = 0;
@@ -285,17 +297,19 @@ void staff_3_4() {
 
 void staff_3_5() {
     //View list of courses
+    string semesterID, classID;
     SemesterList semesterList;
     ClassList classList;
+    
     if (!semesterList.load()|| !classList.load())
         EXITCODE(6);
-    //    string *s = new string[2]{"", ""};
+//    string *s = new string[2]{"", ""};
 //    fPtr *p = new fPtr[2]{inputSemester, inputClass};
 //    inputData(s, p, 0, 2, checkStaff_3_5);
+    
+//    semesterID = s[0];
+//    classID = s[1];
 
-    string semesterID, classID;
-    //    semesterID = s[0];
-    //    classID = s[1];
     CourseList courseList;
     if (!courseList.load(semesterID, classID))
         EXITCODE(6);
@@ -304,41 +318,57 @@ void staff_3_5() {
 
 void staff_3_6() {
     //Remove a specific student from a course.
+    string semesterID, classID, courseID, studentID;
     SemesterList semesterList;
     ClassList classList;
+    CourseList courseList;
+    CourseStudentList courseStudentList;
+    
     if (!semesterList.load()|| !classList.load())
         EXITCODE(6);
 //    string *s = new string[4]{"", "", "", ""};
 //    fPtr *p = new fPtr[4]{inputSemester, inputClass,inputCourse, inputStudent};
 //    inputData(s, p, 0, 4, checkStaff_3_5);
-    string semesterID, classID,courseID,studentID;
+    
     //    semesterID = s[0];
     //    classID = s[1];
     //    courseID=s[2];
     //    studentID=s[3];
-    CourseList courseList;
-    CourseStudentList courseStudentList;
+    
     if (!courseList.load(semesterID, classID)||!courseStudentList.load(semesterID,classID,courseID))
         EXITCODE(6);
     courseStudentList.find(studentID, ACTIVE)->active = 0;
     cout << "/n/nSuccessfully deleted student " << studentID;
+    staffCourseMenu();
+    return;
 }
 
 void staff_3_7() {
     //Add a specific student to a course.
+    string semesterID, classID, studentID, courseID;
     SemesterList semesterList;
     ClassList classList;
+    CourseList courseList;
+    CourseStudentList courseStudentList;
+    StudentList studentList;
+
     if (!semesterList.load()|| !classList.load())
         EXITCODE(6);
-    //    string *s = new string[2]{"", ""};
-    //    fPtr *p = new fPtr[2]{inputSemester, inputClass};
-    //    inputData(s, p, 0, 2, checkStaff_3_5);
-    string semesterID, classID;
+    //    string *s = new string[4]{"", "","",""};
+    //    fPtr *p = new fPtr[4]{inputSemester, inputClass, inputStudent, inputCourse};
+    //    inputData(s, p, 0, 4, checkStaff_3_7);
+    
     //    semesterID = s[0];
     //    classID = s[1];
-    CourseList courseList;
-    if (!courseList.load(semesterID, classID))
+    //    studentID=s[2];
+    //    courseID=s[3];
+    
+    
+    if (!courseList.load(semesterID, classID)|| !courseStudentList.load(semesterID, classID, courseID))
         EXITCODE(6);
+    StudentNode* student = new StudentNode;
+    //Get information from input.
+
 }
 
 void staff_3_8() {
