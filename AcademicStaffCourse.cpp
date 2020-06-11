@@ -386,8 +386,6 @@ void staff_3_2() {
     
     semesterID = s[0];
     classID = s[1];
-    semesterID = "2020-2021hk1";
-    classID = "18ctt1";
     
     if (!courseList.load(semesterID, classID))
         EXITCODE(6);
@@ -483,7 +481,8 @@ void staff_3_5() {
     
 //    semesterID = s[0];
 //    classID = s[1];
-
+    semesterID = "2020-2021hk1";
+    classID = "18ctt1";
     CourseList courseList;
     if (!courseList.load(semesterID, classID))
         EXITCODE(6);
@@ -497,7 +496,12 @@ void staff_3_5() {
         cout << courseList.Head->startingDate.y <<" "<< courseList.Head->startingDate.m <<" "<< courseList.Head->startingDate.y << endl;
         cout << courseList.Head->startingTime.h << " " << courseList.Head->startingTime.m << " " << courseList.Head->startingTime.s;
         cout << courseList.Head->endingTime.h << " " << courseList.Head->endingTime.m << " " << courseList.Head->endingTime.s;
+        cout << endl << endl;
+        courseList.Head = courseList.Head->Next;
     }
+    cout << "\n\n[enter]";
+    staffCourseMenu();
+    return;
 }
 
 void staff_3_6() {

@@ -50,14 +50,11 @@ int main(int argc, const char **argv) {
 //        fileLocation.pop_back();
     logo();
     logInMenu();
-<<<<<<< HEAD
     
     //lecturer_1_();
     //staff_2_1();
     //cout << getCheckInCode("2019-2020-HK2", "19ctt2", "cs162", 3);
-=======
     //lecturer_1_();
->>>>>>> f6079b20d5e4a595bda7529b7c3361033bb020c2
 
     //cout << getCheckInCode("2020-2021hk1", "18CTT1", "cs251", 1);
 
