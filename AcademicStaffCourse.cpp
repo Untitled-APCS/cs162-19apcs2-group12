@@ -46,6 +46,7 @@ void staff_1_1() {
     string* s = new string[1]{ "" };
     //fPtr* p = new fPtr[1]{ inputSemester};
     //inputData(s, p, 0, 1, checkStaff_1_1);
+    semesterNode->current = 0;
     semesterNode->active = 1;
     semesterNode->semesterID = s[0];
     semesterList.pushBack(semesterNode);
@@ -94,9 +95,11 @@ void staff_1_3() {
     //fPtr* p = new fPtr[1]{ inputSemester};
     //inputData(s, p, 0, 1, checkStaff_1_3);
     semesterList.find(s[0], ACTIVE)->active = 0;
+    semesterList.save();
     delete[]s;
     //delete[]p;
-    staffSemesterMenu();
+    cout << "Deleted successfully";
+    //staffSemesterMenu();
     return;
 }
 
@@ -132,7 +135,7 @@ void staff_1_4() {
             cout << endl;
     }
     delete[]temp;
-    staffSemesterMenu();
+    //staffSemesterMenu();
     return;
 }
 
@@ -153,7 +156,7 @@ bool checkStaff_1_3(string* s,int n) {
         cout << "Semester does not exist";
         EXITCODE_V(6, false);
     }
-    if (semesterList.find(s[0],ACTIVE)->active == 1) {
+    if (semesterList.find(s[0],ACTIVE)->current == 1) {
         cout << "Cannot delete a current semester.";
         return false;
     }
