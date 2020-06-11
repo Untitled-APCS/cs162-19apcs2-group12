@@ -104,13 +104,14 @@ void staff_2_1() {
                     dupp->classID = newclassNode->classID;
                 }
             }
-            else
-                classList.pushBack(newclassNode);
+            
         }
-
-
+        
+        else
+            classList.pushBack(newclassNode);
 
     }
+    classList.save();
 }
 
 void staff_2_2() {
@@ -269,15 +270,20 @@ void staff_5_1()
         EXITCODE(4);
 
     StudentList studentList;
-    StudentNode studentNode;
+
+    ClassStudentList classStudentList;
 
     if (!studentList.load())
+        EXITCODE(6);
+
+    if (!classStudentList.load(classID))
         EXITCODE(6);
 
     string temp;
     getline(fin, temp, '\n');
 
     StudentNode* newStudentNode = nullptr;
+    ClassStudentNode* newClassStudentNode = nullptr;
 
     bool skipAll = false;
     bool replaceAll = false;
@@ -293,7 +299,9 @@ void staff_5_1()
         newStudentNode->DOB.m = 10 * (temp[5] - '0') + (temp[6] - '0');
         newStudentNode->DOB.d = 10 * (temp[8] - '0') + (temp[9] - '0');
         getline(fin, newStudentNode->classID);
-
+        
+        newClassStudentNode->studentID = newStudentNode->studentID;
+        
         StudentNode* dupp;
         string pw;
 
@@ -369,23 +377,79 @@ void staff_5_1()
                 }
             }
             else
+            {
                 studentList.pushBack(newStudentNode);
+                classStudentList.pushBack(newClassStudentNode);
+            }
         }
         studentList.save();
+        classStudentList.save(classID);
+
         cout << "\n\nImport successfully";
+        cout << "Data saved to student.txt and " << classID << "-student.txt";
         fin.close();
-        staffClassMenu();
+        staffStudentMenu();
         return;
     }
 }
 
-void staff_5_2();
+void staff_5_2()
+{
+    //Create a new student
+    string classID;
 
-void staff_5_3();
+    cout << "\n\nClass ID: ";
+    getline(cin, classID, '\n');
 
-void staff_5_4();
+    normalize(classID);
 
-void staff_5_5();
+    StudentList studentList;
+
+    ClassStudentList classStudentList;
+
+    if (!studentList.load())
+        EXITCODE(6);
+
+    if (!classStudentList.load(classID))
+        EXITCODE(6);
+
+    StudentNode* newStudentNode = nullptr;
+    ClassStudentNode* newClassStudentNode = nullptr;
+
+    string temp;
+
+    cout << "Student's ID: ";
+    getline(cin, newStudentNode->studentID, '\n');
+    cout << "Student's Full Name: ";
+    getline(cin, newStudentNode->studentName, '\n');
+
+    cout << "Student's Date of Birth:\n Date: ";
+    getline(cin, temp, '\n');
+    newStudentNode->DOB.d = stoi(temp);
+    cout << "\nMonth: ";
+    getline(cin, temp, '\n');
+    newStudentNode->DOB.m = stoi(temp);
+    cout << "\nYear: ";
+    getline(cin, temp, '\n');
+    newStudentNode->DOB.y = stoi(temp);
+
+    cout << "Enter ";
+}
+
+void staff_5_3()
+{
+    //Update a specific student
+}
+
+void staff_5_4()
+{
+    //Remove a specific student
+}
+
+void staff_5_5()
+{
+    //View list of students of a class
+}
 
 bool checkStaff_5_1();
 
