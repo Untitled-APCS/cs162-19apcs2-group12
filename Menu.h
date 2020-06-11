@@ -8,6 +8,7 @@
 #include "Engine/Optimization.h"
 #include "AllRoles.h"
 #include "Student.h"
+#include "AcademicStaffCourse.h"
 
 void mainMenu();
 

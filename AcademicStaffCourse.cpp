@@ -67,7 +67,11 @@ void staff_1_1() {
     }
     delete[]s;
     //delete[]p;
-    //staffSemesterMenu();
+    cout << "\n\nCreated successfully!";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
+    staffSemesterMenu();
     return;
 }
 
@@ -113,7 +117,7 @@ void staff_1_3() {
     delete[]s;
     //delete[]p;
     cout << "Deleted successfully";
-    //staffSemesterMenu();
+    staffSemesterMenu();
     return;
 }
 
@@ -149,7 +153,7 @@ void staff_1_4() {
             cout << endl;
     }
     delete[]temp;
-    //staffSemesterMenu();
+    staffSemesterMenu();
     return;
 }
 
@@ -210,7 +214,6 @@ void staff_3_1() {
 //    filepath = s[2];
     
     //loadCSV
-    filepath = "E:/University Works/Project/cs162-19apcs2-group12/cmake-build-debug/Semester2/18ctt1_courselist.csv";
     string temp, temp2;
     ifstream finput;
     finput.open(filepath);
@@ -349,7 +352,10 @@ void staff_3_1() {
     lecturerList.save();
     //delete[]s;
     //delete[]p;
-    cout << "Import successfully";
+    cout << "\n\nImport successfully. [enter]\n";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
     staffCourseMenu();
     return;
 }

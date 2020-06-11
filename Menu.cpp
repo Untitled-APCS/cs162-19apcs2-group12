@@ -245,16 +245,16 @@ void staffSemesterMenu() {
 
         switch (keyPress) {
             case '1':
-                testStaffSemester();
+                staff_1_1();
                 break;
             case '2':
-                testStaffSemester();
+                staff_1_2();
                 break;
             case '3':
-                testStaffSemester();
+                staff_1_3();
                 break;
             case '4':
-                testStaffSemester();
+                staff_1_4();
                 break;
             case '`':
                 staffMenu();
@@ -335,42 +335,42 @@ void staffCourseMenu() {
 
         switch (keyPress) {
             case '1':
-                testStaffCourse();
+                staff_3_1();
                 break;
             case '2':
-                testStaffCourse();
+                staff_3_2();
                 break;
             case '3':
-                testStaffCourse();
+                staff_3_3();
                 break;
             case '4':
-                testStaffCourse();
+                staff_3_4();
                 break;
             case '5':
-                testStaffCourse();
+                staff_3_5();
                 break;
             case '6':
-                testStaffCourse();
+                staff_3_6();
                 break;
             case '7':
-                testStaffCourse();
+                staff_3_7();
                 break;
             case '8':
-                testStaffCourse();
+                staff_3_8();
                 break;
             case '9':
-                testStaffCourse();
+                staff_3_9();
                 break;
             case '0':
-                testStaffCourse();
+                staff_3_10();
                 break;
             case 'A':
             case 'a':
-                testStaffCourse();
+                staff_3_11();
                 break;
             case 'B':
             case 'b':
-                testStaffCourse();
+                staff_3_12();
                 break;
             case '`':
                 staffMenu();
