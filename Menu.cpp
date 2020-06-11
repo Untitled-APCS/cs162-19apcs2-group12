@@ -405,25 +405,25 @@ void lecturerMenu() {
 
         switch (keyPress) {
             case '1':
-                testLecturer();
+                lecturer_1_();
                 break;
             case '2':
-                testLecturer();
+                lecturer_2_();
                 break;
             case '3':
-                testLecturer();
+                lecturer_3_();
                 break;
             case '4':
-                testLecturer();
+                lecturer_4_();
                 break;
             case '5':
-                testLecturer();
+                lecturer_5_();
                 break;
             case '6':
-                testLecturer();
+                lecturer_6_();
                 break;
             case '7':
-                testLecturer();
+                lecturer_7_();
                 break;
             case 'P':
             case 'p':

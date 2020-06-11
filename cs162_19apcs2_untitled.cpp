@@ -26,10 +26,11 @@ int main(int argc, const char **argv) {
 //    fileLocation = argv[0];
 //    while (fileLocation.size() > 0 && fileLocation[fileLocation.size()-1] != '/')
 //        fileLocation.pop_back();
-    //logo();
-    //logInMenu();
+    logo();
+    logInMenu();
+    
     //lecturer_1_();
-    staff_2_1();
+    //staff_2_1();
     //cout << getCheckInCode("2019-2020-HK2", "19ctt2", "cs162", 3);
 
     //string s;
