@@ -23,14 +23,14 @@ bool cmpStringNode(const StringNode &a, const StringNode &b);
 
 int getMin(StringNode *stringList, double weight);
 
-void getRecStudent(string *Rec, string hint);
+bool getRecStudent(string *Rec, string hint);
 
-void getRecClass(string *Rec, string hint);
+bool getRecClass(string *Rec, string hint);
 
-void getRecSemester(string *Rec, string hint);
+bool getRecSemester(string *Rec, string hint);
 
-void getRecLecturer(string *Rec, string hint);
+bool getRecLecturer(string *Rec, string hint);
 
-void getRecCourse(string semesterID, string classID, string *Rec, string hint);
+bool getRecCourse(string semesterID, string classID, string *Rec, string hint);
 
 #endif //CS162_19APCS2_GROUP12_RECOMMENDATIONSYSTEM_H

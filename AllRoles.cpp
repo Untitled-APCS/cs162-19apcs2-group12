@@ -77,7 +77,9 @@ void logIn() {
     while (true) {
         cout << "Your password: ";
 
+        fflush(stdin);
         getline(cin, password);
+        fflush(stdin);
 
         if (password.find('`') != string::npos) {
             cout << "\n\nGetting you back to the entrance... [enter]";

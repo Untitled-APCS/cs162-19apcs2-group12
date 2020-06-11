@@ -19,6 +19,11 @@
 #define MALE 1
 #define FEMALE 0
 
+#define SKIP 1
+#define REPLACE 2
+#define SKIP_ALL 3
+#define REPLACE_ALL 4
+
 #define ENTER (char) 13
 #define EXITCODE(n) {exitProgram(n); return;}
 #define EXITCODE_V(n, return_value) {exitProgram(n); return return_value;}

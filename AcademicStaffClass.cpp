@@ -28,21 +28,26 @@ void staff_2_1() {
     string temp;
     getline(fin, temp, '\n');
 
+    StudentNode* newStudentNode = nullptr;
+
     while (getline(fin, temp, ','))
     {
-        StudentNode* newStudentNode = new StudentNode;
+        newStudentNode = new StudentNode;
         getline(fin, temp,',');
         getline(fin, newStudentNode->studentID, ',');
         getline(fin, newStudentNode->studentName, ',');
         /*getline(fin, newStudentNode->DOB.y, '-');
         getline(fin, newStudentNode->DOB.m, '-');
         getline(fin, newStudentNode->DOB.d, ',');*/
+        getline(fin, temp, ',');
+        newStudentNode->DOB.y = 1000 * (temp[0] - '0') + 100 * (temp[1] - '0') + 10 * (temp[2] - '0') + (temp[3] - '0');
+        newStudentNode->DOB.m = 10 * (temp[5] - '0') + (temp[6] - '0');
+        newStudentNode->DOB.d = 10 * (temp[8] - '0') + (temp[9] - '0');
         getline(fin, newStudentNode->classID);
         studentList.pushBack(newStudentNode);
-        delete newStudentNode;
     }
     studentList.save();
-    cout << "Import successfully";
+    cout << "\n\nImport successfully";
     fin.close();
     staffClassMenu();
     return;
@@ -72,10 +77,10 @@ void staff_2_2() {
 
 
     //create [semesterID]-classID-course.txt with 0 course
-    ifstream fin;
-    fin.open(semeList.Head->semesterID + "classID-course.txt");
-    fin >> "";
-    fin.close();
+    ofstream fout;
+    fout.open(semeList.Head->semesterID + "classID-course.txt");
+    fout << "0";
+    fout.close();
     staffClassMenu();
     return;
 }
@@ -152,11 +157,16 @@ void staff_2_5() {
     //Input nothing
 
     //View list of active classes
-    string semeID;
-    SemesterList semeList;
-    if (!semeList.load())
+    ClassList classList;
+    if (!classList.load())
         EXITCODE(6);
-    
+    ClassNode* cur;
+    cur = classList.Head;
+    while (cur != nullptr)
+    {
+        cur->classID;
+        cur = cur->Next;
+    }
 }
 
 bool checkStaff_2_1() {
