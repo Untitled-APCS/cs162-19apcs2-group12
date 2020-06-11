@@ -54,7 +54,7 @@ void preferencesMenu() {
     cout << "[1 + enter] View my profile information.\n";
     cout << "[2 + enter] Change my password.\n";
     cout << "[3 + enter] Turn off Recommendation System.\n";
-    cout << "[4 + enter] Turn off Mystyping Correction.\n";
+    cout << "[4 + enter] Turn off Mistyping Correction.\n";
     cout << "[A + enter] About us.\n";
     cout << "[` + enter] Back.\n";
 
@@ -405,25 +405,25 @@ void lecturerMenu() {
 
         switch (keyPress) {
             case '1':
-                testLecturer();
+                lecturer_1_();
                 break;
             case '2':
-                testLecturer();
+                lecturer_2_();
                 break;
             case '3':
-                testLecturer();
+                lecturer_3_();
                 break;
             case '4':
-                testLecturer();
+                lecturer_4_();
                 break;
             case '5':
-                testLecturer();
+                lecturer_5_();
                 break;
             case '6':
-                testLecturer();
+                lecturer_6_();
                 break;
             case '7':
-                testLecturer();
+                lecturer_7_();
                 break;
             case 'P':
             case 'p':

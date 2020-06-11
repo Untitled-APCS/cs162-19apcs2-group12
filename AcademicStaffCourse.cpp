@@ -521,7 +521,7 @@ void staff_3_8() {
     StudentList stuList;
     if (!stuList.load()) EXITCODE(6);
     
-    string semesterID = "", classID = "", courseID = ""; // Data for testing.
+    string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227"; // Data for testing.
     SemesterList sems; ClassList classes; CourseList courses;
   
 	if (!sems.load()|| !classes.load()) EXITCODE(6);
@@ -529,16 +529,19 @@ void staff_3_8() {
 	if (sems.find(semesterID, ACTIVE)==nullptr || classes.find(classID, ACTIVE)==nullptr) EXITCODE(6);
 
 	if (!courses.load(semesterID, classID)) EXITCODE(6);
-	CourseNode* node = courses.find(courseID, ACTIVE);
-	if (node == nullptr) EXITCODE(6);
+	CourseNode* courseNode = courses.find(courseID, ACTIVE);
+	if (courseNode == nullptr) EXITCODE(6);
 	int index=1;
 	CourseStudentList llist;
 	if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
 
 	for(CourseStudentNode* node= llist.Head; node; node = node->Next){
 		StudentNode* stuNode = stuList.find(node->studentID, ACTIVE);
-		printStudent(stuNode, index);
+        if (stuNode) {
+            printStudent(stuNode, index);
+        }
 	}
+    staffCourseMenu();
     // Remember to de allocate s and p
 	//delete [] s;
 	//delete[] p;
@@ -550,8 +553,8 @@ void staff_3_9() {
     //View a scoreboard
     //inputData: semesterID, classID, courseID
 
-    string semesterID = "", courseID = "", classID = ""; 
-    
+    //string semesterID = "", courseID = "", classID = ""; 
+    string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227"; // Data for testing.
     SemesterList sems; ClassList classes; CourseList courses;
     if (!sems.load() || !classes.load()) EXITCODE(6);
 
@@ -579,7 +582,7 @@ void staff_3_9() {
             index++;
         }
     }
-
+    staffCourseMenu();
         
         //delete[] s;
         //delete[] p;
@@ -588,7 +591,7 @@ void staff_3_9() {
 void staff_3_10() {
     //Export a scoreboard to file.
     // inputData: semesterID, classID, courseID, filePath
-    string semesterID = "", courseID = "", classID = "", filePath="";
+    string semesterID = "", courseID = "", classID = "", filePath = "";
 
     SemesterList sems; ClassList classes; CourseList courses;
     if (!sems.load() || !classes.load()) EXITCODE(6);
@@ -603,8 +606,9 @@ void staff_3_10() {
     int index = 1;
     CourseStudentList llist;
     if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
-    
+
     saveCSV(llist, filePath, ScoreBoard);
+    staffCourseMenu();
 }
 
 void staff_3_11() {
@@ -613,8 +617,8 @@ void staff_3_11() {
 
     StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
-	
-    string semesterID = "", courseID = "", classID = "";
+    string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227"; // Data for testing.
+    //string semesterID = "", courseID = "", classID = "";
 
     SemesterList sems; ClassList classes; CourseList courses;
 	if (!sems.load()|| !classes.load()) EXITCODE(6);
@@ -631,8 +635,8 @@ void staff_3_11() {
 
 
     CourseStudentNode* stuNode = llist.Head;
-    cout << "\n\n" << "No\t" <<"Student Name\t" << "Student ID\t" << "W01\t" << "W02\t" << "W03\t" << "W04\t"
-         << "W05\t" << "W06\t"<< "W07\t" << "W08\t" << "W09\t" << "W10" << endl;
+    cout << "\n\n" << "No\t" <<"Student Name\t" << "Student ID\t" << "W01   " << "W02   " << "W03   " << "W04   "
+         << "W05   " << "W06   "<< "W07   " << "W08   " << "W09   " << "W10" << endl;
     int index = 1;
     while (stuNode) {
         StudentNode* node = stuList.find(stuNode->studentID, ACTIVE);
@@ -640,7 +644,7 @@ void staff_3_11() {
             cout << index << "\t" << node->studentName << "\t" << node->studentID << "\t";
             for (int i = 0; i < 10; i++) {
                 if (i == 9) cout << stuNode->attendance[i] << endl;
-                else cout << stuNode->attendance[i] << ",";
+                else cout << stuNode->attendance[i] << "     ";
             }
             index++;
         }
@@ -648,9 +652,12 @@ void staff_3_11() {
         
 
     }
+    
     // Remember to de allocate:
    // delete[]s;
     //delete[]p;
+
+    staffCourseMenu();
 
 
 
@@ -677,6 +684,7 @@ void staff_3_12() {
     if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
 
     saveCSV(llist, filePath, AttendanceList);
+    staffCourseMenu();
 }
 
 bool checkStaff_3_1() {
@@ -735,23 +743,23 @@ bool checkStaff_3_7() {
 }
 
 bool checkStaff_3_8() {
-    return false;
+    return true;
 }
 
 bool checkStaff_3_9() {
-    return false;
+    return true;
 }
 
 bool checkStaff_3_10() {
-    return false;
+    return true;
 }
 
 bool checkStaff_3_11() {
-    return false;
+    return true;
 }
 
 bool checkStaff_3_12() {
-    return false;
+    return true;
 }
 
 void lecturer_1() {
