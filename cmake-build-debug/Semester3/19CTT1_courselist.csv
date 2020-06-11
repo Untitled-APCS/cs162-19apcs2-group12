@@ -1,0 +1,7 @@
+No,Course ID,Course Name,Lecturer ID,Starting Date (yyyy/mm/dd),Starting Time (hh:mm:ss),EndingTime (hh:mm:ss),Room
+1,PH213,general pyhsics3,vththu,2020/06/22,09:30:00,11:10:00,I41
+2,BAA00102,introduction to law,dctrang,2020/06/22,13:30:00,15:10:00,HTI
+3,CS163,introduction to computer science,ntphuong,2020/06/23,07:30:00,09:10:00,I41
+4,MTH261,linear algebra,nhanh,2020/06/23,09:30:00,11:10:00,I41
+5,BAA00103,chu nghia xa hoi khoa hoc,lvtlam,2020/06/23,13:30:00,17:10:00,HTI
+

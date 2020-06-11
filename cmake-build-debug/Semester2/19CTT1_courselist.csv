@@ -1,0 +1,6 @@
+No,Course ID,Course Name,Lecturer ID,Starting Date (yyyy/mm/dd),Starting Time (hh:mm:ss),EndingTime (hh:mm:ss),Room
+1,CS162,introduction to computer science 2,dbtien,2020/02/03,07:30:00,09:10:00,I41
+2,BAA00101,marxism and leninism,lvtlam,2020/02/04,13:30:00,17:10:00,HTI
+3,MTH252,calculus 2,nhanh,2020/02/03,09:30:00,11:10:00,I41
+4,PH212,general physics,nhnha,2020/02/05,13:30:00,15:10:00,I24
+5,PLD001,introduction to law,dctrang,2020/02/03,13:30:00,17:10:00,HTI
