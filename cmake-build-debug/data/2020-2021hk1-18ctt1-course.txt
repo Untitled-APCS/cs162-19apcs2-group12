@@ -1,1 +1,57 @@
-0
+7
+wr227
+Technical Writing
+tmtriet
+2020 2 3
+7 30 0
+9 10 0
+I42
+1
+cs251
+Logical Structures
+npson
+2020 2 4
+7 30 0
+9 10 0
+I35
+1
+mth253
+Calculus 3
+hqvu
+2020 2 6
+13 30 0
+17 10 0
+I32
+1
+cth002
+Revolution Directions Of The Vietnam Communist Party
+nqdinh
+2020 2 3
+13 30 0
+17 10 0
+HTI
+1
+cs201
+Computer System Programming Ii
+dd
+2020 2 4
+13 30 0
+17 10 0
+B.11B
+1
+cs305
+Social Ethical And Legal Issues
+nvvu
+2020 2 5
+13 30 0
+15 10 0
+I41
+1
+pldc001
+Introduction To Law
+dctrang
+2020 2 8
+13 30 0
+17 10 0
+HTI
+1

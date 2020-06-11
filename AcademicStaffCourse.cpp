@@ -195,6 +195,7 @@ void staff_3_1() {
     ClassList classList;
     CourseList courseList;
     CourseNode* courseNode;
+    ClassStudentList classStudentList;
     CourseStudentList courseStudentList;
     LecturerList lecturerList;
    
@@ -227,7 +228,7 @@ void staff_3_1() {
         getline(finput, courseNode->courseName, ',');
         getline(finput, courseNode->lecturerID, ',');
         normalize(courseNode->courseID);
-        normalize(courseNode->courseName);
+        normalizeFullName(courseNode->courseName);
         normalize(courseNode->lecturerID);
         getline(finput, temp, ','); 
         courseNode->startingDate.y = 1000 * (temp[0] - '0') +100*(temp[1]-'0')+10*(temp[2]-'0')+(temp[3]-'0');
@@ -261,11 +262,10 @@ void staff_3_1() {
             continue;
         }
         else {
-            string ID;
             int choice = 0;
             char keyPress;
 
-            cout << "\n\nThe student with ID '" << ID << "' has already added.\n";
+            cout << "\n\nThe course with ID '" << courseNode->courseID << "' has already added.\n";
             cout << "[1 + enter] Skip.\n";
             cout << "[2 + enter] Replace.\n";
             cout << "[3 + enter] Skip all.\n";
@@ -309,21 +309,38 @@ void staff_3_1() {
         }
     }
     
-    cout << courseList.Head->room;
+    
     courseList.save(semesterID, classID);
     courseNode = courseList.Head;
+
+    //load Student List
+    CourseStudentNode* courseStudentNode;
+    classStudentList.load(classID);
+    while (classStudentList.Head != NULL)
+    {
+        courseStudentNode = new CourseStudentNode;
+        courseStudentNode->studentID = classStudentList.Head->studentID;
+        courseStudentNode->active = 1;
+        courseStudentList.pushBack(courseStudentNode);
+        classStudentList.Head = classStudentList.Head->Next;
+    }
+
+    LecturerNode* lecturerNode;
     //save Student Course List
     while (courseNode != nullptr) {
         //courseStudentList.load(semesterID, classID, courseNode->courseID);
+
         courseStudentList.save(semesterID, classID, courseNode->courseID);
         if (lecturerList.find(courseNode->lecturerID, ACTIVE)==nullptr){
             if (lecturerList.find(courseNode->lecturerID, ALL)==nullptr){
-                LecturerNode* lecturerNode=new LecturerNode;
+                lecturerNode=new LecturerNode;
                 lecturerNode->lecturerID = courseNode->lecturerID;
                 lecturerNode->lecturerName = courseNode->lecturerID;
                 lecturerNode->password = getHashedPassword(courseNode->lecturerID);
+                lecturerNode->active = 1;
+                lecturerNode->academicTitle = "Waiting to be edited";
+                lecturerNode->gender= 1;
                 lecturerList.pushBack(lecturerNode);
-                delete lecturerNode;
             }
             else lecturerList.find(courseNode->lecturerID, ALL)->active = 1;
         }
