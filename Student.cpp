@@ -12,32 +12,29 @@ void student_1() {
 	CourseStudentList stuCourse;
 	CourseStudentNode *stuNode;
 	string code = "";
-	CourseNode* currentCourse;
-	ClassNode* classNode;
+	CourseNode* courseNode, *currentCourse;
+	ClassNode* classNode, *currentClass;
 	CourseList courses;
 
 	bool flag = false;
 	if (!sems.load() || !classes.load()) EXITCODE(6);
 	string semesterID = sems.currentSemester;
-	for (ClassNode* node = classes.Head; node; node = node->Next) {
-		if (!courses.load(semesterID, node->classID)) EXITCODE(6);
-		for (CourseNode* courseNode = courses.Head; courseNode; courseNode = courseNode->Next) {
-			if (!stuCourse.load(semesterID, node->classID, courseNode->courseID)) EXITCODE(6);
+	for (classNode = classes.Head; classNode; classNode = classNode->Next) {
+		if (!courses.load(semesterID, classNode->classID)) EXITCODE(6);
+		for (courseNode = courses.Head; courseNode; courseNode = courseNode->Next) {
+			if (!stuCourse.load(semesterID, classNode->classID, courseNode->courseID)) EXITCODE(6);
 
 			stuNode = stuCourse.find(user::ID, ACTIVE);
 			if (stuNode != nullptr && currentTime >= courseNode->startingTime && currentTime <= courseNode->endingTime) {
 				currentCourse = courseNode;
+				currentClass = classNode;
 				flag = true;
 				break;
 			}
-		}
-			
-		if (flag == true) {
-			classNode = node;
-			break;
+
+			stuCourse.destroy();
 		}
 		courses.destroy();
-
 	}
 	
 	int week = 0;
@@ -47,10 +44,44 @@ void student_1() {
 	while (startingDate <= currentDate) {
 		week++;
 		startingDate.nextWeek();
-
 	}
-	cout << "\n\nPlease enter the checkin code ";
-	getline(cin, code);
+
+	cout << "\n\nPreparing to verify your attendance in...\n";
+	cout << "Course: " << currentCourse->courseID << " - " << currentCourse->courseName << endl;
+	cout << "Class: " << currentClass->classID << endl;
+	cout << "Week: " << week << endl;
+	cout << "Please enter the check-in code provided by your lecturer to complete the verification.\n";
+	cout << "[  enter  ] Verify my attendance.\n";
+	cout << "[` + enter] Back to menu.";
+
+	while (true) {
+        cout << "Your check-in code: ";
+
+        fflush(stdin);
+        getline(cin, code);
+        fflush(stdin);
+
+        if (code.find('`') != string::npos) {
+            studentMenu();
+            return;
+        }
+
+        if (code == getCheckInCode(semesterID, currentClass->classID, currentCourse->courseID, week)) {
+            stuNode->attendance[week-1] = true;
+            stuCourse.save(semesterID, currentClass->classID, currentCourse->courseID);
+
+            cout << "Your attendance is verified. Have a good lesson. [enter]\n";
+
+            fflush(stdin);
+            char keyPress = cin.get();
+            fflush(stdin);
+            studentMenu();
+            return;
+        }
+
+        cout << "Your code is invalid. Please try one more time.\n";
+	}
+
 	//AttendanceCode
 	// Enter the week. Recommend .
 }

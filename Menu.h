@@ -7,6 +7,7 @@
 
 #include "Engine/Optimization.h"
 #include "AllRoles.h"
+#include "Student.h"
 
 void mainMenu();
 
