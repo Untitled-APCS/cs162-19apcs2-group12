@@ -110,7 +110,7 @@ bool SemesterList::save() {
     }
 
     //check the actual length of the list > cnt?
-    if (Tail->Next != nullptr)
+    if (cnt > 0 && Tail->Next != nullptr)
     EXITCODE_V(6, false)
 
     return true;
@@ -133,7 +133,7 @@ bool SemesterList::pushBack(SemesterNode *semesterNode) {
     }
 
     //check the actual length of the list > cnt?
-    if (Tail->Next != nullptr)
+    if (cnt > 0 && Tail->Next != nullptr)
     EXITCODE_V(6, false)
     else {
         Tail->Next = semesterNode;
@@ -158,7 +158,7 @@ SemesterNode *SemesterList::find(string semesterID, bool mode) {
         }
     }
 
-    if (Tail->Next != nullptr)
+    if (cnt > 0 && Tail->Next != nullptr)
     EXITCODE_V(6, nullptr)
     else
         return nullptr;

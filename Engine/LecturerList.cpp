@@ -119,7 +119,7 @@ bool LecturerList::save() {
     }
 
     //check the actual length of the list > cnt?
-    if (Tail->Next != nullptr)
+    if (cnt > 0 && Tail->Next != nullptr)
     EXITCODE_V(6, false)
 
     return true;
@@ -142,7 +142,7 @@ bool LecturerList::pushBack(LecturerNode *lecturerNode) {
     }
 
     //check the actual length of the list > cnt?
-    if (Tail->Next != nullptr)
+    if (cnt > 0 && Tail->Next != nullptr)
     EXITCODE_V(6, false)
     else {
         Tail->Next = lecturerNode;
@@ -167,7 +167,7 @@ LecturerNode *LecturerList::find(string lecturerID, bool mode) {
         }
     }
 
-    if (Tail->Next != nullptr)
+    if (cnt > 0 && Tail->Next != nullptr)
     EXITCODE_V(6, nullptr)
     else
         return nullptr;

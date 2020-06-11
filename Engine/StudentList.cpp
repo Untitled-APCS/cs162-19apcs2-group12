@@ -125,7 +125,7 @@ bool StudentList::save() {
     }
 
     //check the actual length of the list > cnt?
-    if (Tail->Next != nullptr)
+    if (cnt > 0 && Tail->Next != nullptr)
         EXITCODE_V(6, false)
 
     return true;
@@ -148,7 +148,7 @@ bool StudentList::pushBack(StudentNode *studentNode) {
     }
 
     //check the actual length of the list > cnt?
-    if (Tail->Next != nullptr)
+    if (cnt > 0 && Tail->Next != nullptr)
         EXITCODE_V(6, false)
     else {
         Tail->Next = studentNode;
@@ -173,7 +173,7 @@ StudentNode* StudentList::find(string studentID, bool mode) {
         }
     }
 
-    if (Tail->Next != nullptr)
+    if (cnt > 0 && Tail->Next != nullptr)
         EXITCODE_V(6, nullptr)
     else
         return nullptr;
