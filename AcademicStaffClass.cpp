@@ -9,8 +9,8 @@ void staff_2_1() {
 
     //inputData(filepath);
     cout << "\n\nPlease enter the CSV file path: ";
-    getline(cin, filepath,'\n');
-    
+    getline(cin, filepath, '\n');
+
     ifstream fin;
     fin.open(filepath);
 
@@ -20,7 +20,7 @@ void staff_2_1() {
     //loadCSV
     ClassList classList;
     ClassNode classNode;
- 
+
     if (!classList.load())
         EXITCODE(6);
     string temp;
@@ -39,33 +39,77 @@ void staff_2_1() {
         {
             if (!skipAll && !replaceAll)
             {
-                int choice;
-                cout << "Skip? Skip All? Replace? Repace All?";
-                //cin >> something ;
-                if (choice == 1)//skip
-                {
-                    delete newclassNode;
-                    continue;
-                }
-                if (choice == 2)//skipAll
-                {
-                    skipAll = false;
-                    delete newclassNode;
-                    continue;
-                }
-                if (choice == 3)//replace
-                {
+                string ID;
+                int choice = 0;
+                char keyPress;
 
+                cout << "\n\nThe student with ID '" << ID << "' has already added.\n";
+                cout << "[1 + enter] Skip.\n";
+                cout << "[2 + enter] Replace.\n";
+                cout << "[3 + enter] Skip all.\n";
+                cout << "[4 + enter] Replace all.\n";
+
+                while (choice == 0) {
+                    fflush(stdin);
+                    keyPress = cin.get();
+                    fflush(stdin);
+
+                    switch (keyPress) {
+                    case '1':
+                        choice = SKIP;
+                        delete newclassNode;
+                        break;
+                    case '2':
+                        choice = REPLACE;
+                        ClassNode* dupp;
+                        dupp = classList.find(classNode.classID, ALL);
+                        dupp->active = 1;
+                        //dupp->DOB = newStudentNode->DOB;
+                        //dupp->Next = newStudentNode->Next;
+                        //dupp->studentName = newStudentNode->studentName;
+                        dupp->classID = newclassNode->classID;
+                        break;
+                    case '3':
+                        choice = SKIP_ALL;
+                        skipAll = true;
+                        delete newclassNode;
+                        break;
+                    case '4':
+                        choice = REPLACE_ALL;
+                        replaceAll = true;
+                        ClassNode* dupp;
+                        dupp = classList.find(newclassNode->classID, ALL);
+                        dupp->active = 1;
+                        //dupp->DOB = newStudentNode->DOB;
+                        //dupp->Next = newStudentNode->Next;
+                        //dupp->studentName = newStudentNode->studentName;
+                        dupp->classID = newclassNode->classID;
+                        break;
+                    default:
+                        choice = 0;
+                    }
+
+                }
+                if (skipAll)
+                    delete newclassNode;
+                if (replaceAll)
+                {
+                    ClassNode* dupp;
+                    dupp = classList.find(newclassNode->classID, ALL);
+                    dupp->active = 1;
+                    //dupp->DOB = newStudentNode->DOB;
+                    //dupp->Next = newStudentNode->Next;
+                    //dupp->studentName = newStudentNode->studentName;
+                    dupp->classID = newclassNode->classID;
                 }
             }
-            //
+            else
+                classList.pushBack(newclassNode);
         }
-        else
-            classList.pushBack(newclassNode);
+
+
+
     }
-
-
-    
 }
 
 void staff_2_2() {
