@@ -72,10 +72,10 @@ void staff_2_2() {
 
 
     //create [semesterID]-classID-course.txt with 0 course
-    ifstream fin;
-    fin.open(semeList.Head->semesterID + "classID-course.txt");
-    fin >> "";
-    fin.close();
+    ofstream fout;
+    fout.open(semeList.Head->semesterID + "classID-course.txt");
+    fout << "0";
+    fout.close();
     staffClassMenu();
     return;
 }
