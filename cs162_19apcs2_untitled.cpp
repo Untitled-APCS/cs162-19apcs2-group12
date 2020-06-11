@@ -7,20 +7,20 @@
 #include "Engine.h"
 #include <filesystem>
 
-bool checkTest(string* s, int cnt) {
-    for (int i = 0; i<cnt; i++)
-        for (int j = i+1; j<cnt; j++)
-            if (s[i] == s[j]) {
-                cout << "\n\nThree studentIDs must be nonidentical. [enter]\n";
-
-                fflush(stdin);
-                char keyPress = cin.get();
-                fflush(stdin);
-                return false;
-            }
-
-    return true;
-}
+//bool checkTest(string* s, int cnt) {
+//    for (int i = 0; i<cnt; i++)
+//        for (int j = i+1; j<cnt; j++)
+//            if (s[i] == s[j]) {
+//                cout << "\n\nThree studentIDs must be nonidentical. [enter]\n";
+//
+//                fflush(stdin);
+//                char keyPress = cin.get();
+//                fflush(stdin);
+//                return false;
+//            }
+//
+//    return true;
+//}
 
 int main(int argc, const char **argv) {
 //    fileLocation = argv[0];
@@ -29,6 +29,8 @@ int main(int argc, const char **argv) {
     //logo();
     //logInMenu();
     //lecturer_1_();
+
+    cout << getCheckInCode("2019-2020-HK2", "19ctt2", "cs162", 3);
 
     //string s;
     //getline(cin, s);
@@ -42,38 +44,38 @@ int main(int argc, const char **argv) {
 //    for (int i = 0; i<cnt; i++)
 //        cout << s[i] << endl;
 
-    string ID;
-    int choice = 0;
-    char keyPress;
-
-    cout << "\n\nThe student with ID '" << ID << "' has already added.\n";
-    cout << "[1 + enter] Skip.\n";
-    cout << "[2 + enter] Replace.\n";
-    cout << "[3 + enter] Skip all.\n";
-    cout << "[4 + enter] Replace all.\n";
-
-    while (choice == 0) {
-        fflush(stdin);
-        keyPress = cin.get();
-        fflush(stdin);
-
-        switch (keyPress) {
-            case '1':
-                choice = SKIP;
-                break;
-            case '2':
-                choice = REPLACE;
-                break;
-            case '3':
-                choice = SKIP_ALL;
-                break;
-            case '4':
-                choice = REPLACE_ALL;
-                break;
-            default:
-                choice = 0;
-        }
-    }
+//    string ID;
+//    int choice = 0;
+//    char keyPress;
+//
+//    cout << "\n\nThe student with ID '" << ID << "' has already added.\n";
+//    cout << "[1 + enter] Skip.\n";
+//    cout << "[2 + enter] Replace.\n";
+//    cout << "[3 + enter] Skip all.\n";
+//    cout << "[4 + enter] Replace all.\n";
+//
+//    while (choice == 0) {
+//        fflush(stdin);
+//        keyPress = cin.get();
+//        fflush(stdin);
+//
+//        switch (keyPress) {
+//            case '1':
+//                choice = SKIP;
+//                break;
+//            case '2':
+//                choice = REPLACE;
+//                break;
+//            case '3':
+//                choice = SKIP_ALL;
+//                break;
+//            case '4':
+//                choice = REPLACE_ALL;
+//                break;
+//            default:
+//                choice = 0;
+//        }
+//    }
 
 
 
