@@ -1,0 +1,6 @@
+No,Course ID,Course Name,Lecturer ID,Starting Date (yyyy/mm/dd),Starting Time (hh:mm:ss),EndingTime (hh:mm:ss),Room
+1,CS202,programming system,nvvu,2019/10/08,13:30:00,17:10:00,I91
+2,CS250,discrete structure,nttrung,2019/10/07,07:30:00,09:10:00,I32
+3,SC203,scientific research methodologies,dnvu,2019/10/12,07:30:00,11:10:00,I32
+4,CTH003,ho chi minh's ideology,ntphuong,2019/10/11,13:30:00,17:10:00,HTI
+5,STAT451,applied statistics for engineers and scientists,phuyen,2019/10/12,13:30:00,17:10:00,I41
