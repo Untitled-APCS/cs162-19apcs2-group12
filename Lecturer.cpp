@@ -444,11 +444,11 @@ void loadCSVScoreBoard(CourseStudentList& llist, string filePath) {
 
 //---------------------------------------------------------------------------------------------------
 void lecturer_2_() {
-	/*input semester, class, course
-  string *s = new string[3]{"", "", ""};
-  fptr *p = new fptr[3]{inputSemester, inputClass, inputCourse};
-  inputdata(s, p, 0, 3, checkstaff_1_1);*/
-	string semesterID = "2020-2021hk1", classID="18ctt1", courseID="wr227";
+	
+	string *s = new string[3]{"", "", ""};
+	fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
+	inputData(s, p, 3, 0, checklecturer_2);
+	string semesterID = s[0], classID=s[1], courseID=s[3];
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
 	
