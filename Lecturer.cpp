@@ -237,8 +237,8 @@ void printCourse(CourseNode* node, int& index) {
 	
 	cout << index << "\t" << node->courseName << "\t" << node->courseID << "\t"
 		<< node->startingDate.y << "/" << node->startingDate.m << "/" << node->startingDate.d << "\t"
-		<< node->startingTime.h << ":" << node->startingTime.m << ":" << node->startingTime.s << "\t"
-		<< node->endingTime.h << ":" << node->endingTime.m << ":" << node->endingTime.s << "\t"
+		<< node->startingTime.h << ":" << node->startingTime.m << ":" << node->startingTime.s<<"0" << "\t"
+		<< node->endingTime.h << ":" << node->endingTime.m << ":" << node->endingTime.s<<"0" << "\t"
 		<< node->room << endl;
 		node = node->Next;
 		index++;
@@ -306,7 +306,7 @@ void lecturer_1_() {
 		if (classNode->active) {
 			if (!courseList.load(node->semesterID, classNode->classID)) EXITCODE(6);
 			for (CourseNode* coursenode = courseList.Head; coursenode; coursenode = coursenode->Next) {
-				if (isPermissible(coursenode->courseID)) {
+				if (coursenode->lecturerID == user::ID) {
 					printCourse(coursenode, index);
 				}
 			}
@@ -315,6 +315,7 @@ void lecturer_1_() {
 
 		classNode = classNode->Next;
 	}
+	lecturerMenu();
 
 	
 }
