@@ -35,21 +35,10 @@ bool checklecturer_2(string* s, int n) {
 	cout << "\n\nThis course does not exist." << endl;
 	return false;
 }
+
 bool checklecturer_3(string* s, int n) {
-	ClassList classes;
-	SemesterList semesters;
-	CourseList courses;
-	if (!semesters.load() || !classes.load()) {
-		EXITCODE_V(6, false);
-	}
-	for (SemesterNode* semNode = semesters.Head; semNode; semNode = semNode->Next) {
-		for (ClassNode* classNode = classes.Head; classNode; classNode = classNode->Next) {
-			if (!courses.load(semNode->semesterID, classNode->classID)) EXITCODE_V(6,false);
-			if (courses.find(s[n - 1], ALL)) return true;
-		}
-	}
-	cout << "\n\nThis course does not exist." << endl;
-	return false;
+
+	return true;
 }
 bool checklecturer_4(string* s, int n) {
 	ClassList classes;
@@ -60,32 +49,35 @@ bool checklecturer_4(string* s, int n) {
 		EXITCODE_V(6, false);
 	}
 	if (s[0] != semesters.currentSemester) {
+		fflush(stdin);
+		char keyPress = cin.get();
+		fflush(stdin);
 		cout << "\n\nYou are not allowed to make changes in this semester" << endl;
 		return false;
 	}
-	if (classes.find(s[1], ACTIVE) == nullptr) {
-		cout << "\n\nThis class does not exist" << endl;
-		return false;
-	}
-	bool flag = false;
-	for (SemesterNode* semNode = semesters.Head; semNode; semNode = semNode->Next) {
-		for (ClassNode* classNode = classes.Head; classNode; classNode = classNode->Next) {
-			if(!courses.load(semNode->semesterID, classNode->classID)) EXITCODE_V(6, false);
-			CourseNode* courseNode = courses.find(s[2], ACTIVE);
-			if (courseNode == nullptr) {
-				cout << "\n\nThis course does not exist" << endl;
-				return false;
-			}
-			if (!stuList.load(semNode->semesterID, classNode->classID, courseNode->courseID)) EXITCODE_V(6, false);
-			CourseStudentNode* stuNode = stuList.find(s[n - 1], ACTIVE);
-			if (stuNode == nullptr) {
-				cout << "\n\nThis student does not exist" << endl;
-				return false;
-			}
-			
+	////if (classes.find(s[1], ACTIVE) == nullptr) {
+	////	cout << "\n\nThis class does not exist" << endl;
+	////	return false;
+	////}
+	/////*bool flag = false;
+	//for (SemesterNode* semNode = semesters.Head; semNode; semNode = semNode->Next) {
+	//	for (ClassNode* classNode = classes.Head; classNode; classNode = classNode->Next) {
+	//		if(!courses.load(semNode->semesterID, classNode->classID)) EXITCODE_V(6, false);
+	//		CourseNode* courseNode = courses.find(s[2], ACTIVE);
+	//		if (courseNode == nullptr) {
+	//			cout << "\n\nThis course does not exist" << endl;
+	//			return false;
+	//		}
+	//		if (!stuList.load(semNode->semesterID, classNode->classID, courseNode->courseID)) EXITCODE_V(6, false);
+	//		CourseStudentNode* stuNode = stuList.find(s[n - 1], ACTIVE);
+	//		if (stuNode == nullptr) {
+	//			cout << "\n\nThis student does not exist" << endl;
+	//			return false;
+	//		}
+	//		
 
-		}
-	}
+	//	}
+	//}*/
 	return true;
 
 }
@@ -99,10 +91,13 @@ bool checklecturer_5(string* s, int n) {
 		EXITCODE_V(6, false);
 	}
 	if (s[0] != semesters.currentSemester) {
+		fflush(stdin);
+		char keyPress = cin.get();
+		fflush(stdin);
 		cout << "\n\nYou are not allowed to make changes in this semester" << endl;
 		return false;
 	}
-	if (classes.find(s[1], ACTIVE) == nullptr) {
+	/*if (classes.find(s[1], ACTIVE) == nullptr) {
 		cout << "\n\nThis class does not exist" << endl;
 		return false;
 	}
@@ -128,7 +123,7 @@ bool checklecturer_5(string* s, int n) {
 			cout << "\n\nThis is not a csv file" << endl;
 			return false;
 		}
-	}
+	}*/
 	return true;
 }
 	
@@ -141,10 +136,13 @@ bool checklecturer_6(string * s, int n) {
 		EXITCODE_V(6, false);
 	}
 	if (s[0] != semesters.currentSemester) {
+		fflush(stdin);
+		char keyPress = cin.get();
+		fflush(stdin);
 		cout << "\n\nYou are not allowed to make changes in this semester" << endl;
 		return false;
 	}
-	if (classes.find(s[1], ACTIVE) == nullptr) {
+	/*if (classes.find(s[1], ACTIVE) == nullptr) {
 		cout << "\n\nThis class does not exist" << endl;
 		return false;
 	}
@@ -166,7 +164,7 @@ bool checklecturer_6(string * s, int n) {
 
 
 		}
-	}
+	}*/
 	return true;
 }
 bool checklecturer_7(string* s, int n) {
@@ -242,6 +240,7 @@ void lecturer_1_() {
 	SemesterList Sems;
 	ClassList classes;
 	
+	
 	if (!Sems.load()) 
 		EXITCODE(6);
 	
@@ -281,10 +280,7 @@ void loadCSVScoreBoard(CourseStudentList& llist, string filePath) {
 		EXITCODE(6);
 	}
 	//CourseStudentList stuList;
-	bool replaceAll = false;
-	bool skipAll = false;
-	bool skip = false;
-	bool replace = false;
+	int choice;
 	getline(fin, temp);
 	CourseStudentNode* node;
 	while (!fin.good()) {
@@ -314,7 +310,7 @@ void loadCSVScoreBoard(CourseStudentList& llist, string filePath) {
 				}
 			}
 			else {
-				if (replaceAll) {
+				if (choice == REPLACE_ALL) {
 					if (stuNode->active == 1) {
 						stuNode->active = 1;
 						stuNode->score.midterm = node->score.midterm;
@@ -326,7 +322,7 @@ void loadCSVScoreBoard(CourseStudentList& llist, string filePath) {
 						cout << "\n\nThis student has dropped out" << endl; // inactive.
 					}
 				}
-				else if (replace) {
+				else if (choice == REPLACE) {
 					if (stuNode->active == 1) {
 						stuNode->active = 1;
 						stuNode->score.midterm = node->score.midterm;
@@ -338,15 +334,49 @@ void loadCSVScoreBoard(CourseStudentList& llist, string filePath) {
 						cout << "\n\nThis student has dropped out" << endl; // inactive.
 					}
 				}
-				else if (skipAll) {
+				else if (choice == SKIP_ALL) {
 					delete node;
 					continue;
 				}
-				else if (skip) {
+				else if (choice == SKIP) {
 					delete node;
 					continue;
 				}
-				//
+				else {
+		
+					
+					char keyPress;
+
+					cout << "\n\nThe student with ID '" << node->studentID << "' has already added.\n";
+					cout << "[1 + enter] Skip.\n";
+					cout << "[2 + enter] Replace.\n";
+					cout << "[3 + enter] Skip all.\n";
+					cout << "[4 + enter] Replace all.\n";
+
+					while (choice == 0) {
+						fflush(stdin);
+						keyPress = cin.get();
+						fflush(stdin);
+
+						switch (keyPress) {
+						case '1':
+							choice = SKIP;
+							break;
+						case '2':
+							choice = REPLACE;
+							break;
+						case '3':
+							choice = SKIP_ALL;
+							break;
+						case '4':
+							choice = REPLACE_ALL;
+							break;
+						default:
+							choice = 0;
+						}
+					}
+
+				}
 			}
 		}
 		else {
@@ -516,7 +546,7 @@ void lecturer_5_() {
 	CourseStudentList llist;
 	if (!llist.load(semesterID, classID, courseID) EXITCODE(6);
 
-	if (!llist.loadCSV()) return ;
+	if (loadCSVScoreBoard(llist,filePath)) return ;
 	llist.save();
 
 	delete []s;
