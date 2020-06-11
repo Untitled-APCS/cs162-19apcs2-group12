@@ -104,11 +104,11 @@ void staff_2_1() {
                     dupp->classID = newclassNode->classID;
                 }
             }
-            else
-                classList.pushBack(newclassNode);
+            
         }
-
-
+        
+        else
+            classList.pushBack(newclassNode);
 
     }
     classList.save();
