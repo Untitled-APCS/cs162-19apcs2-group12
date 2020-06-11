@@ -1,5 +1,5 @@
 #include "AcademicStaffCourse.h"
-//#include "AcademicStaffClass.h"
+#include "AcademicStaffClass.h"
 //#include "AcademicStaffScoreBoard.h"
 //#include "Lecturer.h"
 #include "Student.h"
@@ -29,8 +29,8 @@ int main(int argc, const char **argv) {
     //logo();
     //logInMenu();
     //lecturer_1_();
-
-    cout << getCheckInCode("2019-2020-HK2", "19ctt2", "cs162", 3);
+    staff_2_1();
+    //cout << getCheckInCode("2019-2020-HK2", "19ctt2", "cs162", 3);
 
     //string s;
     //getline(cin, s);

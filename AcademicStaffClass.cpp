@@ -26,14 +26,15 @@ void staff_2_1() {
     string temp;
     getline(fin, temp, '\n');
 
-    ClassNode* newclassNode = new ClassNode;
+    ClassNode* newclassNode;
 
     bool skipAll = false;
     bool replaceAll = false;
 
     while (getline(fin, temp, ','))
     {
-        getline(fin, temp, ',');
+        newclassNode = new ClassNode;
+        //getline(fin, temp, ',');
         getline(fin, newclassNode->classID);
 
         ClassNode* dupp;
@@ -108,10 +109,18 @@ void staff_2_1() {
         }
         
         else
+        {
+            newclassNode->active = 1;
             classList.pushBack(newclassNode);
-
+        }
     }
     classList.save();
+    for (int i = 0; i < 4; i++)
+    {
+        cout << classList.Head->classID;
+        classList.Head = classList.Head->Next;
+    }
+    fin.close();
 }
 
 void staff_2_2() {
