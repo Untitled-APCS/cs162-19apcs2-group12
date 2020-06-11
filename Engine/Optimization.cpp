@@ -165,8 +165,8 @@ string getGreeting() {
 }
 
 string getHashedPassword(string password) {
-    //hashing password using PBKDF2 with 10000 iterations of HMAC-SHA256
-
+//    //hashing password using PBKDF2 with 10000 iterations of HMAC-SHA256
+//
 //    const int keyLen = 50;
 //    string ans;
 //
