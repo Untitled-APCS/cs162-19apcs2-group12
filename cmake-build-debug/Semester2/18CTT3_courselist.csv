@@ -1,0 +1,8 @@
+No,Course ID,Course Name,Lecturer ID,Starting Date (yyyy/mm/dd),Starting Time (hh:mm:ss),EndingTime (hh:mm:ss),Room
+1,WR227,technical writing,nnthao,2020/02/03,07:30:00,11:10:00,I32
+2,STAT451,applied statistics for engineers and scientists I,dnthanh,2020/02/05,13:30:00,17:10:00,I35
+3,MTH253,calculus 3,hqvu,2020/02/06,13:30:00,17:10:00,I32
+4,CTH002,revolution directions of the vietnam communist party,nqdinh,2020/02/03,13:30:00,17:10:00,HTI
+5,ECE341,computer hardware,dd,2020/02/04,07:30:00,11:10:00,F.205A
+6,CS386,introduction to database system,ltnhan,2020/02/06,07:30:00,09:10:00,I61
+7,PLDC001,introduction to law,dctrang,2020/02/08,13:30:00,17:10:00,HTI

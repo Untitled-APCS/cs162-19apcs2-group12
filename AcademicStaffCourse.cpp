@@ -46,6 +46,7 @@ void staff_1_1() {
     string* s = new string[1]{ "" };
     //fPtr* p = new fPtr[1]{ inputSemester};
     //inputData(s, p, 0, 1, checkStaff_1_1);
+    semesterNode->current = 0;
     semesterNode->active = 1;
     semesterNode->semesterID = s[0];
     semesterList.pushBack(semesterNode);
@@ -94,9 +95,11 @@ void staff_1_3() {
     //fPtr* p = new fPtr[1]{ inputSemester};
     //inputData(s, p, 0, 1, checkStaff_1_3);
     semesterList.find(s[0], ACTIVE)->active = 0;
+    semesterList.save();
     delete[]s;
     //delete[]p;
-    staffSemesterMenu();
+    cout << "Deleted successfully";
+    //staffSemesterMenu();
     return;
 }
 
@@ -132,7 +135,7 @@ void staff_1_4() {
             cout << endl;
     }
     delete[]temp;
-    staffSemesterMenu();
+    //staffSemesterMenu();
     return;
 }
 
@@ -153,7 +156,7 @@ bool checkStaff_1_3(string* s,int n) {
         cout << "Semester does not exist";
         EXITCODE_V(6, false);
     }
-    if (semesterList.find(s[0],ACTIVE)->active == 1) {
+    if (semesterList.find(s[0],ACTIVE)->current == 1) {
         cout << "Cannot delete a current semester.";
         return false;
     }
@@ -177,10 +180,11 @@ void staff_3_1() {
     SemesterList semesterList;
     ClassList classList;
     CourseList courseList;
+    CourseNode* courseNode;
     CourseStudentList courseStudentList;
     LecturerList lecturerList;
    
-    if (!semesterList.load()|| !classList.load(),!lecturerList.load())
+    if (!semesterList.load()|| !classList.load()||!lecturerList.load())
         EXITCODE(6);
 //    string *s = new string[3]{"", "", ""};
 //    fPtr *p = new fPtr[3]{inputSemester, inputClass, filepath};
@@ -191,9 +195,44 @@ void staff_3_1() {
 //    filepath = s[2];
     
     //loadCSV
-
+    filepath = "E:/University Works/Project/cs162-19apcs2-group12/cmake-build-debug/Semester2/18CTT1_courselist.csv";
+    string temp, temp2;
+    ifstream finput;
+    finput.open(filepath);
+    getline(finput, temp);
+    
+    while (finput.good()) {
+        courseNode = new CourseNode;
+        getline(finput,temp ,',');
+        getline(finput, courseNode->courseID,',');
+        getline(finput, courseNode->courseName, ',');
+        getline(finput, courseNode->lecturerID, ',');
+        normalize(courseNode->courseID);
+        normalize(courseNode->courseName);
+        normalize(courseNode->lecturerID);
+        getline(finput, temp, ',');
+        courseNode->startingDate.y = 1000 * (temp[0] - '0') +100*(temp[1]-'0')+10*(temp[2]-'0')+(temp[3]-'0');
+        courseNode->startingDate.m = 10 * (temp[5] - '0') + (temp[6] - '0');
+        courseNode->startingDate.d = 10 * (temp[8] - '0') + (temp[9] - '0');
+        getline(finput, temp, ',');
+        courseNode->startingTime.h = 10 * (temp[0] - '0') + (temp[1] - '0');
+        courseNode->startingTime.m = 10 * (temp[3] - '0') + (temp[4] - '0');
+        courseNode->startingTime.s = 10 * (temp[6] - '0') + (temp[7] - '0');
+        getline(finput, temp, ',');
+        courseNode->endingTime.h = 10 * (temp[0] - '0') + (temp[1] - '0');
+        courseNode->endingTime.m = 10 * (temp[3] - '0') + (temp[4] - '0');
+        courseNode->endingTime.s = 10 * (temp[6] - '0') + (temp[7] - '0');
+        courseNode->active = 1;
+        getline(finput, courseNode->room,'\n');
+        courseList.pushBack(courseNode);
+        
+    }
+    semesterID = "2020-2021 HK1";
+    classID = "18CTT1";
+    cout << courseList.Head->room;
     courseList.save(semesterID, classID);
-    CourseNode* courseNode = courseList.Head;
+    courseNode = courseList.Head;
+    //save Student Course List
     while (courseNode != nullptr) {
         //courseStudentList.load(semesterID, classID, courseNode->courseID);
         courseStudentList.save(semesterID, classID, courseNode->courseID);

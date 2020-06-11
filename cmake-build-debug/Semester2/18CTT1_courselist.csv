@@ -1,0 +1,8 @@
+No,Course ID,Course Name,Lecturer ID,Starting Date (yyyy/mm/dd),Starting Time (hh:mm:ss),EndingTime (hh:mm:ss),Room
+1,WR227,technical writing,tmtriet,2020/02/03,07:30:00,09:10:00,I42
+2,CS251,logical structures,npson,2020/02/04,07:30:00,09:10:00,I35
+3,MTH253,calculus 3,hqvu,2020/02/06,13:30:00,17:10:00,I32
+4,CTH002,revolution directions of the vietnam communist party,nqdinh,2020/02/03,13:30:00,17:10:00,HTI
+5,CS201,computer system programming ii,dd,2020/02/04,13:30:00,17:10:00,B.11B
+6,CS305,social ethical and legal issues,nvvu,2020/02/05,13:30:00,15:10:00,I41
+7,PLDC001,introduction to law,dctrang,2020/02/08,13:30:00,17:10:00,HTI

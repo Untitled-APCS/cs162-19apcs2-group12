@@ -85,7 +85,7 @@ bool SemesterList::load() {
 
 bool SemesterList::save() {
     ofstream fout;
-    fout.open(getLocation() + "data/student.txt");
+    fout.open(getLocation() + "data/semester.txt");
 
     //check if the file is missing?
     if (!fout.is_open())

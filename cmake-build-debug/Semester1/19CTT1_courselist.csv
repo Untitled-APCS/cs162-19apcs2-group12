@@ -1,0 +1,5 @@
+No,Course ID,Course Name,Lecturer ID,Starting Date (yyyy/mm/dd),Starting Time (hh:mm:ss),EndingTime (hh:mm:ss),Room
+1,CS161,introduction to computer science,dbtien,2019/10/12,07:30:00,11:10:00,I42
+2,MTH252,calculus 1,nhanh,2019/10/08,09:30:00,11:10:00,I34
+3,CM101,comunication management,dnvu,2019/10/12,13:30:00,17:10:00,HTI
+4,PTH211,general physics,nththu,2019/10/07,07:30:00,09:10:00,I34

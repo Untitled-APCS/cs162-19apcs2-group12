@@ -1,0 +1,7 @@
+No,Course ID,Course Name,Lecturer ID,Starting Date (yyyy/mm/dd),Starting Time (hh:mm:ss),EndingTime (hh:mm:ss),Room
+1,CS202,programming system,dbtien,2019/10/07,07:30:00,09:10:00,F.205B
+2,CS250,discrete structure,lvluyen,2019/10/11,07:30:00,11:10:00,I35
+3,SC203,scientific research methodologies,nnthao,2019/10/07,09:30:00,11:10:00,F.205B
+4,CTH003,ho chi minh's ideology,ntphuong,2019/10/11,13:30:00,17:10:00,HTI
+5,STAT451,applied statistics for engineers and scientists,ltxmai,2019/10/11,07:30:00,11:10:00,F.203
+6,CS201,computer system programming II,dd,2019/10/10,07:30:00,11:10:00,I91

@@ -1,0 +1,6 @@
+No,Course ID,Course Name,Lecturer ID,Starting Date (yyyy/mm/dd),Starting Time (hh:mm:ss),EndingTime (hh:mm:ss),Room
+1,CS386,introduction to database system,ltnhan,2020/06/22,13:30:00,15:10:00,I44
+2,CS426,mobile device application development,tmtriet,2020/06/22,09:30:00,11:10:00,I23
+3,MTH253,calculus 3,nttvan,2020/06/25,13:30:00,17:10:00,I32
+4,ECE341,computer hardware,dd,2020/06/23/07:30:00,09:10:00,I32
+5,STAT452,applied statistics for engineers and scientists II,dnthanh,2020/06/26,07:30:00,11:10:00,I32

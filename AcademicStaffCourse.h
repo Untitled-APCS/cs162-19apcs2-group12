@@ -69,7 +69,7 @@ bool checkStaff_1_1();
 
 bool checkStaff_1_2();
 
-bool checkStaff_1_3();
+bool checkStaff_1_3(string* s, int n);
 
 bool checkStaff_1_4();
 
