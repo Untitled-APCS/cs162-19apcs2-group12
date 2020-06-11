@@ -1,5 +1,5 @@
 #include "AcademicStaffCourse.h"
-#include "AcademicStaffClass.h"
+//#include "AcademicStaffClass.h"
 //#include "AcademicStaffScoreBoard.h"
 //#include "Lecturer.h"
 #include "Student.h"
@@ -7,7 +7,7 @@
 #include "Engine.h"
 #include <filesystem>
 
-//bool checkTest(string* s, int cnt) {
+bool checkTest(string* s, int cnt) {
 //    for (int i = 0; i<cnt; i++)
 //        for (int j = i+1; j<cnt; j++)
 //            if (s[i] == s[j]) {
@@ -18,9 +18,31 @@
 //                fflush(stdin);
 //                return false;
 //            }
-//
-//    return true;
-//}
+
+    if (s[0] == s[1]) {
+        cout << "\n\nThe two studentIDs must be nonidentical. [enter]\n";
+
+        fflush(stdin);
+        char keyPress = cin.get();
+        fflush(stdin);
+        return false;
+    }
+
+    ClassStudentList classStudentList;
+    classStudentList.load(s[2]);
+
+    if (classStudentList.find(s[0], ACTIVE) == nullptr ||
+        classStudentList.find(s[1], ACTIVE) == nullptr) {
+        cout << "\n\nThe two studentIDs must exist in the class. [enter]\n";
+
+        fflush(stdin);
+        char keyPress = cin.get();
+        fflush(stdin);
+        return false;
+    }
+
+    return true;
+}
 
 int main(int argc, const char **argv) {
 //    fileLocation = argv[0];
@@ -28,17 +50,27 @@ int main(int argc, const char **argv) {
 //        fileLocation.pop_back();
     logo();
     logInMenu();
+<<<<<<< HEAD
     
     //lecturer_1_();
     //staff_2_1();
     //cout << getCheckInCode("2019-2020-HK2", "19ctt2", "cs162", 3);
+=======
+    //lecturer_1_();
+>>>>>>> f6079b20d5e4a595bda7529b7c3361033bb020c2
 
+    //cout << getCheckInCode("2020-2021hk1", "18CTT1", "cs251", 1);
+
+    //44BD29
+    //7EA241
+    //4F89E7
+    //AFC0BE
     //string s;
     //getline(cin, s);
 
 //    int cnt = 3;
 //    string *s = new string [cnt];
-//    fPtr *p = new fPtr [cnt] {inputStudent, inputStudent, inputStudent};
+//    fPtr *p = new fPtr [cnt] {inputStudent, inputStudent, inputClass};
 //    if (!inputData(s, p, cnt, 0, checkTest))
 //        EXITCODE_V(6, 0)
 //

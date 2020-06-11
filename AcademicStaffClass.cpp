@@ -270,10 +270,14 @@ void staff_5_1()
     cout << "\n\nClass ID: ";
     getline(cin, classID, '\n');
 
-    normalize(classID);
+    string filepath;
+    cout << "\n\nfilepath: ";
+    getline(cin, filepath, '\n');
+
+    //normalize(classID);
 
     ifstream fin;
-    fin.open(classID + "-student.csv");
+    fin.open(filepath);
 
     if (!fin.is_open())
         EXITCODE(4);
@@ -292,7 +296,7 @@ void staff_5_1()
     getline(fin, temp, '\n');
 
     StudentNode* newStudentNode = nullptr;
-    ClassStudentNode* newClassStudentNode = nullptr;
+    ClassStudentNode* newClassStudentNode = new ClassStudentNode;
 
     bool skipAll = false;
     bool replaceAll = false;
@@ -300,7 +304,7 @@ void staff_5_1()
     while (getline(fin, temp, ','))
     {
         newStudentNode = new StudentNode;
-        getline(fin, temp, ',');
+        //getline(fin, temp, ',');
         getline(fin, newStudentNode->studentID, ',');
         getline(fin, newStudentNode->studentName, ',');
         getline(fin, temp, ',');
