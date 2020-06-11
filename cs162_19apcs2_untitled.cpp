@@ -29,7 +29,7 @@ int main(int argc, const char **argv) {
     //logo();
     //logInMenu();
     //lecturer_1_();
-    staff_2_1();
+    staff_5_1();
     //cout << getCheckInCode("2019-2020-HK2", "19ctt2", "cs162", 3);
 
     //string s;
