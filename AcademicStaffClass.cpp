@@ -152,11 +152,16 @@ void staff_2_5() {
     //Input nothing
 
     //View list of active classes
-    string semeID;
-    SemesterList semeList;
-    if (!semeList.load())
+    ClassList classList;
+    if (!classList.load())
         EXITCODE(6);
-    
+    ClassNode* cur;
+    cur = classList.Head;
+    while (cur != nullptr)
+    {
+        cur->classID;
+        cur = cur->Next;
+    }
 }
 
 bool checkStaff_2_1() {
