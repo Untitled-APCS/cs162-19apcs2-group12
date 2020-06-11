@@ -26,14 +26,15 @@ void staff_2_1() {
     string temp;
     getline(fin, temp, '\n');
 
-    ClassNode* newclassNode = new ClassNode;
+    ClassNode* newclassNode;
 
     bool skipAll = false;
     bool replaceAll = false;
 
     while (getline(fin, temp, ','))
     {
-        getline(fin, temp, ',');
+        newclassNode = new ClassNode;
+        //getline(fin, temp, ',');
         getline(fin, newclassNode->classID);
 
         ClassNode* dupp;
@@ -108,10 +109,18 @@ void staff_2_1() {
         }
         
         else
+        {
+            newclassNode->active = 1;
             classList.pushBack(newclassNode);
-
+        }
     }
     classList.save();
+    for (int i = 0; i < 4; i++)
+    {
+        cout << classList.Head->classID;
+        classList.Head = classList.Head->Next;
+    }
+    fin.close();
 }
 
 void staff_2_2() {
@@ -261,10 +270,14 @@ void staff_5_1()
     cout << "\n\nClass ID: ";
     getline(cin, classID, '\n');
 
-    normalize(classID);
+    string filepath;
+    cout << "\n\nfilepath: ";
+    getline(cin, filepath, '\n');
+
+    //normalize(classID);
 
     ifstream fin;
-    fin.open(classID + "-student.csv");
+    fin.open(filepath);
 
     if (!fin.is_open())
         EXITCODE(4);
@@ -283,7 +296,7 @@ void staff_5_1()
     getline(fin, temp, '\n');
 
     StudentNode* newStudentNode = nullptr;
-    ClassStudentNode* newClassStudentNode = nullptr;
+    ClassStudentNode* newClassStudentNode = new ClassStudentNode;
 
     bool skipAll = false;
     bool replaceAll = false;
@@ -291,7 +304,7 @@ void staff_5_1()
     while (getline(fin, temp, ','))
     {
         newStudentNode = new StudentNode;
-        getline(fin, temp, ',');
+        //getline(fin, temp, ',');
         getline(fin, newStudentNode->studentID, ',');
         getline(fin, newStudentNode->studentName, ',');
         getline(fin, temp, ',');
