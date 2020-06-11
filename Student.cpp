@@ -34,8 +34,12 @@ void student_1() {
 
 			stuCourse.destroy();
 		}
-		courses.destroy();
+
+		if (!flag)
+		    courses.destroy();
 	}
+
+	//courses.print();
 	
 	int week = 0;
 	Date startingDate = currentCourse->startingDate;
@@ -52,7 +56,7 @@ void student_1() {
 	cout << "Week: " << week << endl;
 	cout << "Please enter the check-in code provided by your lecturer to complete the verification.\n";
 	cout << "[  enter  ] Verify my attendance.\n";
-	cout << "[` + enter] Back to menu.";
+	cout << "[` + enter] Back to menu.\n";
 
 	while (true) {
         cout << "Your check-in code: ";

@@ -26,12 +26,15 @@ int main(int argc, const char **argv) {
 //    fileLocation = argv[0];
 //    while (fileLocation.size() > 0 && fileLocation[fileLocation.size()-1] != '/')
 //        fileLocation.pop_back();
-    //logo();
-    //logInMenu();
+    logo();
+    logInMenu();
     //lecturer_1_();
 
-    cout << getCheckInCode("2019-2020-HK2", "19ctt2", "cs162", 3);
+    //cout << getCheckInCode("2020-2021hk1", "18CTT1", "cs251", 3);
 
+    //44BD29
+    //7EA241
+    //4F89E7
     //string s;
     //getline(cin, s);
 
