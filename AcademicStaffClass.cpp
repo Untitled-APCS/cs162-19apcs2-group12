@@ -94,7 +94,11 @@ void staff_2_1() {
 
                 }
                 if (skipAll)
+                {
                     delete newclassNode;
+                    continue;
+                }
+
                 if (replaceAll)
                 {
                     dupp = classList.find(newclassNode->classID, ALL);
@@ -148,7 +152,7 @@ void staff_2_2() {
 
     //create [semesterID]-classID-course.txt with 0 course
     ofstream fout;
-    fout.open(semeList.Head->semesterID + "classID-course.txt");
+    fout.open(semeList.currentSemester + newClass + "-course.txt");
     fout << "0";
     fout.close();
     staffClassMenu();
@@ -292,18 +296,19 @@ void staff_5_1()
     if (!classStudentList.load(classID))
         EXITCODE(6);
 
-    string temp;
-    getline(fin, temp, '\n');
+    string temp1, temp2, temp;
+    getline(fin, temp2, '\n');
 
     StudentNode* newStudentNode = nullptr;
-    ClassStudentNode* newClassStudentNode = new ClassStudentNode;
+    ClassStudentNode* newClassStudentNode;
 
     bool skipAll = false;
     bool replaceAll = false;
 
-    while (getline(fin, temp, ','))
+    while (getline(fin, temp1, ','))
     {
         newStudentNode = new StudentNode;
+        newClassStudentNode = new ClassStudentNode;
         //getline(fin, temp, ',');
         getline(fin, newStudentNode->studentID, ',');
         getline(fin, newStudentNode->studentName, ',');
@@ -312,11 +317,16 @@ void staff_5_1()
         newStudentNode->DOB.m = 10 * (temp[5] - '0') + (temp[6] - '0');
         newStudentNode->DOB.d = 10 * (temp[8] - '0') + (temp[9] - '0');
         getline(fin, newStudentNode->classID);
-        
+
         newClassStudentNode->studentID = newStudentNode->studentID;
-        
+
+        newStudentNode->active = 1;
+        newClassStudentNode->active = 1;
+
         StudentNode* dupp;
         string pw;
+        pw = to_string((newStudentNode->DOB.y * 10000 + newStudentNode->DOB.m * 100 + newStudentNode->DOB.d));
+        newStudentNode->password = getHashedPassword(pw);
 
         if (studentList.find(newStudentNode->studentID, ALL))
         {
@@ -348,7 +358,7 @@ void staff_5_1()
                         dupp->active = 1;
                         dupp->DOB = newStudentNode->DOB;
                         //dupp->Next = newStudentNode->Next;
-                        pw = to_string(dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d);
+                        pw = to_string((dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d));
                         dupp->password = getHashedPassword(pw);
                         dupp->studentName = newStudentNode->studentName;
                         dupp->classID = newStudentNode->classID;
@@ -389,21 +399,23 @@ void staff_5_1()
                     dupp->classID = newStudentNode->classID;
                 }
             }
-            else
-            {
-                studentList.pushBack(newStudentNode);
-                classStudentList.pushBack(newClassStudentNode);
-            }
+            
         }
-        studentList.save();
-        classStudentList.save(classID);
+        else
+        {
+            studentList.pushBack(newStudentNode);
+            classStudentList.pushBack(newClassStudentNode);
+        }
 
-        cout << "\n\nImport successfully";
-        cout << "Data saved to student.txt and " << classID << "-student.txt";
-        fin.close();
-        staffStudentMenu();
-        return;
     }
+    studentList.save();
+    classStudentList.save(classID);
+
+    cout << "\n\nImport successfully";
+    cout << "\nData saved to student.txt and " << classID << "-student.txt";
+    fin.close();
+    staffStudentMenu();
+    return;
 }
 
 void staff_5_2()
@@ -452,6 +464,21 @@ void staff_5_2()
 void staff_5_3()
 {
     //Update a specific student
+
+    string classID;
+    cout << "Enter class's ID: ";
+    getline(cin, classID, '\n');
+
+    string oldStudentID;
+    cout << "\n\nEnter student's ID: ";
+    getline(cin, oldStudentID, '\n');
+
+    ClassStudentList classStudentList;
+    if (!classStudentList.load(classID))
+        EXITCODE(6);
+
+
+
 }
 
 void staff_5_4()
@@ -462,6 +489,27 @@ void staff_5_4()
 void staff_5_5()
 {
     //View list of students of a class
+    StudentList stuList;
+    if (!stuList.load()) EXITCODE(6);
+
+    string semesterID = "", classID = "", courseID = ""; // Data for testing.
+    SemesterList sems; ClassList classes; CourseList courses;
+
+    if (!sems.load() || !classes.load()) EXITCODE(6);
+
+    if (sems.find(semesterID, ACTIVE) == nullptr || classes.find(classID, ACTIVE) == nullptr) EXITCODE(6);
+
+    if (!courses.load(semesterID, classID)) EXITCODE(6);
+    CourseNode* node = courses.find(courseID, ACTIVE);
+    if (node == nullptr) EXITCODE(6);
+    int index = 1;
+    CourseStudentList llist;
+    if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
+
+    for (CourseStudentNode* node = llist.Head; node; node = node->Next) {
+        StudentNode* stuNode = stuList.find(node->studentID, ACTIVE);
+        printStudent(stuNode, index);
+    }
 }
 
 bool checkStaff_5_1();
