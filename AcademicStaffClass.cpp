@@ -18,39 +18,54 @@ void staff_2_1() {
         EXITCODE(4);
 
     //loadCSV
-    
-    StudentList studentList;
-    StudentNode studentNode;
-
-    if (!studentList.load())
+    ClassList classList;
+    ClassNode classNode;
+ 
+    if (!classList.load())
         EXITCODE(6);
-
     string temp;
     getline(fin, temp, '\n');
 
-    StudentNode* newStudentNode = nullptr;
+    ClassNode* newclassNode = new ClassNode;
+
+    bool skipAll = false;
+    bool replaceAll = false;
 
     while (getline(fin, temp, ','))
     {
-        newStudentNode = new StudentNode;
-        getline(fin, temp,',');
-        getline(fin, newStudentNode->studentID, ',');
-        getline(fin, newStudentNode->studentName, ',');
-        /*getline(fin, newStudentNode->DOB.y, '-');
-        getline(fin, newStudentNode->DOB.m, '-');
-        getline(fin, newStudentNode->DOB.d, ',');*/
         getline(fin, temp, ',');
-        newStudentNode->DOB.y = 1000 * (temp[0] - '0') + 100 * (temp[1] - '0') + 10 * (temp[2] - '0') + (temp[3] - '0');
-        newStudentNode->DOB.m = 10 * (temp[5] - '0') + (temp[6] - '0');
-        newStudentNode->DOB.d = 10 * (temp[8] - '0') + (temp[9] - '0');
-        getline(fin, newStudentNode->classID);
-        studentList.pushBack(newStudentNode);
+        getline(fin, newclassNode->classID);
+        if (classList.find(newclassNode->classID, ALL))
+        {
+            if (!skipAll && !replaceAll)
+            {
+                int choice;
+                cout << "Skip? Skip All? Replace? Repace All?";
+                //cin >> something ;
+                if (choice == 1)//skip
+                {
+                    delete newclassNode;
+                    continue;
+                }
+                if (choice == 2)//skipAll
+                {
+                    skipAll = false;
+                    delete newclassNode;
+                    continue;
+                }
+                if (choice == 3)//replace
+                {
+
+                }
+            }
+            //
+        }
+    else
+                newclassNode.pushBack(newStudentNode);
     }
-    studentList.save();
-    cout << "\n\nImport successfully";
-    fin.close();
-    staffClassMenu();
-    return;
+
+
+    
 }
 
 void staff_2_2() {
@@ -188,3 +203,99 @@ bool checkStaff_2_4() {
 bool checkStaff_2_5() {
     return false;
 }
+
+void staff_5_1()
+{
+    //Import list of classes from file
+
+    //import filepath
+
+    string filepath;
+
+    //inputData(filepath);
+    cout << "\n\nPlease enter the CSV file path: ";
+    getline(cin, filepath, '\n');
+
+    ifstream fin;
+    fin.open(filepath);
+
+    if (!fin.is_open())
+        EXITCODE(4);
+
+    StudentList studentList;
+    StudentNode studentNode;
+
+    if (!studentList.load())
+        EXITCODE(6);
+
+    string temp;
+    getline(fin, temp, '\n');
+
+    StudentNode* newStudentNode = nullptr;
+    
+    bool skipAll = false;
+    bool replaceAll = false;
+
+    while (getline(fin, temp, ','))
+    {
+        newStudentNode = new StudentNode;
+        getline(fin, temp,',');
+        getline(fin, newStudentNode->studentID, ',');
+        getline(fin, newStudentNode->studentName, ',');
+        getline(fin, temp, ',');
+        newStudentNode->DOB.y = 1000 * (temp[0] - '0') + 100 * (temp[1] - '0') + 10 * (temp[2] - '0') + (temp[3] - '0');
+        newStudentNode->DOB.m = 10 * (temp[5] - '0') + (temp[6] - '0');
+        newStudentNode->DOB.d = 10 * (temp[8] - '0') + (temp[9] - '0');
+        getline(fin, newStudentNode->classID);
+        if (studentList.find(newStudentNode->studentID, ALL))
+        {
+            if (!skipAll && !replaceAll)
+            {
+                int choice;
+                cout << "Skip? Skip All? Replace? Repace All?";
+                //cin >> something ;
+                if (choice==1)//skip
+                {
+                    delete newStudentNode;
+                    continue;
+                }
+                if (choice == 2)//skipAll
+                {
+                    skipAll = false;
+                    delete newStudentNode;
+                    continue;
+                }
+                if (choice == 3)//replace
+                {
+
+                }
+            }
+            //
+        }
+        else
+            studentList.pushBack(newStudentNode);
+    }
+    studentList.save();
+    cout << "\n\nImport successfully";
+    fin.close();
+    staffClassMenu();
+    return;
+}
+
+void staff_5_2();
+
+void staff_5_3();
+
+void staff_5_4();
+
+void staff_5_5();
+
+bool checkStaff_5_1();
+
+bool checkStaff_5_2();
+
+bool checkStaff_5_3();
+
+bool checkStaff_5_4();
+
+bool checkStaff_5_5();
