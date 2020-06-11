@@ -38,8 +38,10 @@ void staff_1_1() {
     
     //create new node and pushBack --> save
     
+    ofstream foutput;
     SemesterList semesterList;
-    if (!semesterList.load())
+    ClassList classList;
+    if (!semesterList.load()||!classList.load())
         EXITCODE(6);
     cout << "\n\n";
     SemesterNode* semesterNode = new SemesterNode;
@@ -49,11 +51,23 @@ void staff_1_1() {
     semesterNode->current = 0;
     semesterNode->active = 1;
     semesterNode->semesterID = s[0];
+    normalize(semesterNode->semesterID);
     semesterList.pushBack(semesterNode);
     semesterList.save();
+    string filename = "";
+    while (classList.Head != nullptr)
+    {
+        if (classList.Head->active == 1) {
+            filename = getLocation() + semesterNode->semesterID + "-" + classList.Head->classID + "-course.txt";
+            foutput.open(filename);
+            foutput << 0;
+            foutput.close();
+        }
+        classList.Head = classList.Head->Next;  
+    }
     delete[]s;
     //delete[]p;
-    staffSemesterMenu();
+    //staffSemesterMenu();
     return;
 }
 
@@ -195,12 +209,17 @@ void staff_3_1() {
 //    filepath = s[2];
     
     //loadCSV
-    filepath = "E:/University Works/Project/cs162-19apcs2-group12/cmake-build-debug/Semester2/18CTT1_courselist.csv";
+    filepath = "E:/University Works/Project/cs162-19apcs2-group12/cmake-build-debug/Semester2/18ctt1_courselist.csv";
     string temp, temp2;
     ifstream finput;
     finput.open(filepath);
     getline(finput, temp);
     
+    semesterID = "2020-2021hk1";
+    classID = "18ctt1";
+    courseList.load(semesterID, classID);
+    bool skipAll = false;
+    bool replaceAll = false;
     while (finput.good()) {
         courseNode = new CourseNode;
         getline(finput,temp ,',');
@@ -210,7 +229,7 @@ void staff_3_1() {
         normalize(courseNode->courseID);
         normalize(courseNode->courseName);
         normalize(courseNode->lecturerID);
-        getline(finput, temp, ',');
+        getline(finput, temp, ','); 
         courseNode->startingDate.y = 1000 * (temp[0] - '0') +100*(temp[1]-'0')+10*(temp[2]-'0')+(temp[3]-'0');
         courseNode->startingDate.m = 10 * (temp[5] - '0') + (temp[6] - '0');
         courseNode->startingDate.d = 10 * (temp[8] - '0') + (temp[9] - '0');
@@ -224,11 +243,72 @@ void staff_3_1() {
         courseNode->endingTime.s = 10 * (temp[6] - '0') + (temp[7] - '0');
         courseNode->active = 1;
         getline(finput, courseNode->room,'\n');
-        courseList.pushBack(courseNode);
-        
+        if(courseList.find(courseNode->courseID,ALL)==nullptr)
+            courseList.pushBack(courseNode);
+        else if (skipAll) {
+            delete courseNode;
+            continue;
+        }
+        else if (replaceAll) {
+            courseList.find(courseNode->courseID, ALL)->active = 1;
+            courseList.find(courseNode->courseID, ALL)->courseName = courseNode->courseName;
+            courseList.find(courseNode->courseID, ALL)->endingTime = courseNode->endingTime;
+            courseList.find(courseNode->courseID, ALL)->lecturerID = courseNode->lecturerID;
+            courseList.find(courseNode->courseID, ALL)->room = courseNode->room;
+            courseList.find(courseNode->courseID, ALL)->startingDate = courseNode->startingDate;
+            courseList.find(courseNode->courseID, ALL)->startingTime = courseNode->startingTime;
+            delete courseNode;
+            continue;
+        }
+        else {
+            string ID;
+            int choice = 0;
+            char keyPress;
+
+            cout << "\n\nThe student with ID '" << ID << "' has already added.\n";
+            cout << "[1 + enter] Skip.\n";
+            cout << "[2 + enter] Replace.\n";
+            cout << "[3 + enter] Skip all.\n";
+            cout << "[4 + enter] Replace all.\n";
+
+            while (choice == 0) {
+                fflush(stdin);
+                keyPress = cin.get();
+                fflush(stdin);
+
+                switch (keyPress) {
+                case '1':
+                    choice = SKIP;
+                    delete courseNode;
+                    break;
+                case '2':
+                    choice = REPLACE;
+                    {
+                        courseList.find(courseNode->courseID, ALL)->active = 1;
+                        courseList.find(courseNode->courseID, ALL)->courseName = courseNode->courseName;
+                        courseList.find(courseNode->courseID, ALL)->endingTime = courseNode->endingTime;
+                        courseList.find(courseNode->courseID, ALL)->lecturerID = courseNode->lecturerID;
+                        courseList.find(courseNode->courseID, ALL)->room = courseNode->room;
+                        courseList.find(courseNode->courseID, ALL)->startingDate = courseNode->startingDate;
+                        courseList.find(courseNode->courseID, ALL)->startingTime = courseNode->startingTime;
+                        delete courseNode;
+                    }
+                    break;
+                case '3':
+                    choice = SKIP_ALL;
+                    skipAll = true;
+                    break;
+                case '4':
+                    choice = REPLACE_ALL;
+                    replaceAll = true;
+                    break;
+                default:
+                    choice = 0;
+                }
+            }
+        }
     }
-    semesterID = "2020-2021 HK1";
-    classID = "18CTT1";
+    
     cout << courseList.Head->room;
     courseList.save(semesterID, classID);
     courseNode = courseList.Head;
@@ -236,8 +316,8 @@ void staff_3_1() {
     while (courseNode != nullptr) {
         //courseStudentList.load(semesterID, classID, courseNode->courseID);
         courseStudentList.save(semesterID, classID, courseNode->courseID);
-        if (!lecturerList.find(courseNode->lecturerID, ACTIVE)){
-            if (!lecturerList.find(courseNode->lecturerID, ALL)){
+        if (lecturerList.find(courseNode->lecturerID, ACTIVE)==nullptr){
+            if (lecturerList.find(courseNode->lecturerID, ALL)==nullptr){
                 LecturerNode* lecturerNode=new LecturerNode;
                 lecturerNode->lecturerID = courseNode->lecturerID;
                 lecturerNode->lecturerName = courseNode->lecturerID;

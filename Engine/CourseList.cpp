@@ -150,7 +150,7 @@ bool CourseList::save(string semesterID, string classID) {
     }
 
     //check the actual length of the list > cnt?
-    if (Tail->Next != nullptr)
+    if (cnt > 0 && Tail->Next != nullptr)
     EXITCODE_V(6, false)
 
     return true;
@@ -173,7 +173,7 @@ bool CourseList::pushBack(CourseNode *courseNode) {
     }
 
     //check the actual length of the list > cnt?
-    if (Tail->Next != nullptr)
+    if (cnt > 0 && Tail->Next != nullptr)
     EXITCODE_V(6, false)
     else {
         Tail->Next = courseNode;
@@ -198,7 +198,7 @@ CourseNode *CourseList::find(string courseID, bool mode) {
         }
     }
 
-    if (Tail->Next != nullptr)
+    if (cnt > 0 && Tail->Next != nullptr)
     EXITCODE_V(6, nullptr)
     else
         return nullptr;

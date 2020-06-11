@@ -94,7 +94,7 @@ StaffNode *StaffList::find(string staffID) {
             return Tail;
     }
 
-    if (Tail->Next != nullptr)
+    if (cnt > 0 && Tail->Next != nullptr)
     EXITCODE_V(6, nullptr)
     else
         return nullptr;

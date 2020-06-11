@@ -73,7 +73,7 @@ bool getRecStudent(string *Rec, string hint) {
     }
 
     //check the actual length of the list > cnt?
-    if (Tail->Next != nullptr)
+    if (studentList.cnt > 0 && Tail->Next != nullptr)
         EXITCODE_V(6, false)
 
     sort(stringList+1, stringList+11, cmpStringNode);
@@ -121,7 +121,7 @@ bool getRecClass(string *Rec, string hint) {
     }
 
     //check the actual length of the list > cnt?
-    if (Tail->Next != nullptr)
+    if (classList.cnt > 0 && Tail->Next != nullptr)
     EXITCODE_V(6, false)
 
     sort(stringList+1, stringList+11, cmpStringNode);
@@ -169,7 +169,7 @@ bool getRecSemester(string *Rec, string hint) {
     }
 
     //check the actual length of the list > cnt?
-    if (Tail->Next != nullptr)
+    if (semesterList.cnt > 0 && Tail->Next != nullptr)
     EXITCODE_V(6, false)
 
     sort(stringList+1, stringList+11, cmpStringNode);
@@ -220,7 +220,7 @@ bool getRecLecturer(string *Rec, string hint) {
     }
 
     //check the actual length of the list > cnt?
-    if (Tail->Next != nullptr)
+    if (lecturerList.cnt > 0 && Tail->Next != nullptr)
     EXITCODE_V(6, false)
 
     sort(stringList+1, stringList+11, cmpStringNode);
@@ -271,7 +271,7 @@ bool getRecCourse(string semesterID, string classID, string *Rec, string hint) {
     }
 
     //check the actual length of the list > cnt?
-    if (Tail->Next != nullptr)
+    if (courseList.cnt > 0 && Tail->Next != nullptr)
     EXITCODE_V(6, false)
 
     sort(stringList+1, stringList+11, cmpStringNode);
