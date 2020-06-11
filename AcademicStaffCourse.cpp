@@ -58,7 +58,7 @@ void staff_1_1() {
     while (classList.Head != nullptr)
     {
         if (classList.Head->active == 1) {
-            filename = getLocation() +"/data/"+ semesterNode->semesterID + "-" + classList.Head->classID + "-course.txt";
+            filename = getLocation() + semesterNode->semesterID + "-" + classList.Head->classID + "-course.txt";
             foutput.open(filename);
             foutput << 0;
             foutput.close();
@@ -116,10 +116,7 @@ void staff_1_3() {
     semesterList.save();
     delete[]s;
     //delete[]p;
-    cout << "Deleted successfully [enter]";
-    fflush(stdin);
-    cin.get();
-    fflush(stdin);
+    cout << "Deleted successfully";
     staffSemesterMenu();
     return;
 }
@@ -157,10 +154,6 @@ void staff_1_4() {
     }
     delete[]temp;
     staffSemesterMenu();
-    cout << "\n[enter]";
-    fflush(stdin);
-    cin.get();
-    fflush(stdin);
     return;
 }
 
@@ -226,6 +219,8 @@ void staff_3_1() {
     finput.open(filepath);
     getline(finput, temp);
     
+    semesterID = "2020-2021hk1";
+    classID = "18ctt1";
     courseList.load(semesterID, classID);
     bool skipAll = false;
     bool replaceAll = false;
@@ -386,8 +381,6 @@ void staff_3_2() {
     
     semesterID = s[0];
     classID = s[1];
-    semesterID = "2020-2021hk1";
-    classID = "18ctt1";
     
     if (!courseList.load(semesterID, classID))
         EXITCODE(6);
@@ -395,29 +388,8 @@ void staff_3_2() {
     //s[0] = "";
     //inputData(s,p,0,1,checkStaff_3_2);
     CourseNode *courseNode = new CourseNode;
-    //input
     courseList.pushBack(courseNode);
-    courseList.save(semesterID,classID);
-    //load Student List
-    ClassStudentList classStudentList;
-    CourseStudentList courseStudentList;
-    CourseStudentNode* courseStudentNode;
-    classStudentList.load(classID);
-    while (classStudentList.Head != NULL)
-    {
-        courseStudentNode = new CourseStudentNode;
-        courseStudentNode->studentID = classStudentList.Head->studentID;
-        courseStudentNode->active = 1;
-        courseStudentList.pushBack(courseStudentNode);
-        classStudentList.Head = classStudentList.Head->Next;
-    }
-    courseStudentList.save(semesterID, classID, courseNode->courseID);
-    cout << "Created successfully[enter]";
-    fflush(stdin);
-    cin.get();
-    fflush(stdin);
-    staffSemesterMenu;
-    return;
+    
 }
 
 void staff_3_3() {
@@ -460,11 +432,7 @@ void staff_3_4() {
     if (!courseList.load(semesterID, classID))
         EXITCODE(6);
     courseList.find(courseID, ACTIVE)->active = 0;
-    courseList.save(semesterID, classID);
-    cout << "Successfully deleted course [enter]";
-    fflush(stdin);
-    cin.get();
-    fflush(stdin);
+    cout << "Successfully deleted course";
     staffCourseMenu();
     return;
 }
