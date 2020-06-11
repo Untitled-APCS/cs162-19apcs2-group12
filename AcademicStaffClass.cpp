@@ -3,7 +3,7 @@
 void staff_2_1() {
     //Import list of classes from file
 
-    //import filepath
+    //import classID
 
     string filepath;
 
@@ -60,8 +60,8 @@ void staff_2_1() {
             }
             //
         }
-    else
-                newclassNode.pushBack(newStudentNode);
+        else
+            classList.pushBack(newclassNode);
     }
 
 
@@ -206,18 +206,19 @@ bool checkStaff_2_5() {
 
 void staff_5_1()
 {
-    //Import list of classes from file
+    //Import list of students from file
 
-    //import filepath
+    //input classID
 
-    string filepath;
+    string classID;
 
-    //inputData(filepath);
-    cout << "\n\nPlease enter the CSV file path: ";
-    getline(cin, filepath, '\n');
+    cout << "\n\nClass ID: ";
+    getline(cin, classID, '\n');
+
+    normalize(classID);
 
     ifstream fin;
-    fin.open(filepath);
+    fin.open(classID+"-student.csv");
 
     if (!fin.is_open())
         EXITCODE(4);
@@ -251,26 +252,69 @@ void staff_5_1()
         {
             if (!skipAll && !replaceAll)
             {
-                int choice;
-                cout << "Skip? Skip All? Replace? Repace All?";
-                //cin >> something ;
-                if (choice==1)//skip
-                {
-                    delete newStudentNode;
-                    continue;
-                }
-                if (choice == 2)//skipAll
-                {
-                    skipAll = false;
-                    delete newStudentNode;
-                    continue;
-                }
-                if (choice == 3)//replace
-                {
+                string ID;
+                int choice = 0;
+                char keyPress;
 
-                }
+                cout << "\n\nThe student with ID '" << ID << "' has already added.\n";
+                cout << "[1 + enter] Skip.\n";
+                cout << "[2 + enter] Replace.\n";
+                cout << "[3 + enter] Skip all.\n";
+                cout << "[4 + enter] Replace all.\n";
+
+                while (choice == 0) {
+                    fflush(stdin);
+                    keyPress = cin.get();
+                    fflush(stdin);
+
+                    switch (keyPress) {
+                    case '1':
+                        choice = SKIP;
+                        delete newStudentNode;
+                        break;
+                    case '2':
+                        choice = REPLACE;
+                        StudentNode* dupp;
+                        dupp = studentList.find(newStudentNode->studentID, ALL);
+                        dupp->active = 1;
+                        dupp->DOB = newStudentNode->DOB;
+                        //dupp->Next = newStudentNode->Next;
+                        dupp->studentName = newStudentNode->studentName;
+                        dupp->classID = newStudentNode->classID;
+                        break;
+                    case '3':
+                        choice = SKIP_ALL;
+                        skipAll = true;
+                        delete newStudentNode;
+                        break;
+                    case '4':
+                        choice = REPLACE_ALL;
+                        replaceAll = true;
+                        StudentNode* dupp;
+                        dupp = studentList.find(newStudentNode->studentID, ALL);
+                        dupp->active = 1;
+                        dupp->DOB = newStudentNode->DOB;
+                        //dupp->Next = newStudentNode->Next;
+                        dupp->studentName = newStudentNode->studentName;
+                        dupp->classID = newStudentNode->classID;
+                        break;
+                    default:
+                        choice = 0;
+                    }
+                
             }
-            //
+            if(skipAll)
+                delete newStudentNode;
+            if (replaceAll)
+            {
+                StudentNode* dupp;
+                dupp = studentList.find(newStudentNode->studentID, ALL);
+                dupp->active = 1;
+                dupp->DOB = newStudentNode->DOB;
+                //dupp->Next = newStudentNode->Next;
+                dupp->studentName = newStudentNode->studentName;
+                dupp->classID = newStudentNode->classID;
+            }
         }
         else
             studentList.pushBack(newStudentNode);
