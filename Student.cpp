@@ -5,7 +5,52 @@
 #include "Student.h"
 
 void student_1() {
-	//inputData: semesterID, classID, courseID..
+	Time currentTime;
+	
+	SemesterList sems;
+	ClassList classes;
+	CourseStudentList stuCourse;
+	CourseStudentNode *stuNode;
+	string code = "";
+	CourseNode* currentCourse;
+	ClassNode* classNode;
+	CourseList courses;
+
+	bool flag = false;
+	if (!sems.load() || !classes.load()) EXITCODE(6);
+	string semesterID = sems.currentSemester;
+	for (ClassNode* node = classes.Head; node; node = node->Next) {
+		if (!courses.load(semesterID, node->classID)) EXITCODE(6);
+		for (CourseNode* courseNode = courses.Head; courseNode; courseNode = courseNode->Next) {
+			if (!stuCourse.load(semesterID, node->classID, courseNode->courseID)) EXITCODE(6);
+
+			stuNode = stuCourse.find(user::ID, ACTIVE);
+			if (stuNode != nullptr && currentTime >= courseNode->startingTime && currentTime <= courseNode->endingTime) {
+				currentCourse = courseNode;
+				flag = true;
+				break;
+			}
+		}
+			
+		if (flag == true) {
+			classNode = node;
+			break;
+		}
+		courses.destroy();
+
+	}
+	
+	int week = 0;
+	Date startingDate = currentCourse->startingDate;
+	Date currentDate;
+	currentDate.capture();
+	while (startingDate <= currentDate) {
+		week++;
+		startingDate.nextWeek();
+
+	}
+	cout << "\n\nPlease enter the checkin code ";
+	getline(cin, code);
 	//AttendanceCode
 	// Enter the week. Recommend .
 }
