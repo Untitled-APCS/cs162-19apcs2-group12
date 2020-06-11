@@ -35,6 +35,9 @@ void staff_2_1() {
     {
         getline(fin, temp, ',');
         getline(fin, newclassNode->classID);
+
+        ClassNode* dupp;
+
         if (classList.find(newclassNode->classID, ALL))
         {
             if (!skipAll && !replaceAll)
@@ -61,7 +64,7 @@ void staff_2_1() {
                         break;
                     case '2':
                         choice = REPLACE;
-                        ClassNode* dupp;
+                       
                         dupp = classList.find(classNode.classID, ALL);
                         dupp->active = 1;
                         //dupp->DOB = newStudentNode->DOB;
@@ -77,7 +80,6 @@ void staff_2_1() {
                     case '4':
                         choice = REPLACE_ALL;
                         replaceAll = true;
-                        ClassNode* dupp;
                         dupp = classList.find(newclassNode->classID, ALL);
                         dupp->active = 1;
                         //dupp->DOB = newStudentNode->DOB;
@@ -94,7 +96,6 @@ void staff_2_1() {
                     delete newclassNode;
                 if (replaceAll)
                 {
-                    ClassNode* dupp;
                     dupp = classList.find(newclassNode->classID, ALL);
                     dupp->active = 1;
                     //dupp->DOB = newStudentNode->DOB;
@@ -262,7 +263,7 @@ void staff_5_1()
     normalize(classID);
 
     ifstream fin;
-    fin.open(classID+"-student.csv");
+    fin.open(classID + "-student.csv");
 
     if (!fin.is_open())
         EXITCODE(4);
@@ -277,14 +278,14 @@ void staff_5_1()
     getline(fin, temp, '\n');
 
     StudentNode* newStudentNode = nullptr;
-    
+
     bool skipAll = false;
     bool replaceAll = false;
 
     while (getline(fin, temp, ','))
     {
         newStudentNode = new StudentNode;
-        getline(fin, temp,',');
+        getline(fin, temp, ',');
         getline(fin, newStudentNode->studentID, ',');
         getline(fin, newStudentNode->studentName, ',');
         getline(fin, temp, ',');
@@ -292,6 +293,10 @@ void staff_5_1()
         newStudentNode->DOB.m = 10 * (temp[5] - '0') + (temp[6] - '0');
         newStudentNode->DOB.d = 10 * (temp[8] - '0') + (temp[9] - '0');
         getline(fin, newStudentNode->classID);
+
+        StudentNode* dupp;
+        string pw;
+
         if (studentList.find(newStudentNode->studentID, ALL))
         {
             if (!skipAll && !replaceAll)
@@ -318,11 +323,12 @@ void staff_5_1()
                         break;
                     case '2':
                         choice = REPLACE;
-                        StudentNode* dupp;
                         dupp = studentList.find(newStudentNode->studentID, ALL);
                         dupp->active = 1;
                         dupp->DOB = newStudentNode->DOB;
                         //dupp->Next = newStudentNode->Next;
+                        pw = to_string(dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d);
+                        dupp->password = getHashedPassword(pw);
                         dupp->studentName = newStudentNode->studentName;
                         dupp->classID = newStudentNode->classID;
                         break;
@@ -334,40 +340,43 @@ void staff_5_1()
                     case '4':
                         choice = REPLACE_ALL;
                         replaceAll = true;
-                        StudentNode* dupp;
                         dupp = studentList.find(newStudentNode->studentID, ALL);
                         dupp->active = 1;
                         dupp->DOB = newStudentNode->DOB;
                         //dupp->Next = newStudentNode->Next;
+                        pw = to_string(dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d);
+                        dupp->password = getHashedPassword(pw);
                         dupp->studentName = newStudentNode->studentName;
                         dupp->classID = newStudentNode->classID;
                         break;
                     default:
                         choice = 0;
                     }
-                
+
+                }
+                if (skipAll)
+                    delete newStudentNode;
+                if (replaceAll)
+                {
+                    dupp = studentList.find(newStudentNode->studentID, ALL);
+                    dupp->active = 1;
+                    dupp->DOB = newStudentNode->DOB;
+                    //dupp->Next = newStudentNode->Next;
+                    pw = to_string(dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d);
+                    dupp->password = getHashedPassword(pw);
+                    dupp->studentName = newStudentNode->studentName;
+                    dupp->classID = newStudentNode->classID;
+                }
             }
-            if(skipAll)
-                delete newStudentNode;
-            if (replaceAll)
-            {
-                StudentNode* dupp;
-                dupp = studentList.find(newStudentNode->studentID, ALL);
-                dupp->active = 1;
-                dupp->DOB = newStudentNode->DOB;
-                //dupp->Next = newStudentNode->Next;
-                dupp->studentName = newStudentNode->studentName;
-                dupp->classID = newStudentNode->classID;
-            }
+            else
+                studentList.pushBack(newStudentNode);
         }
-        else
-            studentList.pushBack(newStudentNode);
+        studentList.save();
+        cout << "\n\nImport successfully";
+        fin.close();
+        staffClassMenu();
+        return;
     }
-    studentList.save();
-    cout << "\n\nImport successfully";
-    fin.close();
-    staffClassMenu();
-    return;
 }
 
 void staff_5_2();
