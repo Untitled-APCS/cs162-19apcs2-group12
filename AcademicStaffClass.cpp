@@ -433,7 +433,7 @@ void staff_5_2()
     getline(cin, temp, '\n');
     newStudentNode->DOB.y = stoi(temp);
 
-    cout <<"Enter "
+    cout << "Enter ";
 }
 
 void staff_5_3()
