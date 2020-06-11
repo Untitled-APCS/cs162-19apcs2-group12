@@ -268,10 +268,101 @@ void lecturer_1_() {
 		}
 
 		classNode = classNode->Next;
-	}	
+	}
 
 	
 }
+void loadCSVScoreBoard(CourseStudentList& llist, string filePath) {
+	ifstream fin;
+	string temp;
+	fin.open(filePath);
+	if (!fin.is_open()) {
+		cout << "\n\nCannot open this file " << endl;
+		EXITCODE(6);
+	}
+	//CourseStudentList stuList;
+	bool replaceAll = false;
+	bool skipAll = false;
+	bool skip = false;
+	bool replace = false;
+	getline(fin, temp);
+	CourseStudentNode* node;
+	while (!fin.good()) {
+		node = new CourseStudentNode;
+		getline(fin, node->studentID, ',');
+		getline(fin,temp, ',');
+		node->score.midterm = stod(temp);
+		getline(fin, temp, ',');
+		node->score.final = stod(temp);
+		getline(fin, temp, ',');
+		node->score.bonus = stod(temp);
+		getline(fin, temp, ',');
+		node->score.total = stod(temp);
+		CourseStudentNode* stuNode = llist.find(node->studentID, ALL);
+
+		if (stuNode) {
+			if (stuNode->score.midterm == -1 && stuNode->score.final == -1 && stuNode->score.bonus == -1 && stuNode->score.total == -1) {
+				if (stuNode->active == 1) {
+					stuNode->active = 1;
+					stuNode->score.midterm = node->score.midterm;
+					stuNode->score.final = node->score.final;
+					stuNode->score.bonus = node->score.bonus;
+					stuNode->score.total = node->score.total;
+				}
+				else {
+					cout << "\n\nThis student has dropped out"; // inactive.
+				}
+			}
+			else {
+				if (replaceAll) {
+					if (stuNode->active == 1) {
+						stuNode->active = 1;
+						stuNode->score.midterm = node->score.midterm;
+						stuNode->score.final = node->score.final;
+						stuNode->score.bonus = node->score.bonus;
+						stuNode->score.total = node->score.total;
+					}
+					else {
+						cout << "\n\nThis student has dropped out" << endl; // inactive.
+					}
+				}
+				else if (replace) {
+					if (stuNode->active == 1) {
+						stuNode->active = 1;
+						stuNode->score.midterm = node->score.midterm;
+						stuNode->score.final = node->score.final;
+						stuNode->score.bonus = node->score.bonus;
+						stuNode->score.total = node->score.total;
+					}
+					else {
+						cout << "\n\nThis student has dropped out" << endl; // inactive.
+					}
+				}
+				else if (skipAll) {
+					delete node;
+					continue;
+				}
+				else if (skip) {
+					delete node;
+					continue;
+				}
+				//
+			}
+		}
+		else {
+			cout << "\n\n" << node->studentID << " does not exist." << endl;
+			
+		}
+		delete node;
+
+
+
+	}
+}
+
+
+	
+
 
 //---------------------------------------------------------------------------------------------------
 void lecturer_2_() {
