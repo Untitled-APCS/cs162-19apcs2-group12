@@ -7,7 +7,7 @@
 #include "Engine.h"
 #include <filesystem>
 
-//bool checkTest(string* s, int cnt) {
+bool checkTest(string* s, int cnt) {
 //    for (int i = 0; i<cnt; i++)
 //        for (int j = i+1; j<cnt; j++)
 //            if (s[i] == s[j]) {
@@ -18,9 +18,31 @@
 //                fflush(stdin);
 //                return false;
 //            }
-//
-//    return true;
-//}
+
+    if (s[0] == s[1]) {
+        cout << "\n\nThe two studentIDs must be nonidentical. [enter]\n";
+
+        fflush(stdin);
+        char keyPress = cin.get();
+        fflush(stdin);
+        return false;
+    }
+
+    ClassStudentList classStudentList;
+    classStudentList.load(s[2]);
+
+    if (classStudentList.find(s[0], ACTIVE) == nullptr ||
+        classStudentList.find(s[1], ACTIVE) == nullptr) {
+        cout << "\n\nThe two studentIDs must exist in the class. [enter]\n";
+
+        fflush(stdin);
+        char keyPress = cin.get();
+        fflush(stdin);
+        return false;
+    }
+
+    return true;
+}
 
 int main(int argc, const char **argv) {
 //    fileLocation = argv[0];
@@ -30,17 +52,18 @@ int main(int argc, const char **argv) {
     logInMenu();
     //lecturer_1_();
 
-    //cout << getCheckInCode("2020-2021hk1", "18CTT1", "cs251", 3);
+    //cout << getCheckInCode("2020-2021hk1", "18CTT1", "cs251", 1);
 
     //44BD29
     //7EA241
     //4F89E7
+    //AFC0BE
     //string s;
     //getline(cin, s);
 
 //    int cnt = 3;
 //    string *s = new string [cnt];
-//    fPtr *p = new fPtr [cnt] {inputStudent, inputStudent, inputStudent};
+//    fPtr *p = new fPtr [cnt] {inputStudent, inputStudent, inputClass};
 //    if (!inputData(s, p, cnt, 0, checkTest))
 //        EXITCODE_V(6, 0)
 //

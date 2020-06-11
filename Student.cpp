@@ -12,9 +12,12 @@ void student_1() {
 	CourseStudentList stuCourse;
 	CourseStudentNode *stuNode;
 	string code = "";
-	CourseNode* courseNode, *currentCourse;
-	ClassNode* classNode, *currentClass;
+	CourseNode* courseNode, *currentCourse = nullptr;
+	ClassNode* classNode, *currentClass = nullptr;
 	CourseList courses;
+
+	int week;
+	Date startingDate, currentDate;
 
 	bool flag = false;
 	if (!sems.load() || !classes.load()) EXITCODE(6);
@@ -25,11 +28,29 @@ void student_1() {
 			if (!stuCourse.load(semesterID, classNode->classID, courseNode->courseID)) EXITCODE(6);
 
 			stuNode = stuCourse.find(user::ID, ACTIVE);
-			if (stuNode != nullptr && currentTime >= courseNode->startingTime && currentTime <= courseNode->endingTime) {
-				currentCourse = courseNode;
-				currentClass = classNode;
-				flag = true;
-				break;
+			if (stuNode != nullptr) {
+
+			    //check if courseNode occurs on currentDate
+                week = 0;
+                startingDate = courseNode->startingDate;
+                currentDate.capture();
+                while (startingDate <= currentDate) {
+                    week++;
+                    startingDate.nextWeek();
+                }
+
+                startingDate = courseNode->startingDate;
+                for (int i = 0; i<week-1; i++)
+                    startingDate.nextWeek();
+
+                if (currentDate == startingDate &&
+                    currentTime >= courseNode->startingTime &&
+                    currentTime <= courseNode->endingTime) {
+                    currentCourse = courseNode;
+                    currentClass = classNode;
+                    flag = true;
+                    break;
+                }
 			}
 
 			stuCourse.destroy();
@@ -40,14 +61,16 @@ void student_1() {
 	}
 
 	//courses.print();
-	
-	int week = 0;
-	Date startingDate = currentCourse->startingDate;
-	Date currentDate;
-	currentDate.capture();
-	while (startingDate <= currentDate) {
-		week++;
-		startingDate.nextWeek();
+
+	if (!flag) {
+	    cout << "\n\nYou currently have no available courses. Please try again later or contact your lecturer. [enter]\n";
+
+	    fflush(stdin);
+	    char keyPress = cin.get();
+	    fflush(stdin);
+
+	    studentMenu();
+	    return;
 	}
 
 	cout << "\n\nPreparing to verify your attendance in...\n";
