@@ -459,7 +459,7 @@ void studentMenu() {
 
         switch (keyPress) {
             case '1':
-                testStudent();
+                student_1();
                 break;
             case '2':
                 testStudent();
