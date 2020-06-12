@@ -118,6 +118,12 @@ void staff_1_3() {
     string* s = new string[1]{ "" };
     fPtr* p = new fPtr[1]{ inputSemester};
     inputData(s, p, 1, 0, checkStaff_1_3);
+
+    if (s[0].length() == 0) {
+        staffSemesterMenu();
+        return;
+    }
+
     semesterList.find(s[0], ACTIVE)->active = 0;
     semesterList.save();
     delete[]s;
@@ -218,9 +224,15 @@ void staff_3_1() {
     
     if (!semesterList.load()|| !classList.load()||!lecturerList.load())
         EXITCODE(6);
+
     string *s = new string[3]{"", "", ""};
     fPtr *p = new fPtr[3]{inputSemester, inputClass, inputPathCourseListCSV};
     inputData(s, p, 3, 0, checkStaff_1_1);
+
+    if (s[0].length() == 0 || s[1].length() == 0 ||s[2].length()==0) {
+        staffCourseMenu();
+        return;
+    }
 
     //DEBUG ONLY!!
    /* fPtr *p = new fPtr[2]{inputSemester, inputClass};
@@ -402,6 +414,11 @@ void staff_3_2() {
     string *s = new string[2]{"", ""};
     fPtr *p = new fPtr[2]{inputSemester, inputClass};
     inputData(s, p, 2, 0, checkStaff_1_1);
+
+    if (s[0].length() == 0|| s[1].length()==0) {
+        staffCourseMenu();
+        return;
+    }
     
     semesterID = s[0];
     classID = s[1];
@@ -469,6 +486,11 @@ void staff_3_3() {
     string *s = new string[3]{"", "",""};
     fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
     inputData(s, p, 3, 0, checkStaff_1_1);
+
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+        staffCourseMenu();
+        return;
+    }
     
     semesterID = s[0];
     classID = s[1];
@@ -525,6 +547,11 @@ void staff_3_4() {
     string *s = new string[3]{"", "",""};
     fPtr *p = new fPtr[3]{inputSemester, inputClass,inputCourse};
     inputData(s, p, 3, 0, checkStaff_1_1);
+
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+        staffCourseMenu();
+        return;
+    }
     
     semesterID = s[0];
     classID = s[1];
@@ -555,6 +582,11 @@ void staff_3_5() {
     string *s = new string[2]{"", ""};
     fPtr *p = new fPtr[2]{inputSemester, inputClass};
     inputData(s, p, 2, 0, checkStaff_3_5);
+
+    if (s[0].length() == 0 || s[1].length() == 0) {
+        staffCourseMenu();
+        return;
+    }
     
     semesterID = s[0];
     classID = s[1];
@@ -596,6 +628,11 @@ void staff_3_6() {
     string *s = new string[4]{"", "", "", ""};
     fPtr *p = new fPtr[4]{inputSemester, inputClass,inputCourse, inputStudent};
     inputData(s, p, 4, 0, checkStaff_3_5);
+
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length()==0) {
+        staffCourseMenu();
+        return;
+    }
     
     semesterID = s[0];
     classID = s[1];
@@ -633,6 +670,11 @@ void staff_3_7() {
     fPtr *p = new fPtr[3]{inputStudent};
     inputData(s, p, 1, 0, checkStaff_1_1);
     
+    if (s[0].length() == 0 ) {
+        staffCourseMenu();
+        return;
+    }
+
     studentID=s[0];
 
     p[0] = inputSemester;
