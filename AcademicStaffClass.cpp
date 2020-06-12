@@ -138,7 +138,7 @@ void staff_2_1() {
     fin.close();
     cout << "Successfully import class [ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffClassMenu();
     delete[]s;
@@ -161,9 +161,10 @@ void staff_2_2() {
     string newClass, newSeme;
     cout << "\n\nEnter Semester: ";
     getline(cin, newSeme, '\n');
+    normalize(newSeme);
     cout << "\n\n Enter the new class ID: ";
     getline(cin, newClass, '\n');
-
+    normalize(newClass);
     if (classList.find(newClass, ACTIVE))
     {
         cout << "\nClass has already existed, you may NOT want to new one!!!\n";
@@ -195,7 +196,7 @@ void staff_2_2() {
 
     cout << "Successfully create new class [ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffClassMenu();
     return;
@@ -286,7 +287,7 @@ void staff_2_3() {
 
     cout << "Successfully update class [ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffClassMenu();
     delete[]s;
@@ -323,7 +324,7 @@ void staff_2_4() {
     classlist.save();
     cout << "Successfully deleted class [ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffClassMenu();
     delete[]s;
@@ -351,7 +352,7 @@ void staff_2_5() {
     }
     cout << "\n\nSuccessfully view list of class(es) [ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffClassMenu();
     return;
@@ -440,6 +441,7 @@ void staff_5_1()
 
     string temp1, temp2, temp;
     getline(fin, temp2, '\n');
+    
 
     StudentNode* newStudentNode = nullptr;
     ClassStudentNode* newClassStudentNode;
@@ -571,7 +573,7 @@ void staff_5_1()
     fin.close();
 
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffStudentMenu();
     delete[]s;
@@ -620,11 +622,12 @@ void staff_5_2()
     cout << "Student's ID: ";
     cin.ignore();
     getline(cin, newStudentNode->studentID, '\n');
+    normalize(newStudentNode->studentID);
     newClassStudentNode->studentID = newStudentNode->studentID;
     cout << "Student's Full Name: ";
     cin.ignore();
     getline(cin, newStudentNode->studentName, '\n');
-
+    normalizeFullName(newStudentNode->studentName);
     cout << "Student's Date of Birth:\n Date: ";
     cin.ignore();
     getline(cin, temp, '\n');
@@ -646,7 +649,7 @@ void staff_5_2()
     classStudentList.save(classID);
     cout << "\n\nNew student created. [ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffStudentMenu();
     delete[]s;
@@ -755,7 +758,7 @@ void staff_5_3()
 
     cout << "\n\nUpdate student's information completed [ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffStudentMenu();
     delete[]s;
@@ -817,7 +820,7 @@ void staff_5_4()
 
     cout << endl << studentID << " deleted! [ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffStudentMenu();
     delete[]s;
@@ -872,7 +875,7 @@ void staff_5_5()
 
     cout << "\nDone view list of class " << classID << "[ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffStudentMenu();
     delete[]s;
@@ -1053,7 +1056,7 @@ void staff_4_1()
     fin.close();
 
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffLecturerMenu();
     delete[]s;
@@ -1084,12 +1087,16 @@ void staff_4_2() {
     cout << "Lecturer's ID: ";
     cin.ignore();
     getline(cin, newLecturerNode->lecturerID, '\n');
+    normalize(newLecturerNode->lecturerID);
     cout << "Lecturer's Full Name: ";
     cin.ignore();
     getline(cin, newLecturerNode->lecturerName, '\n');
+    normalizeFullName(newLecturerNode->lecturerName);
+
     cout << "Lecturer's Academic Title: ";
     cin.ignore();
-    getline(cin, newLecturerNode->lecturerName, '\n');
+    getline(cin, newLecturerNode->academicTitle, '\n');
+    normalize(newLecturerNode->academicTitle);
     cout << "Lecturer's Gender: (Male=1/Female=0)";
     cin.ignore();
     getline(cin, temp, '\n');
@@ -1110,7 +1117,7 @@ void staff_4_2() {
     lecturerList.save();
     cout << "\n\nNew Lecturer created. [ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffLecturerMenu();
     return;
@@ -1161,6 +1168,7 @@ void staff_4_2() {
         normalizeFullName(newlecturer->lecturerName);
         cout << "Enter Lecturer's Academic Title: ";
         getline(cin, newlecturer->academicTitle, '\n');
+        normalize(newlecturer->academicTitle);
         cout << "Lecturer's Gender: (Male=1/Female=0)";
         cin.ignore();
         getline(cin, temp, '\n');
@@ -1181,7 +1189,7 @@ void staff_4_2() {
     
         cout << "\n\nUpdate Lecturer's information completed [ENTER]";
         fflush(stdin);
-        cin.get();
+        char keyPress = cin.get();
         fflush(stdin);
         staffLecturerMenu();
         delete[]s;
@@ -1233,7 +1241,7 @@ void staff_4_2() {
     
         cout << endl <<lecturerID << " deleted! [ENTER]";
         fflush(stdin);
-        cin.get();
+        char keyPress = cin.get();
         fflush(stdin);
         staffLecturerMenu();
         delete[]s;
@@ -1262,7 +1270,7 @@ void staff_4_2() {
 
         cout << "\nDone view list of lecturers [ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffLecturerMenu();
     return;
