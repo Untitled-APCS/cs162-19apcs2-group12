@@ -32,22 +32,22 @@ void sample() {
 void staff_1_1() {
     //Create a new semester
     //Input nothing
-    
+
     //input semesterID not exist in semester list
     //until getting valid data
-    
+
     //create new node and pushBack --> save
     ofstream foutput;
     SemesterList semesterList;
     ClassList classList;
     if (!semesterList.load()||!classList.load())
-        EXITCODE(6);
+    EXITCODE(6);
     cout << "\n\n";
     SemesterNode* semesterNode = new SemesterNode;
     string* s = new string[1]{ "" };
     //fPtr* p = new fPtr[1]{ inputSemester};
     //inputData(s, p, 1, 0, checkStaff_1_1);
-    
+
     //INPUT:
     cout << "\n\nCreate a new semester. Please enter the semester ID you want.\n";
     cout << "[` + enter] Back to menu.\n\n";
@@ -72,7 +72,7 @@ void staff_1_1() {
             cout << "The semester ID that you typed has been existing. Please enter another one.\n";
         }
     }
-    
+
     semesterNode->current = 0;
     semesterNode->active = 1;
     semesterNode->semesterID = s[0];
@@ -88,7 +88,7 @@ void staff_1_1() {
             foutput << 0;
             foutput.close();
         }
-        classList.Head = classList.Head->Next;  
+        classList.Head = classList.Head->Next;
     }
     delete[]s;
     //delete[]p;
@@ -251,18 +251,18 @@ void staff_1_2() {
 }
 
 void staff_1_3() {
-    
+
     //Remove a specific semester
-    
+
     //Input semesterID
     //semesterID is not current but is active
-    
-    
+
+
     //remove semesterID: active -> 0
 
     SemesterList semesterList;
     if (!semesterList.load())
-        EXITCODE(6);
+    EXITCODE(6);
     cout << "\n\n";
     string* s = new string[1]{ "" };
     fPtr* p = new fPtr[1]{ inputSemester};
@@ -289,7 +289,7 @@ void staff_1_4() {
     //View list of active semesters
     SemesterList semesterList;
     if (!semesterList.load())
-        EXITCODE(6);
+    EXITCODE(6);
     cout << "\n\n";
     SemesterNode* cur = semesterList.Head;
     SemesterNode* temp = new SemesterNode[semesterList.cnt];
@@ -311,7 +311,7 @@ void staff_1_4() {
             cout << endl;
     }
     delete[]temp;
-    
+
     cout << "\n[enter]";
     fflush(stdin);
     cin.get();
@@ -331,7 +331,7 @@ bool checkStaff_1_2(string *s, int n) {
 bool checkStaff_1_3(string* s,int n) {
     SemesterList semesterList;
     if (!semesterList.load())
-        EXITCODE_V(6, false);
+    EXITCODE_V(6, false);
     if (!semesterList.find(s[0], ACTIVE)){
         cout << "Semester does not exist";
         EXITCODE_V(6, false);
@@ -364,29 +364,29 @@ void staff_3_1() {
     ClassStudentList classStudentList;
     CourseStudentList courseStudentList;
     LecturerList lecturerList;
-    
+
     if (!semesterList.load()|| !classList.load()||!lecturerList.load())
-        EXITCODE(6);
+    EXITCODE(6);
     string *s = new string[3]{"", "", ""};
     fPtr *p = new fPtr[3]{inputSemester, inputClass, inputPathCourseListCSV};
     inputData(s, p, 3, 0, checkStaff_1_1);
 
     //DEBUG ONLY!!
-   /* fPtr *p = new fPtr[2]{inputSemester, inputClass};
-    inputData(s, p, 2, 0, checkStaff_1_1);
-    filepath = "E:/University Works/Project/cs162-19apcs2-group12/cmake-build-debug/Semester1/19ctt2_courselist.csv";*/
+    /* fPtr *p = new fPtr[2]{inputSemester, inputClass};
+     inputData(s, p, 2, 0, checkStaff_1_1);
+     filepath = "E:/University Works/Project/cs162-19apcs2-group12/cmake-build-debug/Semester1/19ctt2_courselist.csv";*/
     //DEBUG END
 
     semesterID = s[0];
     classID = s[1];
     filepath = s[2];
-    
+
     //loadCSV
     string temp, temp2;
     ifstream finput;
     finput.open(filepath);
     getline(finput, temp);
-    
+
     courseList.load(semesterID, classID);
     bool skipAll = false;
     bool replaceAll = false;
@@ -404,7 +404,7 @@ void staff_3_1() {
         normalize(courseNode->courseID);
         normalizeFullName(courseNode->courseName);
         normalize(courseNode->lecturerID);
-        getline(finput, temp, ','); 
+        getline(finput, temp, ',');
         courseNode->startingDate.y = 1000 * (temp[0] - '0') +100*(temp[1]-'0')+10*(temp[2]-'0')+(temp[3]-'0');
         courseNode->startingDate.m = 10 * (temp[5] - '0') + (temp[6] - '0');
         courseNode->startingDate.d = 10 * (temp[8] - '0') + (temp[9] - '0');
@@ -451,39 +451,39 @@ void staff_3_1() {
                 fflush(stdin);
 
                 switch (keyPress) {
-                case '1':
-                    choice = SKIP;
-                    delete courseNode;
-                    break;
-                case '2':
-                    choice = REPLACE;
-                    {
-                        courseList.find(courseNode->courseID, ALL)->active = 1;
-                        courseList.find(courseNode->courseID, ALL)->courseName = courseNode->courseName;
-                        courseList.find(courseNode->courseID, ALL)->endingTime = courseNode->endingTime;
-                        courseList.find(courseNode->courseID, ALL)->lecturerID = courseNode->lecturerID;
-                        courseList.find(courseNode->courseID, ALL)->room = courseNode->room;
-                        courseList.find(courseNode->courseID, ALL)->startingDate = courseNode->startingDate;
-                        courseList.find(courseNode->courseID, ALL)->startingTime = courseNode->startingTime;
+                    case '1':
+                        choice = SKIP;
                         delete courseNode;
-                    }
-                    break;
-                case '3':
-                    choice = SKIP_ALL;
-                    skipAll = true;
-                    break;
-                case '4':
-                    choice = REPLACE_ALL;
-                    replaceAll = true;
-                    break;
-                default:
-                    choice = 0;
+                        break;
+                    case '2':
+                        choice = REPLACE;
+                        {
+                            courseList.find(courseNode->courseID, ALL)->active = 1;
+                            courseList.find(courseNode->courseID, ALL)->courseName = courseNode->courseName;
+                            courseList.find(courseNode->courseID, ALL)->endingTime = courseNode->endingTime;
+                            courseList.find(courseNode->courseID, ALL)->lecturerID = courseNode->lecturerID;
+                            courseList.find(courseNode->courseID, ALL)->room = courseNode->room;
+                            courseList.find(courseNode->courseID, ALL)->startingDate = courseNode->startingDate;
+                            courseList.find(courseNode->courseID, ALL)->startingTime = courseNode->startingTime;
+                            delete courseNode;
+                        }
+                        break;
+                    case '3':
+                        choice = SKIP_ALL;
+                        skipAll = true;
+                        break;
+                    case '4':
+                        choice = REPLACE_ALL;
+                        replaceAll = true;
+                        break;
+                    default:
+                        choice = 0;
                 }
             }
         }
     }
-    
-    
+
+
     courseList.save(semesterID, classID);
     courseNode = courseList.Head;
 
@@ -538,15 +538,15 @@ void staff_3_2() {
 
     //Input courseID, courseName, lecturerID, startingDate, startingTime, endingTime, room
     //courseID not exist, lecturerID must exist
-    
+
     string semesterID, classID;
     SemesterList semesterList;
     ClassList classList;
     CourseList courseList;
     LecturerList lecturerList;
-   
+
     if (!semesterList.load()|| !classList.load())
-        EXITCODE(6);
+    EXITCODE(6);
 
     //inputData
     string *s = new string[2]{"", ""};
@@ -561,12 +561,12 @@ void staff_3_2() {
         staffCourseMenu();
         return;
     }
-    
+
     semesterID = s[0];
     classID = s[1];
-    
+
     if (!courseList.load(semesterID, classID))
-        EXITCODE(6);
+    EXITCODE(6);
     //p[0]={inputCourse}
     //s[0] = "";
     //inputData(s,p,0,1,checkStaff_3_2);
@@ -829,20 +829,20 @@ void staff_3_3() {
     SemesterList semesterList;
     ClassList classList;
     CourseList courseList;
-    
+
     if (!semesterList.load()||!classList.load())
-        EXITCODE(6);
+    EXITCODE(6);
     string *s = new string[3]{"", "",""};
     fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
     inputData(s, p, 3, 0, checkStaff_1_1);
-    
+
     semesterID = s[0];
     classID = s[1];
     courseID = s[2];
-    
+
     if (!courseList.load(semesterID,classID))
-        EXITCODE(6);
- 
+    EXITCODE(6);
+
     //INPUT:
     // courseID, courseName, lecturerID, startingDate, startingTime, endingTime, room, active
     CourseNode *courseNode = new CourseNode;
@@ -1082,19 +1082,19 @@ void staff_3_4() {
     SemesterList semesterList;
     ClassList classList;
     CourseList courseList;
-    
+
     if (!semesterList.load()||!classList.load())
-        EXITCODE(6);
+    EXITCODE(6);
     string *s = new string[3]{"", "",""};
     fPtr *p = new fPtr[3]{inputSemester, inputClass,inputCourse};
     inputData(s, p, 3, 0, checkStaff_1_1);
-    
+
     semesterID = s[0];
     classID = s[1];
     courseID = s[2];
-    
+
     if (!courseList.load(semesterID, classID))
-        EXITCODE(6);
+    EXITCODE(6);
     courseList.find(courseID, ACTIVE)->active = 0;
     courseList.save(semesterID, classID);
     cout << "Successfully deleted course [enter]";
@@ -1110,18 +1110,18 @@ void staff_3_5() {
     string semesterID, classID;
     SemesterList semesterList;
     ClassList classList;
-    
+
     if (!semesterList.load()|| !classList.load())
-        EXITCODE(6);
+    EXITCODE(6);
     string *s = new string[2]{"", ""};
     fPtr *p = new fPtr[2]{inputSemester, inputClass};
     inputData(s, p, 2, 0, checkStaff_3_5);
-    
+
     semesterID = s[0];
     classID = s[1];
     CourseList courseList;
     if (!courseList.load(semesterID, classID))
-        EXITCODE(6);
+    EXITCODE(6);
     //output: PENDING!
     cout << endl << endl;
     while (courseList.Head != nullptr&&courseList.Head->active==1) {
@@ -1147,20 +1147,20 @@ void staff_3_6() {
     ClassList classList;
     CourseList courseList;
     CourseStudentList courseStudentList;
-    
+
     if (!semesterList.load()|| !classList.load())
-        EXITCODE(6);
+    EXITCODE(6);
     string *s = new string[4]{"", "", "", ""};
     fPtr *p = new fPtr[4]{inputSemester, inputClass,inputCourse, inputStudent};
     inputData(s, p, 4, 0, checkStaff_3_5);
-    
+
     semesterID = s[0];
     classID = s[1];
     courseID=s[2];
     studentID=s[3];
-    
+
     if (!courseList.load(semesterID, classID)||!courseStudentList.load(semesterID,classID,courseID))
-        EXITCODE(6);
+    EXITCODE(6);
     courseStudentList.find(studentID, ACTIVE)->active = 0;
     courseStudentList.save(semesterID, classID, courseID);
     cout << "\n\nSuccessfully deleted student " << studentID<<"  [enter]";
@@ -1181,13 +1181,13 @@ void staff_3_7() {
     StudentList studentList;
 
     if (!semesterList.load()|| !classList.load())
-        EXITCODE(6);
+    EXITCODE(6);
 
     cout <<"Choose student to add:";
     string *s = new string[3]{"","",""};
     fPtr *p = new fPtr[3]{inputStudent};
     inputData(s, p, 1, 0, checkStaff_1_1);
-    
+
     studentID=s[0];
 
     p[0] = inputSemester;
@@ -1198,9 +1198,9 @@ void staff_3_7() {
     semesterID = s[0];
     classID = s[1];
     courseID=s[2];
-    
+
     if (!courseList.load(semesterID, classID) || !courseStudentList.load(semesterID, classID, courseID))
-        EXITCODE(6);
+    EXITCODE(6);
     if(courseStudentList.find(studentID,ACTIVE)==nullptr)
         if (courseStudentList.find(studentID, ALL) == nullptr)
         {
@@ -1218,7 +1218,7 @@ void staff_3_7() {
         cout << "Student already existed";
     }
     courseStudentList.save(semesterID, classID, courseID);
-    
+
     fflush(stdin);
     cin.get();
     fflush(stdin);
@@ -1234,30 +1234,30 @@ void staff_3_8() {
     inputData(s, p, 3, 0, checkStaff_3_8);
     StudentList stuList;
     if (!stuList.load()) EXITCODE(6);
-    
+
     string semesterID = s[0], classID = s[1], courseID = s[2]; // Data for testing.
     SemesterList sems; ClassList classes; CourseList courses;
-  
-	if (!sems.load()|| !classes.load()) EXITCODE(6);
 
-	if (sems.find(semesterID, ACTIVE)==nullptr || classes.find(classID, ACTIVE)==nullptr) EXITCODE(6);
+    if (!sems.load()|| !classes.load()) EXITCODE(6);
 
-	if (!courses.load(semesterID, classID)) EXITCODE(6);
-	CourseNode* node = courses.find(courseID, ACTIVE);
-	if (node == nullptr) EXITCODE(6);
-	int index=1;
-	CourseStudentList llist;
-	if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
+    if (sems.find(semesterID, ACTIVE)==nullptr || classes.find(classID, ACTIVE)==nullptr) EXITCODE(6);
 
-	for(CourseStudentNode* node= llist.Head; node; node = node->Next){
-		StudentNode* stuNode = stuList.find(node->studentID, ACTIVE);
-		printStudent(stuNode, index);
-	}
+    if (!courses.load(semesterID, classID)) EXITCODE(6);
+    CourseNode* node = courses.find(courseID, ACTIVE);
+    if (node == nullptr) EXITCODE(6);
+    int index=1;
+    CourseStudentList llist;
+    if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
+
+    for(CourseStudentNode* node= llist.Head; node; node = node->Next){
+        StudentNode* stuNode = stuList.find(node->studentID, ACTIVE);
+        printStudent(stuNode, index);
+    }
 
     // Remember to de allocate s and p
     staffCourseMenu();
-	delete [] s;
-	delete[] p;
+    delete [] s;
+    delete[] p;
 
 
 }
@@ -1269,8 +1269,8 @@ void staff_3_9() {
     fPtr* p = new fPtr[3]{ inputSemester, inputClass, inputCourse };
     inputData(s, p, 3, 0, checkStaff_3_9);
 
-    string semesterID = s[0], courseID = s[2], classID = s[1]; 
-    
+    string semesterID = s[0], courseID = s[2], classID = s[1];
+
     SemesterList sems; ClassList classes; CourseList courses;
     if (!sems.load() || !classes.load()) EXITCODE(6);
 
@@ -1281,11 +1281,11 @@ void staff_3_9() {
 
     CourseNode* node = courses.find(courseID, ACTIVE);
     if (node == nullptr) EXITCODE(6);
-   
+
     CourseStudentList llist;
     if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
-        
-        
+
+
     StudentList stuList;
     if (!stuList.load()) EXITCODE(6);
     cout << "\n\nNo\t" << "Student Name\t" << "Student ID\t" << "Midterm\t" << "Final\t" << "Bonus\t" << "Total" << endl;
@@ -1294,7 +1294,7 @@ void staff_3_9() {
         StudentNode* tmp = stuList.find(node->studentID, ACTIVE);
         if (tmp) {
             cout << index << "\t" << tmp->studentName << "\t" << tmp->studentID << "\t" << node->score.midterm
-                << "\t" << node->score.final << "\t" << node->score.bonus << "\t" << node->score.total << endl;
+                 << "\t" << node->score.final << "\t" << node->score.bonus << "\t" << node->score.total << endl;
             index++;
         }
     }
@@ -1325,7 +1325,7 @@ void staff_3_10() {
     int index = 1;
     CourseStudentList llist;
     if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
-    
+
     saveCSV(llist, filePath, ScoreBoard);
     delete[]s;
     delete[]p;
@@ -1339,21 +1339,21 @@ void staff_3_11() {
     inputData(s, p, 3, 0, checkStaff_3_11);
 
     StudentList stuList;
-	if (!stuList.load()) EXITCODE(6);
-	
+    if (!stuList.load()) EXITCODE(6);
+
     string semesterID = s[0], courseID = s[2], classID = s[1];
 
     SemesterList sems; ClassList classes; CourseList courses;
-	if (!sems.load()|| !classes.load()) EXITCODE(6);
+    if (!sems.load()|| !classes.load()) EXITCODE(6);
 
-	if (sems.find(semesterID, ACTIVE)==nullptr || classes.find(classID, ACTIVE)==nullptr) EXITCODE(6);
+    if (sems.find(semesterID, ACTIVE)==nullptr || classes.find(classID, ACTIVE)==nullptr) EXITCODE(6);
 
-	if (!courses.load(semesterID, classID)) EXITCODE(6);
-	CourseNode* node = courses.find(courseID, ACTIVE);
-	if (node == nullptr) EXITCODE(6);
+    if (!courses.load(semesterID, classID)) EXITCODE(6);
+    CourseNode* node = courses.find(courseID, ACTIVE);
+    if (node == nullptr) EXITCODE(6);
 
-	CourseStudentList llist;
-	if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
+    CourseStudentList llist;
+    if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
 
 
 
@@ -1372,13 +1372,13 @@ void staff_3_11() {
             index++;
         }
         stuNode = stuNode->Next;
-        
+
 
     }
     // Remember to de allocate:
     staffCourseMenu();
-   delete[]s;
-   delete[]p;
+    delete[]s;
+    delete[]p;
 
 
 
@@ -1455,7 +1455,7 @@ bool checkStaff_3_6(string* s,int n) {
     ClassList classList;
     CourseStudentList courseStudentList;
     if (!courseStudentList.load(semesterID,classID,courseID))
-        EXITCODE_V(6,false);
+    EXITCODE_V(6,false);
     if (courseStudentList.find(studentID, ACTIVE)==nullptr) {
         cout << "Student not found";
         return false;
@@ -1553,7 +1553,7 @@ void ScoreBoardFormat(CourseStudentList llist, ofstream &fout) {
     for (CourseStudentNode* node = llist.Head; node; node = node->Next) {
         StudentNode* tmp = stuList.find(node->studentID, ACTIVE);
         fout << index << "," << tmp->studentName << "," << tmp->studentID << "," << node->score.midterm
-            << "," << node->score.final << "," << node->score.bonus << "," << node->score.total << endl;
+             << "," << node->score.final << "," << node->score.bonus << "," << node->score.total << endl;
         index++;
     }
 }
@@ -1586,4 +1586,3 @@ void saveCSV(CourseStudentList llist, string filePath, bool mode) {
     else if (mode == AttendanceList) AttendanceListFormat(llist, fout);
     fout.close();
 }
-
