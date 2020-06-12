@@ -12,15 +12,15 @@ void staff_4_4();
 
 void staff_4_5();
 
-bool checkStaff_4_1();
+bool checkStaff_4_1(string* s, int n);
 
-bool checkStaff_4_2();
+bool checkStaff_4_2(string* s, int n);
 
-bool checkStaff_4_3();
+bool checkStaff_4_3(string* s, int n);
 
-bool checkStaff_4_4();
+bool checkStaff_4_4(string* s, int n);
 
-bool checkStaff_4_5();
+bool checkStaff_4_5(string* s, int n);
 
 void lecturer_1_();
 void lecturer_2_();
