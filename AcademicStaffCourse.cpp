@@ -66,7 +66,7 @@ void staff_1_1() {
             return;
         }
 
-        if (semesterList.find(s[0], ALL) != nullptr)
+        if (semesterList.find(s[0], ALL) == nullptr)
             passed = true;
         else {
             cout << "The semester ID that you typed has been existing. Please enter another one.\n";
