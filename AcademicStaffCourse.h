@@ -47,9 +47,9 @@ bool checkStaff_3_2();
 
 bool checkStaff_3_3();
 
-bool checkStaff_3_4();
+bool checkStaff_3_4(string* s,int n);
 
-bool checkStaff_3_5();
+bool checkStaff_3_5(string* s, int n);
 
 bool checkStaff_3_6();
 
@@ -65,7 +65,7 @@ bool checkStaff_3_11();
 
 bool checkStaff_3_12();
 
-bool checkStaff_1_1();
+bool checkStaff_1_1(string* s,int n);
 
 bool checkStaff_1_2();
 

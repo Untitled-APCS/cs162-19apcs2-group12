@@ -37,7 +37,6 @@ void staff_1_1() {
     //until getting valid data
     
     //create new node and pushBack --> save
-    
     ofstream foutput;
     SemesterList semesterList;
     ClassList classList;
@@ -47,7 +46,14 @@ void staff_1_1() {
     SemesterNode* semesterNode = new SemesterNode;
     string* s = new string[1]{ "" };
     //fPtr* p = new fPtr[1]{ inputSemester};
-    //inputData(s, p, 0, 1, checkStaff_1_1);
+    //inputData(s, p, 1, 0, checkStaff_1_1);
+    
+    //INPUT:
+    cout << "Input semester ID: ";
+    fflush(stdin);
+    getline(cin, s[0]);
+    fflush(stdin);
+    
     semesterNode->current = 0;
     semesterNode->active = 1;
     semesterNode->semesterID = s[0];
@@ -67,7 +73,7 @@ void staff_1_1() {
     }
     delete[]s;
     //delete[]p;
-    cout << "\n\nCreated successfully!";
+    cout << "\n\nCreated successfully! [enter]";
     fflush(stdin);
     cin.get();
     fflush(stdin);
@@ -110,12 +116,12 @@ void staff_1_3() {
         EXITCODE(6);
     cout << "\n\n";
     string* s = new string[1]{ "" };
-    //fPtr* p = new fPtr[1]{ inputSemester};
-    //inputData(s, p, 0, 1, checkStaff_1_3);
+    fPtr* p = new fPtr[1]{ inputSemester};
+    inputData(s, p, 1, 0, checkStaff_1_3);
     semesterList.find(s[0], ACTIVE)->active = 0;
     semesterList.save();
     delete[]s;
-    //delete[]p;
+    delete[]p;
     cout << "Deleted successfully [enter]";
     fflush(stdin);
     cin.get();
@@ -156,17 +162,17 @@ void staff_1_4() {
             cout << endl;
     }
     delete[]temp;
-    staffSemesterMenu();
+    
     cout << "\n[enter]";
     fflush(stdin);
     cin.get();
     fflush(stdin);
+    staffSemesterMenu();
     return;
 }
 
-bool checkStaff_1_1() {
+bool checkStaff_1_1(string* s,int n) {
     return true;
-    return false;
 }
 
 bool checkStaff_1_2() {
@@ -209,16 +215,22 @@ void staff_3_1() {
     ClassStudentList classStudentList;
     CourseStudentList courseStudentList;
     LecturerList lecturerList;
-   
+    
     if (!semesterList.load()|| !classList.load()||!lecturerList.load())
         EXITCODE(6);
-//    string *s = new string[3]{"", "", ""};
-//    fPtr *p = new fPtr[3]{inputSemester, inputClass, filepath};
-//    inputData(s, p, 0, 3, checkStaff_3_1);
-   
-//    semesterID = s[0];
-//    classID = s[1];
-//    filepath = s[2];
+    string *s = new string[3]{"", "", ""};
+    //fPtr *p = new fPtr[3]{inputSemester, inputClass, filepath};
+    //inputData(s, p, 3, 0, checkStaff_1_1);
+
+    //DEBUG ONLY!!
+   /* fPtr *p = new fPtr[2]{inputSemester, inputClass};
+    inputData(s, p, 2, 0, checkStaff_1_1);
+    filepath = "E:/University Works/Project/cs162-19apcs2-group12/cmake-build-debug/Semester1/19ctt2_courselist.csv";*/
+    //DEBUG END
+
+    semesterID = s[0];
+    classID = s[1];
+    filepath = s[2];
     
     //loadCSV
     string temp, temp2;
@@ -343,7 +355,7 @@ void staff_3_1() {
             if (lecturerList.find(courseNode->lecturerID, ALL)==nullptr){
                 lecturerNode=new LecturerNode;
                 lecturerNode->lecturerID = courseNode->lecturerID;
-                lecturerNode->lecturerName = courseNode->lecturerID;
+                lecturerNode->lecturerName = "Waiting to be edited";
                 lecturerNode->password = getHashedPassword(courseNode->lecturerID);
                 lecturerNode->active = 1;
                 lecturerNode->academicTitle = "Waiting to be edited";
@@ -381,8 +393,8 @@ void staff_3_2() {
     if (!semesterList.load()|| !classList.load())
         EXITCODE(6);
     string *s = new string[2]{"", ""};
-    //fPtr *p = new fPtr[2]{inputSemester, inputClass};
-    //inputData(s, p, 0, 2, checkStaff_1_1);
+    fPtr *p = new fPtr[2]{inputSemester, inputClass};
+    inputData(s, p, 0, 2, checkStaff_1_1);
     
     semesterID = s[0];
     classID = s[1];
@@ -410,7 +422,7 @@ void staff_3_2() {
         classStudentList.Head = classStudentList.Head->Next;
     }
     courseStudentList.save(semesterID, classID, courseNode->courseID);
-    cout << "Created successfully[enter]";
+    cout << "Created successfully! [enter]";
     fflush(stdin);
     cin.get();
     fflush(stdin);
@@ -420,22 +432,26 @@ void staff_3_2() {
 
 void staff_3_3() {
     //Update a specific course
-    string semesterID, classID;
+    string semesterID, classID, courseID;
     SemesterList semesterList;
     ClassList classList;
     CourseList courseList;
     
     if (!semesterList.load()||!classList.load())
         EXITCODE(6);
-    //    string *s = new string[2]{"", ""};
-    //    fPtr *p = new fPtr[2]{inputSemester, inputClass};
-    //    inputData(s, p, 0, 2, checkStaff_3_3);
+    string *s = new string[3]{"", "",""};
+    fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
+    inputData(s, p, 3, 0, checkStaff_1_1);
     
-    //    semesterID = s[0];
-    //    classID = s[1];
+    semesterID = s[0];
+    classID = s[1];
+    courseID = s[2];
     
     if (!courseList.load(semesterID,classID))
         EXITCODE(6);
+ 
+    //INPUT:
+    // courseID, courseName, lecturerID, startingDate, startingTime, endingTime, room, active
 }
 
 void staff_3_4() {
@@ -447,13 +463,13 @@ void staff_3_4() {
     
     if (!semesterList.load()||!classList.load())
         EXITCODE(6);
-    //    string *s = new string[3]{"", "",""};
-    //    fPtr *p = new fPtr[2]{inputSemester, inputClass,inputCourse};
-    //    inputData(s, p, 0, 3, checkStaff_3_4);
+    string *s = new string[3]{"", "",""};
+    fPtr *p = new fPtr[3]{inputSemester, inputClass,inputCourse};
+    inputData(s, p, 3, 0, checkStaff_1_1);
     
-    //    semesterID = s[0];
-    //    classID = s[1];
-    //    courseID = s[3];
+    semesterID = s[0];
+    classID = s[1];
+    courseID = s[2];
     
     if (!courseList.load(semesterID, classID))
         EXITCODE(6);
@@ -475,14 +491,12 @@ void staff_3_5() {
     
     if (!semesterList.load()|| !classList.load())
         EXITCODE(6);
-//    string *s = new string[2]{"", ""};
-//    fPtr *p = new fPtr[2]{inputSemester, inputClass};
-//    inputData(s, p, 0, 2, checkStaff_3_5);
+    string *s = new string[2]{"", ""};
+    fPtr *p = new fPtr[2]{inputSemester, inputClass};
+    inputData(s, p, 2, 0, checkStaff_3_5);
     
-//    semesterID = s[0];
-//    classID = s[1];
-    semesterID = "2020-2021hk1";
-    classID = "18ctt1";
+    semesterID = s[0];
+    classID = s[1];
     CourseList courseList;
     if (!courseList.load(semesterID, classID))
         EXITCODE(6);
@@ -514,19 +528,23 @@ void staff_3_6() {
     
     if (!semesterList.load()|| !classList.load())
         EXITCODE(6);
-//    string *s = new string[4]{"", "", "", ""};
-//    fPtr *p = new fPtr[4]{inputSemester, inputClass,inputCourse, inputStudent};
-//    inputData(s, p, 0, 4, checkStaff_3_5);
+    string *s = new string[4]{"", "", "", ""};
+    fPtr *p = new fPtr[4]{inputSemester, inputClass,inputCourse, inputStudent};
+    inputData(s, p, 4, 0, checkStaff_3_5);
     
-    //    semesterID = s[0];
-    //    classID = s[1];
-    //    courseID=s[2];
-    //    studentID=s[3];
+    semesterID = s[0];
+    classID = s[1];
+    courseID=s[2];
+    studentID=s[3];
     
     if (!courseList.load(semesterID, classID)||!courseStudentList.load(semesterID,classID,courseID))
         EXITCODE(6);
     courseStudentList.find(studentID, ACTIVE)->active = 0;
-    cout << "/n/nSuccessfully deleted student " << studentID;
+    courseStudentList.save(semesterID, classID, courseID);
+    cout << "\n\nSuccessfully deleted student " << studentID<<"  [enter]";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
     staffCourseMenu();
     return;
 }
@@ -542,21 +560,48 @@ void staff_3_7() {
 
     if (!semesterList.load()|| !classList.load())
         EXITCODE(6);
-    //    string *s = new string[4]{"", "","",""};
-    //    fPtr *p = new fPtr[4]{inputSemester, inputClass, inputStudent, inputCourse};
-    //    inputData(s, p, 0, 4, checkStaff_3_7);
-    
-    //    semesterID = s[0];
-    //    classID = s[1];
-    //    studentID=s[2];
-    //    courseID=s[3];
-    
-    
-    if (!courseList.load(semesterID, classID)|| !courseStudentList.load(semesterID, classID, courseID))
-        EXITCODE(6);
-    StudentNode* student = new StudentNode;
-    //Get information from input.
 
+    cout <<"Choose student to add:";
+    string *s = new string[3]{"","",""};
+    fPtr *p = new fPtr[3]{inputStudent};
+    inputData(s, p, 1, 0, checkStaff_1_1);
+    
+    studentID=s[0];
+
+    p[0] = inputSemester;
+    p[1] = inputClass;
+    p[2] = inputCourse;
+    s[0] = s[1] = s[2] = "";
+    inputData(s, p, 3, 0, checkStaff_1_1);
+    semesterID = s[0];
+    classID = s[1];
+    courseID=s[2];
+    
+    if (!courseList.load(semesterID, classID) || !courseStudentList.load(semesterID, classID, courseID))
+        EXITCODE(6);
+    if(courseStudentList.find(studentID,ACTIVE)==nullptr)
+        if (courseStudentList.find(studentID, ALL) == nullptr)
+        {
+            CourseStudentNode* courseStudentNode = new CourseStudentNode;
+            courseStudentNode->active = 1;
+            courseStudentNode->studentID = studentID;
+            courseStudentList.pushBack(courseStudentNode);
+            cout << "Successfully added " << studentID << "   [enter]";
+        }
+        else {
+            courseStudentList.find(studentID, ALL)->active = 1;
+            cout << "Successfully added " << studentID << "   [enter]";
+        }
+    else {
+        cout << "Student already existed";
+    }
+    courseStudentList.save(semesterID, classID, courseID);
+    
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
+    staffCourseMenu();
+    return;
 }
 
 void staff_3_8() {
@@ -733,7 +778,7 @@ bool checkStaff_3_2() {
     return false;
 }
 
-bool checkStaff_3_3() {
+bool checkStaff_3_3(string* s,int n) {
     return false;
 }
 
@@ -754,8 +799,8 @@ bool checkStaff_3_4(string* s,int n) {
     return false;
 }
 
-bool checkStaff_3_5() {
-    return false;
+bool checkStaff_3_5(string* s, int n) {
+    return true;
 }
 
 bool checkStaff_3_6(string* s,int n) {
