@@ -395,7 +395,7 @@ void staff_5_1()
     }
     string
         classID = s[0],
-        filepath = s[2];
+        filepath = s[1];
     //string classID;
 
     //cout << "\n\nClass ID: ";
