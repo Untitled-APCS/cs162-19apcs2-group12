@@ -1253,7 +1253,9 @@ void staff_3_8() {
 		StudentNode* stuNode = stuList.find(node->studentID, ACTIVE);
 		printStudent(stuNode, index);
 	}
+
     // Remember to de allocate s and p
+    staffCourseMenu();
 	delete [] s;
 	delete[] p;
 
@@ -1297,9 +1299,9 @@ void staff_3_9() {
         }
     }
 
-        
-        delete[] s;
-        delete[] p;
+    staffCourseMenu();
+    delete[] s;
+    delete[] p;
 }
 
 void staff_3_10() {
@@ -1374,6 +1376,7 @@ void staff_3_11() {
 
     }
     // Remember to de allocate:
+    staffCourseMenu();
    delete[]s;
    delete[]p;
 
