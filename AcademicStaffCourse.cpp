@@ -723,6 +723,8 @@ void staff_3_8() {
     inputData(s, p, 3, 0, checkStaff_3_8);
     if (s[0].length() == 0 || s[1].length() == 0 || s[2].length()==0) {
         staffCourseMenu();
+        delete[]s;
+        delete[]p;
         return;
     }
     StudentList stuList;
@@ -761,6 +763,8 @@ void staff_3_9() {
     inputData(s, p, 3, 0, checkStaff_3_9);
     if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
         staffCourseMenu();
+        delete[]s;
+        delete[]p;
         return;
     }
     string semesterID = s[0], courseID = s[2], classID = s[1]; 
@@ -806,6 +810,8 @@ void staff_3_10() {
     inputData(s, p, 4, 0, checkStaff_3_10);
     if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length()) {
         staffCourseMenu();
+        delete[]s;
+        delete[]p;
         return;
     }
     string semesterID = s[0], courseID = s[2], classID = s[1], filePath=s[3];
@@ -838,6 +844,8 @@ void staff_3_11() {
     inputData(s, p, 3, 0, checkStaff_3_11);
     if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
         staffCourseMenu();
+        delete[]s;
+        delete[]p;
         return;
     }
     StudentList stuList;
@@ -894,6 +902,8 @@ void staff_3_12() {
     inputData(s, p, 4, 0, checkStaff_3_12);
     if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length()==0) {
         staffCourseMenu();
+        delete[]s;
+        delete[]p;
         return;
     }
     string semesterID = s[0], courseID = s[2], classID = s[1], filePath = s[3];
@@ -1068,7 +1078,7 @@ void ScoreBoardFormat(CourseStudentList llist, ofstream &fout) {
 void AttendanceListFormat(CourseStudentList llist, ofstream& fout) {
     StudentList stuList;
     if (!stuList.load()) EXITCODE(6);
-    fout << "No, Student Name, Student ID, W01, W02, W03, W04, W05, W06, W07, W08, W09, W10" << endl;
+    fout << "No,Student Name,Student ID,W01,W02,W03,W04,W05,W06,W07,W08,W09,W10" << endl;
     int index = 1;
     for (CourseStudentNode* node = llist.Head; node; node = node->Next) {
         StudentNode* tmp = stuList.find(node->studentID, ACTIVE);

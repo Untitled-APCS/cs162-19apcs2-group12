@@ -143,6 +143,8 @@ void student_2() {
 	inputData(s, p, 2, 0, checkStudent_2);
 	if (s[0].length() == 0 || s[1].length() == 0) {
 		studentMenu();
+		delete[]s;
+		delete[]p;
 		return;
 	}
 	string semesterID = s[0], studentID = s[1];
@@ -198,6 +200,8 @@ void student_3() {
 	inputData(s, p, 2 ,0, checkStudent_3);
 	if (s[0].length() == 0 || s[1].length() == 0) {
 		studentMenu();
+		delete[]s;
+		delete[]p;
 		return;
 	}
 	string semesterID = s[0], studentID = s[1];
@@ -238,6 +242,8 @@ void student_4() {
 	inputData(s, p, 2, 0, checkStudent_4);
 	if (s[0].length() == 0 || s[1].length() == 0) {
 		studentMenu();
+		delete[]s;
+		delete[]p;
 		return;
 	}
 	string semesterID = s[0], studentID = s[1];

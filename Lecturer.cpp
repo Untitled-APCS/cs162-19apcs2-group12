@@ -402,7 +402,10 @@ void lecturer_1_() {
 	SemesterList Sems;
 	ClassList classes;
 	if (s[0].length() == 0) {
+		
 		lecturerMenu();
+		delete[]s;
+		delete[]p;
 		return;
 	}
 	
@@ -592,6 +595,8 @@ void lecturer_2_() {
 	inputData(s, p, 3, 0, checklecturer_2);
 	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
 		lecturerMenu();
+		delete[]s;
+		delete[]p;
 		return;
 	}
 	string semesterID = s[0], classID=s[1], courseID=s[2];
@@ -651,6 +656,8 @@ void lecturer_3_() {
 	inputData(s, p, 3, 0, checklecturer_3);
 	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
 		lecturerMenu();
+		delete[]s;
+		delete[]p;
 		return;
 	}
 	StudentList stuList;
@@ -706,6 +713,8 @@ void lecturer_4_() {
 	inputData(s, p, 4, 0, checklecturer_4);
 	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length() == 0) {
 		lecturerMenu();
+		delete[]p;
+		delete[]s;
 		return;
 	}
 	StudentList stuList;
@@ -762,6 +771,8 @@ void lecturer_5_() {
 	inputData(s, p, 4, 0, checklecturer_5);
 	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length() == 0) {
 		lecturerMenu();
+		delete[]s;
+		delete[]p;
 		return;
 	}
 
@@ -805,6 +816,8 @@ void lecturer_6_() {
 	inputData(s, p, 4, 0, checklecturer_6);
 	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length() == 0) {
 		lecturerMenu();
+		delete[]s;
+		delete[]p;
 		return;
 	}
 	StudentList stuList;
@@ -855,6 +868,8 @@ void lecturer_7_() {
 	inputData(s, p, 3, 0, checklecturer_7);
 	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
 		lecturerMenu();
+		delete[]s;
+		delete[]p;
 		return;
 	}
 
