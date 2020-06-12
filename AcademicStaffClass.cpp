@@ -155,7 +155,10 @@ void staff_2_2() {
     getline(cin, newClass, '\n');
 
     if (classList.find(newClass, ACTIVE))
+    {
+        cout << "\nClass has already existed, you may NOT want to new one!!!\n";
         EXITCODE(6);
+    }
     //pushBack --> save to class list
     ClassNode* newClassNode = new ClassNode;
     newClassNode->classID = newClass;
@@ -197,10 +200,8 @@ void staff_2_3() {
     inputData(s, p, 1, 0, checkStaff_2_3);
 
     string
-        oldclass = s[0];
-    /*string semeID;
-    cout << "\n\nEnter semester's ID: ";
-    getline(cin, semeID, '\n');*/
+        oldClass = s[0];
+
     SemesterList semeList;
     if (!semeList.load())
         EXITCODE(6);
@@ -209,35 +210,60 @@ void staff_2_3() {
     if (!classlist.load())
         EXITCODE(6);
 
-    string oldClass;
-    getline(cin, oldClass, '\n');
-    if (!classlist.find(oldClass, ACTIVE))
+    ClassNode* oldClassNode = classlist.find(oldClass, ACTIVE);
+    if (oldClassNode->active == 0)
         EXITCODE(6);
     //Input newClassID which does not exist in class list
     string newClass;
+
+    cout << "\n\nEnter new class ID";
+    cin.ignore();
     getline(cin, newClass, '\n');
+    normalize(newClass);
     if (classlist.find(newClass, ACTIVE))
         EXITCODE(6);
-    //Update oldClassID to newClassID
-    ClassNode* newClassNode = new ClassNode;
-    newClassNode = classlist.find(oldClass, ACTIVE);
-    classlist.find(oldClass, ACTIVE)->active = 0;
-    classlist.pushBack(newClassNode);
-    classlist.save();
-    //copy all files [semesterID]-newClassID-course.txt to [semesterID]-newClassID-course.txt
-    CourseList courseList;
-    if (!courseList.load(semeList.Head->semesterID, oldClass))
-        EXITCODE(6);
-    courseList.save(semeList.Head->semesterID, newClass);
-    //each file [semesterID]-newClassID-course.txt, copy all files [semesterID]-olClassID-[courseID]-student.txt to [semesterID]-newClassID-[courseID]-student.txt
-    CourseStudentList courseStudentList;
-    CourseNode* cur = courseList.Head;
-    while (cur != nullptr) {
-        if (!courseStudentList.load(semeList.Head->semesterID, oldClass, cur->courseID))
-            EXITCODE(6);
-        courseStudentList.save(semeList.Head->semesterID, newClass, cur->courseID);
-    }
+    if (classlist.find(newClass, ALL)) {
 
+        //set the oldclass to inactive and re_active the existing class 
+
+        classlist.find(newClass, ALL)->active = 1;
+        classlist.find(oldClass, ACTIVE)->active = 0;
+        classlist.save();
+    }
+    else
+    {
+        //Update oldClassID to newClassID
+        ClassNode* newClassNode = new ClassNode;
+        //newClassNode = oldClassNode;
+        newClassNode->classID = newClass;
+        newClassNode->active = 1;
+
+        //oldClassNode->active = 0;
+        //classlist.pushBack(newClassNode);
+        //classlist.save();
+        //copy all files [semesterID]-newClassID-course.txt to [semesterID]-newClassID-course.txt
+        CourseList courseList;
+
+        SemesterNode* cur_seme = semeList.Head;
+        if (courseList.load(cur_seme->semesterID, oldClass) == 0)
+            EXITCODE(6);
+        courseList.save(cur_seme->semesterID, newClass);
+
+        oldClassNode->active = 0;
+        classlist.pushBack(newClassNode);
+        classlist.save();
+        //each file [semesterID]-newClassID-course.txt, copy all files [semesterID]-olClassID-[courseID]-student.txt to [semesterID]-newClassID-[courseID]-student.txt
+        CourseStudentList courseStudentList;
+        CourseNode* cur = courseList.Head;
+        while (cur != nullptr) {
+            cout << cur->courseID;
+            if (!courseStudentList.load(cur_seme->semesterID, oldClass, cur->courseID))
+                EXITCODE(6);
+            courseStudentList.save(cur_seme->semesterID, newClass, cur->courseID);
+            courseStudentList.destroy();
+            cur = cur->Next;
+        }
+    }
     //EX:
 //    courseList.load(semesterID, oldClassID);
 //    courseList.save(semesterID, newClassID);
@@ -270,6 +296,7 @@ void staff_2_4() {
         EXITCODE(6);
     //remove classID: active -> 0
     classlist.find(oldClass, ACTIVE)->active = 0;
+    classlist.save();
     cout << "Successfully deleted class [ENTER]";
     fflush(stdin);
     cin.get();
@@ -289,12 +316,14 @@ void staff_2_5() {
         EXITCODE(6);
     ClassNode* cur;
     cur = classList.Head;
+
+    cout << "\n\nList of active class(es): \n\n";
     while (cur != nullptr)
     {
-        cur->classID;
+        cout << cur->classID << endl;
         cur = cur->Next;
     }
-    cout << "Successfully deleted class [ENTER]";
+    cout << "\n\nSuccessfully view list of class(es) [ENTER]";
     fflush(stdin);
     cin.get();
     fflush(stdin);
@@ -312,10 +341,14 @@ bool checkStaff_2_2(string* s, int n) {
 }
 
 bool checkStaff_2_3(string* s, int n) {
-    /*ClassList classlist;
-    classlist.load();
+    ClassList classlist;
+    if (!classlist.load())
+    {
+        cout << "\n\nCan not load list of Classes!!!";
+        return false;
+    }
     if (!classlist.find(s[0], ACTIVE))
-        return false;*/
+        return false;
     return true;
 }
 
