@@ -1212,13 +1212,19 @@ bool inputPathExportCSV(string *s, int cnt, int x) {
                 string fileName;
 
                 while (true) {
-                    cout << "\n\nFile Browser - Please enter the file name.\n\n";
+                    cout << "\n\nFile Browser - Please enter the file name.\n";
+                    cout << "[  enter  ] Select.\n";
+                    cout << "[~ + enter] Back to menu.\n\n";
                     cout << "Your file path: " << s[x];
 
                     fflush(stdin);
                     getline(cin, fileName);
                     fflush(stdin);
 
+                    if (fileName.find('~') != string::npos) {
+                        s[x] = "~";
+                        return true;
+                    }
 
                     if (fileName.length() >= 4) {
                         string tmp = fileName.substr(fileName.length() - 4, 4);
@@ -1235,6 +1241,12 @@ bool inputPathExportCSV(string *s, int cnt, int x) {
                         s[x] += fileName;
                         return true;
                     }
+
+                    cout << "Could not open the file path '" << s[x] + fileName << "'. Please try one more time. [enter]\n";
+
+                    fflush(stdin);
+                    keyPress = cin.get();
+                    fflush(stdin);
                 }
             }
 
