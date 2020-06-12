@@ -21,8 +21,22 @@ bool inputCourse(string *s, int cnt, int x);
 
 bool inputLecturer(string *s, int cnt, int x);
 
-bool inputFilePath(string *s, int cnt, int x);
+bool inputPathClassListCSV(string *s, int cnt, int x);
+
+bool inputPathCourseListCSV(string *s, int cnt, int x);
+
+bool inputPathLecturerListCSV(string *s, int cnt, int x);
+
+bool inputPathStudentListCSV(string *s, int cnt, int x);
+
+bool inputPathScoreBoardListCSV(string *s, int cnt, int x);
+
+bool inputPathExportCSV(string *s, int cnt, int x);
 
 bool inputData(string *s, fPtr *p, int cnt, int x, bool (*check)(string*, int));
+
+void refreshPathList(PathList &pathList, string &path, int &page, bool (*checkPath)(string), string *hint, int n);
+
+void refreshFolderList(PathList &pathList, string &path, int &page);
 
 #endif //CS162_19APCS2_GROUP12_INPUTDATA_H

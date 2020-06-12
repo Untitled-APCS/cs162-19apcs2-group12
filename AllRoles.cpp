@@ -6,6 +6,8 @@
 //#include <openssl/sha.h>
 //#include <openssl/evp.h>
 
+namespace fs = std::filesystem;
+
 void logIn() {
 //    user::ID = "19125001";
 //    cin >> user::type;
@@ -71,7 +73,7 @@ void logIn() {
 
     cout << "\n\nWe found you, " << getTitle(fullName, type, gender) << ". Type in your password and go ahead.\n";
     cout << "In this version, the password is not hidden on the screen. Please be aware of intentional glances of people around you.\n";
-    cout << "[` + enter] This isn't you? Try again.\n";
+    cout << "[` + enter] This isn't you? Try again.\n\n";
 
 
     while (true) {
@@ -114,7 +116,7 @@ void logOut() {
     user::type = -1;
     user::fullName = "";
     user::gender = -1;
-    user::workspace = "";
+    user::workspace = "/";
 
     cout << "You have been logged out. Getting you back to the entrance... [enter]\n";
 
@@ -137,6 +139,111 @@ void changePassword() {
     char keyPress = cin.get();
     fflush(stdin);
     preferencesMenu();
+}
+
+void changeWorkspace() {
+    int page;
+
+    if (!fs::exists(user::workspace)) {
+        cout << "\n\nYour old workspace has been deleted or corrupted. [enter]\n";
+
+        fflush(stdin);
+        char keyPress = cin.get();
+        fflush(stdin);
+
+        user::workspace = "/";
+    }
+
+    PathList pathList;
+    char keyPress; bool passed;
+    refreshFolderList(pathList, user::workspace, page);
+
+    while (true) {
+        cout << "\n\nFile Browser - Please select your workspace folder.\n";
+        cout << "Only folders and accepted files are shown below. If your file is hidden, please check its file format.\n\n";
+        cout << "Current directory: " << user::workspace << endl;
+
+        for (int i = page * 10; i < min((page + 1) * 10, pathList.cnt); i++)
+            cout << "[" << (i+1)%10 << " + enter] " << pathList.c[i].path << endl;
+
+        cout << endl;
+
+        if (page > 0)
+            cout << "[A + enter] Previous.\n";
+
+        if (page < ((pathList.cnt-1)/10+1) - 1)
+            cout << "[D + enter] Next.\n";
+
+        if (user::workspace != "/")
+            cout << "[W + enter] Back to parent folder.\n";
+
+        cout << "[S + enter] Select current directory.\n";
+
+        cout << endl;
+
+        cout << "[` + enter] Back to menu.\n";
+
+        passed = false;
+        do {
+            fflush(stdin);
+            keyPress = cin.get();
+            fflush(stdin);
+
+            if (keyPress >= '0' && keyPress <= '9') {
+                int k = (keyPress == '0' ? page * 10 + 9 : page * 10 + keyPress - '0' - 1);
+                if (k < 0 || k >= pathList.cnt) continue;
+
+                passed = true;
+                user::workspace += pathList.c[k].path;
+
+                if (user::workspace.length() > 0 && user::workspace[user::workspace.length()-1] != '/')
+                    user::workspace.push_back('/');
+                refreshFolderList(pathList, user::workspace, page);
+            }
+
+            if ((keyPress == 'A' || keyPress == 'a') && page > 0) {
+                page--;
+                passed = true;
+            }
+
+            if ((keyPress == 'D' || keyPress == 'd') && page < ((pathList.cnt-1)/10+1) - 1) {
+                page++;
+                passed = true;
+            }
+
+            if ((keyPress == 'W' || keyPress == 'w') && user::workspace != "/") {
+                if (user::workspace.length() > 0 && user::workspace[user::workspace.length()-1] == '/') user::workspace.pop_back();
+                user::workspace = fs::path(user::workspace).parent_path().u8string();
+                //cout << s[x] << endl;
+
+                if (user::workspace.length() > 0 && user::workspace[user::workspace.length()-1] != '/') user::workspace.push_back('/');
+
+                refreshFolderList(pathList, user::workspace, page);
+                passed = true;
+            }
+
+            if (keyPress == 'S' || keyPress == 's') {
+                cout << "Your workspace has been changed to '" << user::workspace << "' successfully. [enter]\n";
+
+                fflush(stdin);
+                keyPress = cin.get();
+                fflush(stdin);
+                preferencesMenu();
+                return;
+            }
+
+            if (keyPress == '`') {
+                user::workspace = "/";
+                cout << "Your workspace is being erased. [enter]\n";
+
+                fflush(stdin);
+                keyPress = cin.get();
+                fflush(stdin);
+                preferencesMenu();
+                return;
+            }
+        } while (!passed);
+    }
 }
 
 void turnOffRecommendation() {

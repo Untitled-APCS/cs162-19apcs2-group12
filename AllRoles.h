@@ -16,6 +16,8 @@ void viewProfileInfo();
 
 void changePassword();
 
+void changeWorkspace();
+
 void turnOffRecommendation();
 
 void turnOffCorrection();

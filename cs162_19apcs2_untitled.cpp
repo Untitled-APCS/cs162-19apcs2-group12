@@ -19,27 +19,39 @@ bool checkTest(string* s, int cnt) {
 //                return false;
 //            }
 
-    if (s[0] == s[1]) {
-        cout << "\n\nThe two studentIDs must be nonidentical. [enter]\n";
+//    if (s[0] == s[1]) {
+//        cout << "\n\nThe two studentIDs must be nonidentical. [enter]\n";
+//
+//        fflush(stdin);
+//        char keyPress = cin.get();
+//        fflush(stdin);
+//        return false;
+//    }
+//
+//    ClassStudentList classStudentList;
+//    classStudentList.load(s[2]);
+//
+//    if (classStudentList.find(s[0], ACTIVE) == nullptr ||
+//        classStudentList.find(s[1], ACTIVE) == nullptr) {
+//        cout << "\n\nThe two studentIDs must exist in the class. [enter]\n";
+//
+//        fflush(stdin);
+//        char keyPress = cin.get();
+//        fflush(stdin);
+//        return false;
+//    }
 
-        fflush(stdin);
-        char keyPress = cin.get();
-        fflush(stdin);
-        return false;
-    }
-
-    ClassStudentList classStudentList;
-    classStudentList.load(s[2]);
-
-    if (classStudentList.find(s[0], ACTIVE) == nullptr ||
-        classStudentList.find(s[1], ACTIVE) == nullptr) {
-        cout << "\n\nThe two studentIDs must exist in the class. [enter]\n";
-
-        fflush(stdin);
-        char keyPress = cin.get();
-        fflush(stdin);
-        return false;
-    }
+//    SemesterList semesterList;
+//    semesterList.load();
+//
+//    if (s[0] != SemesterList::currentSemester) {
+//        cout << "\n\nThe semester must be set to be current. [enter]\n";
+//
+//        fflush(stdin);
+//        char keyPress = cin.get();
+//        fflush(stdin);
+//        return false;
+//    }
 
     return true;
 }
@@ -65,11 +77,28 @@ int main(int argc, const char **argv) {
     //string s;
     //getline(cin, s);
 
+    //cout << (int) (21 - 1) / (int) 10 + 1;
+
+//    SemesterList semesterList;
+//    semesterList.load();
+//
 //    int cnt = 3;
-//    string *s = new string [cnt];
-//    fPtr *p = new fPtr [cnt] {inputStudent, inputStudent, inputClass};
+//    string *s = new string [cnt] {SemesterList::currentSemester, "", ""};
+//    fPtr *p = new fPtr [cnt] {inputSemester, inputClass, inputCourse};
 //    if (!inputData(s, p, cnt, 0, checkTest))
 //        EXITCODE_V(6, 0)
+//
+//    for (int i = 0; i<cnt; i++)
+//        cout << s[i] << endl;
+
+    //cout << isStudentListCSV("/Users/ducanchu/Documents/Assignments/CS162/Standard CSV Input/class-list-18ctt1.csv");
+    //return 0;
+
+//    int cnt = 1;
+//    string *s = new string [cnt];
+//    fPtr *p = new fPtr [cnt] {inputPathExportCSV};
+//    if (!inputData(s, p, cnt, 0, checkTest))
+//    EXITCODE_V(6, 0)
 //
 //    for (int i = 0; i<cnt; i++)
 //        cout << s[i] << endl;
@@ -161,6 +190,8 @@ int main(int argc, const char **argv) {
 //    pathList.getDirectoryList("/Users/ducanchu/Documents/Assignments/CS162/cs162-19apcs2-group12/", isLecturerListCSV, hint, 3);
 //    for (int i = 0; i<pathList.cnt; i++)
 //        cout << pathList.c[i].path << endl;
+
+
 
     //cout << isClassListCSV(getLocation() + "CSVTemplate/ClassListCSVTemplate.csv");
 
