@@ -447,14 +447,26 @@ void staff_5_1()
     bool skipAll = false;
     bool replaceAll = false;
 
-    while (getline(fin, temp1, ','))
+    while (fin.good())
     {
         newStudentNode = new StudentNode;
         newClassStudentNode = new ClassStudentNode;
-        //getline(fin, temp, ',');
-        getline(fin, newStudentNode->studentID, ',');
-        getline(fin, newStudentNode->studentName, ',');
+        getline(fin, temp, ',');
+        cout << temp << " ";
+        if (temp == "") {
+            delete newStudentNode;
+            delete newClassStudentNode;
+            cout << "ok" << endl;
+            continue;
+        }
+        getline(fin, temp, ','); // newStudentNode->studentID
+        newStudentNode->studentID = temp;
+        cout << temp << " ";
+        getline(fin, temp, ','); // name
+        newStudentNode->studentName = temp;
+        cout << temp << " ";
         getline(fin, temp);
+        cout << temp << endl;
         newStudentNode->DOB.y = 1000 * (temp[0] - '0') + 100 * (temp[1] - '0') + 10 * (temp[2] - '0') + (temp[3] - '0');
         newStudentNode->DOB.m = 10 * (temp[5] - '0') + (temp[6] - '0');
         newStudentNode->DOB.d = 10 * (temp[8] - '0') + (temp[9] - '0');
@@ -465,94 +477,96 @@ void staff_5_1()
         newStudentNode->active = 1;
         newClassStudentNode->active = 1;
 
-        StudentNode* dupp;
-        string pw;
-        pw = to_string((newStudentNode->DOB.y * 10000 + newStudentNode->DOB.m * 100 + newStudentNode->DOB.d));
-        newStudentNode->password = getHashedPassword(pw);
+        //    StudentNode* dupp;
+        //    string pw;
+        //    pw = to_string((newStudentNode->DOB.y * 10000 + newStudentNode->DOB.m * 100 + newStudentNode->DOB.d));
+        //    newStudentNode->password = getHashedPassword(pw);
 
-        if (studentList.find(newStudentNode->studentID, ALL))
-        {
-            if (!skipAll && !replaceAll)
-            {
-                string ID;
-                int choice = 0;
-                char keyPress;
+        //    if (studentList.find(newStudentNode->studentID, ALL))
+        //    {
+        //        if (!skipAll && !replaceAll)
+        //        {
+        //            string ID;
+        //            int choice = 0;
+        //            char keyPress;
 
-                cout << "\n\nThe student with ID '" << ID << "' has already added.\n";
-                cout << "[1 + enter] Skip.\n";
-                cout << "[2 + enter] Replace.\n";
-                cout << "[3 + enter] Skip all.\n";
-                cout << "[4 + enter] Replace all.\n";
+        //            cout << "\n\nThe student with ID '" << ID << "' has already added.\n";
+        //            cout << "[1 + enter] Skip.\n";
+        //            cout << "[2 + enter] Replace.\n";
+        //            cout << "[3 + enter] Skip all.\n";
+        //            cout << "[4 + enter] Replace all.\n";
 
-                while (choice == 0) {
-                    fflush(stdin);
-                    keyPress = cin.get();
-                    fflush(stdin);
+        //            while (choice == 0) {
+        //                fflush(stdin);
+        //                keyPress = cin.get();
+        //                fflush(stdin);
 
-                    switch (keyPress) {
-                    case '1':
-                        choice = SKIP;
-                        delete newStudentNode;
-                        break;
-                    case '2':
-                        choice = REPLACE;
-                        dupp = studentList.find(newStudentNode->studentID, ALL);
-                        dupp->active = 1;
-                        dupp->DOB = newStudentNode->DOB;
-                        //dupp->Next = newStudentNode->Next;
-                        pw = to_string((dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d));
-                        dupp->password = getHashedPassword(pw);
-                        dupp->studentName = newStudentNode->studentName;
-                        dupp->classID = newStudentNode->classID;
-                        break;
-                    case '3':
-                        choice = SKIP_ALL;
-                        skipAll = true;
-                        delete newStudentNode;
-                        break;
-                    case '4':
-                        choice = REPLACE_ALL;
-                        replaceAll = true;
-                        dupp = studentList.find(newStudentNode->studentID, ALL);
-                        dupp->active = 1;
-                        dupp->DOB = newStudentNode->DOB;
-                        //dupp->Next = newStudentNode->Next;
-                        pw = to_string(dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d);
-                        dupp->password = getHashedPassword(pw);
-                        dupp->studentName = newStudentNode->studentName;
-                        dupp->classID = newStudentNode->classID;
-                        break;
-                    default:
-                        choice = 0;
-                    }
+        //                switch (keyPress) {
+        //                case '1':
+        //                    choice = SKIP;
+        //                    delete newStudentNode;
+        //                    break;
+        //                case '2':
+        //                    choice = REPLACE;
+        //                    dupp = studentList.find(newStudentNode->studentID, ALL);
+        //                    dupp->active = 1;
+        //                    dupp->DOB = newStudentNode->DOB;
+        //                    //dupp->Next = newStudentNode->Next;
+        //                    pw = to_string((dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d));
+        //                    dupp->password = getHashedPassword(pw);
+        //                    dupp->studentName = newStudentNode->studentName;
+        //                    dupp->classID = newStudentNode->classID;
+        //                    break;
+        //                case '3':
+        //                    choice = SKIP_ALL;
+        //                    skipAll = true;
+        //                    delete newStudentNode;
+        //                    break;
+        //                case '4':
+        //                    choice = REPLACE_ALL;
+        //                    replaceAll = true;
+        //                    dupp = studentList.find(newStudentNode->studentID, ALL);
+        //                    dupp->active = 1;
+        //                    dupp->DOB = newStudentNode->DOB;
+        //                    //dupp->Next = newStudentNode->Next;
+        //                    pw = to_string(dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d);
+        //                    dupp->password = getHashedPassword(pw);
+        //                    dupp->studentName = newStudentNode->studentName;
+        //                    dupp->classID = newStudentNode->classID;
+        //                    break;
+        //                default:
+        //                    choice = 0;
+        //                }
 
-                }
-                if (skipAll)
-                    delete newStudentNode;
-                if (replaceAll)
-                {
-                    dupp = studentList.find(newStudentNode->studentID, ALL);
-                    dupp->active = 1;
-                    dupp->DOB = newStudentNode->DOB;
-                    //dupp->Next = newStudentNode->Next;
-                    pw = to_string(dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d);
-                    dupp->password = getHashedPassword(pw);
-                    dupp->studentName = newStudentNode->studentName;
-                    dupp->classID = newStudentNode->classID;
-                }
-            }
+        //            }
+        //            if (skipAll)
+        //                delete newStudentNode;
+        //            if (replaceAll)
+        //            {
+        //                dupp = studentList.find(newStudentNode->studentID, ALL);
+        //                dupp->active = 1;
+        //                dupp->DOB = newStudentNode->DOB;
+        //                //dupp->Next = newStudentNode->Next;
+        //                pw = to_string(dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d);
+        //                dupp->password = getHashedPassword(pw);
+        //                dupp->studentName = newStudentNode->studentName;
+        //                dupp->classID = newStudentNode->classID;
+        //            }
+        //        }
 
-        }
-        else
-        {
-            studentList.pushBack(newStudentNode);
-            classStudentList.pushBack(newClassStudentNode);
-        }
+        //    }
+        //    else
+        //    {
+        //        studentList.pushBack(newStudentNode);
+        //        classStudentList.pushBack(newClassStudentNode);
+        //    }
 
-    }
-    studentList.save();
-    classStudentList.save(classID);
-
+        //}
+        /*studentList.save();
+        classStudentList.save(classID);*/
+        delete newStudentNode;
+        delete newClassStudentNode;
+    } // nho xoa
     cout << "\n\nImport successfully";
     cout << "\nData saved to student.txt and " << classID << "-student.txt\n[ENTER]";
     fin.close();

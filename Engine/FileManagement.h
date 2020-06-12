@@ -54,6 +54,8 @@ bool isStudentListCSV(string filePath);
 
 bool isScoreBoardListCSV(string filePath);
 
+bool copyFile(string src, string des);
+
 int numComma(string s);
 
 

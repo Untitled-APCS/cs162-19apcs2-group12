@@ -49,6 +49,7 @@ struct user {
     static int type;
     static string workspace;
     static string fullName;
+    static string password;
     static int gender;
     //
 };

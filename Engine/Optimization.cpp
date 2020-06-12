@@ -8,6 +8,7 @@ string user::ID;
 int user::type = -1;
 string user::workspace = "/";
 string user::fullName;
+string user::password;
 int user::gender = -1;
 
 void normalize(string &s) {
@@ -139,6 +140,8 @@ bool isStrongPassword(string password) {
             lower = true;
         else if (password[i] >= 'A' && password[i] <= 'Z')
             upper = true;
+        else if (password[i] >= '0' && password[i] <= '9')
+            number = true;
         else
             special = true;
 
@@ -146,7 +149,7 @@ bool isStrongPassword(string password) {
             forbidden = true;
     }
 
-    return (lower && upper && special && !forbidden);
+    return (lower && upper && number && special && !forbidden);
 }
 
 string getGreeting() {
@@ -213,7 +216,10 @@ string getCheckInCode(string semesterID, string classID, string courseID, int we
     normalize(classID);
     normalize(courseID);
 
-    string ans = getHashedPassword(semesterID + classID + courseID + to_string(week));
+    Time cur;
+    cur.capture_gm(); //cout << cur.h << endl;
+
+    string ans = getHashedPassword(semesterID + classID + courseID + to_string(week) + to_string(cur.h));
     ans.erase(6, ans.length() - 6);
     return ans;
 }

@@ -31,6 +31,7 @@ struct StaffList {
     StaffList();
     ~StaffList();
     bool load(); //load data from data/staff.txt
+    bool save(); //save data to data/staff.txt
     void destroy();
     StaffNode* find(string staffID); //mode is either ALL (find both active and inactive) or ACTIVE)
 

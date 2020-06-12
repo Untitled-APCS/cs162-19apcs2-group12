@@ -23,6 +23,7 @@ struct Time {
     Time(); //Default value is the current time
     Time(int hour, int minute, int second);
     void capture(); //Capture the current time
+    void capture_gm(); //Capture the GMT
     bool wrongFormat();
 };
 
