@@ -37,6 +37,7 @@ bool checklecturer_4(string* s, int n);
 bool checklecturer_5(string* s, int n);
 bool checklecturer_6(string* s, int n);
 bool checklecturer_7(string* s, int n);
+bool checklecturerCheckin(string* s, int n);
 
 // Activities:
 bool isPermissible(string courseID);
@@ -45,6 +46,7 @@ void printStudent(StudentNode* node, int &index);
 void printArray(int* arr, int n);
 void printScoreboard(StudentList llist, CourseStudentList llist2);
 bool loadCSVScoreBoard(CourseStudentList&llist, string filePath);
+void setAttendanceCourse();
 
 
 

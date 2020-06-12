@@ -62,6 +62,8 @@ int main(int argc, const char **argv) {
 //        fileLocation.pop_back();
     logo();
     logInMenu();
+
+    //setAttendanceCourse();
     
     //lecturer_1_();
     //staff_2_1();

@@ -466,13 +466,13 @@ void studentMenu() {
                 student_1();
                 break;
             case '2':
-                testStudent();
+                student_2();
                 break;
             case '3':
-                testStudent();
+                student_3();
                 break;
             case '4':
-                testStudent();
+                student_4();
                 break;
             case 'P':
             case 'p':
