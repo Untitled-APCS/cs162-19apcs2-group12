@@ -207,19 +207,19 @@ void staffLecturerMenu() {
 
         switch (keyPress) {
             case '1':
-                testStaffLecturer();
+                staff_4_1();
                 break;
             case '2':
-                testStaffLecturer();
+                staff_4_2();
                 break;
             case '3':
-                testStaffLecturer();
+                staff_4_3();
                 break;
             case '4':
-                testStaffLecturer();
+                staff_4_4();
                 break;
             case '5':
-                testStaffLecturer();
+                staff_4_5();
                 break;
             case '`':
                 staffMenu();

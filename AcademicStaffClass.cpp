@@ -400,7 +400,7 @@ void staff_5_1()
     string* s = new string[2]{ "","" };
     fPtr* p = new fPtr[2]{ inputClass,inputPathStudentListCSV };
     inputData(s, p, 2, 0, checkStaff_5_1);
-    if (s[0].length() == 0||s[1].length()==0)
+    if (s[0].length() == 0 || s[1].length() == 0)
     {
         staffStudentMenu();
         delete[]s;
@@ -798,7 +798,7 @@ void staff_5_4()
     ClassStudentList classStudentList;
     if (!classStudentList.load(classID))
         EXITCODE(6);
-    if (classStudentList.find(studentID, ACTIVE)==nullptr)
+    if (classStudentList.find(studentID, ACTIVE) == nullptr)
         EXITCODE(6);
 
     classStudentList.find(studentID, ACTIVE)->active = 0;
@@ -806,7 +806,7 @@ void staff_5_4()
     StudentList studentList;
     if (!studentList.load())
         EXITCODE(6);
-    if (studentList.find(studentID, ACTIVE)==nullptr)
+    if (studentList.find(studentID, ACTIVE) == nullptr)
         EXITCODE(6);
     StudentNode* node = studentList.find(studentID, ACTIVE);
     //if (node == nullptr)
@@ -912,11 +912,11 @@ void staff_4_1()
 
 
     string* s = new string[1]{ "" };
-    fPtr* p = new fPtr[1]{inputPathLecturerListCSV };
+    fPtr* p = new fPtr[1]{ inputPathLecturerListCSV };
     inputData(s, p, 1, 0, checkStaff_5_1);
-    if (s[0].length() == 0 )
+    if (s[0].length() == 0)
     {
-        staffStudentMenu();
+        staffLecturerMenu();
         delete[]s;
         delete[]p;
         return;
@@ -1056,7 +1056,7 @@ void staff_4_1()
     fflush(stdin);
     cin.get();
     fflush(stdin);
-    staffStudentMenu();
+    staffLecturerMenu();
     delete[]s;
     delete[]p;
     return;
@@ -1064,7 +1064,7 @@ void staff_4_1()
 
 void staff_4_2() {
     //Create a new lecturer
-    
+
 
     /*string classID;
 
@@ -1081,264 +1081,191 @@ void staff_4_2() {
     LecturerNode* newLecturerNode = nullptr;
 
     string temp;
-//
-//    cout << "Student's ID: ";
-//    cin.ignore();
-//    getline(cin, newLecturerNode->studentID, '\n');
-//    newClassLecturerNode->studentID = newLecturerNode->studentID;
-//    cout << "Student's Full Name: ";
-//    cin.ignore();
-//    getline(cin, newLecturerNode->studentName, '\n');
-//
-//    cout << "Student's Date of Birth:\n Date: ";
-//    cin.ignore();
-//    getline(cin, temp, '\n');
-//    newLecturerNode->DOB.d = stoi(temp);
-//    cout << "\nMonth: ";
-//    cin.ignore();
-//    getline(cin, temp, '\n');
-//    newLecturerNode->DOB.m = stoi(temp);
-//    cout << "\nYear: ";
-//    cin.ignore();
-//    getline(cin, temp, '\n');
-//    newLecturerNode->DOB.y = stoi(temp);
-//    newLecturerNode->classID = classID;
-//
-//    lecturerList.pushBack(newLecturerNode);
-//    classLecturerList.pushBack(newClassLecturerNode);
-//
-//    lecturerList.save();
-//    classLecturerList.save(classID);
-//    cout << "\n\nNew student created. [ENTER]";
-//    fflush(stdin);
-//    cin.get();
-//    fflush(stdin);
-//    staffStudentMenu();
-//    delete[]s;
-//    delete[]p;
-//    return;
-//}
-//
-//void staff_4_3() {
-//    //Update a specific student
-//
-//    string* s = new string[2]{ "","" };
-//    fPtr* p = new fPtr[2]{ inputClass,inputStudent };
-//    inputData(s, p, 2, 0, checkStaff_5_3);
-//    if (s[0].length() == 0 || s[1].length() == 0)
-//    {
-//        staffStudentMenu();
-//        delete[]s;
-//        delete[]p;
-//        return;
-//    }
-//    string
-//        classID = s[0],
-//        oldStudentID = s[1];
-//
-//
-//    /*string classID;
-//    cout << "Enter class's ID: ";
-//    getline(cin, classID, '\n');
-//
-//    string oldStudentID;
-//    cout << "\n\nEnter student's ID: ";
-//    getline(cin, oldStudentID, '\n');*/
-//
-//    ClassLecturerList classLecturerList;
-//    if (!classLecturerList.load(classID))
-//        EXITCODE(6);
-//
-//    LecturerList lecturerList;
-//    if (!lecturerList.load())
-//        EXITCODE(6);
-//
-//    if (!lecturerList.find(oldStudentID, ACTIVE))
-//        EXITCODE(6);
-//    if (!classLecturerList.find(oldStudentID, ACTIVE))
-//        EXITCODE(6);
-//
-//    //update old to new
-//    LecturerNode* newstudent = new LecturerNode;
-//    newstudent = lecturerList.find(oldStudentID, ACTIVE);
-//    ClassLecturerNode* newclassstudent = new ClassLecturerNode;
-//    newclassstudent = classLecturerList.find(oldStudentID, ACTIVE);
-//
-//    newstudent->active = 1;
-//
-//    string temp;
-//
-//    getline(cin, newstudent->studentName, '\n');
-//    normalizeFullName(newstudent->studentName);
-//    getline(cin, temp, '\n');
-//    newstudent->DOB.y = 1000 * (temp[0] - '0') + 100 * (temp[1] - '0') + 10 * (temp[2] - '0') + (temp[3] - '0');
-//    newstudent->DOB.m = 10 * (temp[5] - '0') + (temp[6] - '0');
-//    newstudent->DOB.d = 10 * (temp[8] - '0') + (temp[9] - '0');
-//    getline(cin, newstudent->classID, '\n');
-//    normalize(newstudent->classID);
-//
-//    //flag to tell if the class can be changed or not
-//    bool changeclass = false;
-//    if (newstudent->classID != classID)
-//    {
-//        SemesterList semester;
-//        semester.load();
-//
-//        CourseList course;
-//        course.load(semester.currentSemester, classID);
-//        if (course.Head != nullptr)
-//        {
-//            cout << "You can not change this student class!!!";
-//            newstudent->classID = classID;
-//        }
-//        else
-//        {
-//            changeclass = true;
-//            //inactivate student in the old class
-//            newclassstudent->active = 0;
-//            classLecturerList.pushBack(newclassstudent);
-//            classLecturerList.save(classID);
-//
-//
-//            //activete and save student to new class
-//            ClassLecturerList newclassStudentlist;
-//            newclassstudent->active = 1;
-//            newclassStudentlist.load(newstudent->classID);
-//            newclassStudentlist.pushBack(newclassstudent);
-//            newclassStudentlist.save(newstudent->classID);
-//        }
-//    }
-//    if (!changeclass)
-//    {
-//        ClassLecturerList newclasslist;
-//        newclasslist.load(newstudent->classID);
-//        newclasslist.pushBack(newclassstudent);
-//    }
-//    lecturerList.pushBack(newstudent);
-//    lecturerList.save();
-//
-//    cout << "\n\nUpdate student's information completed [ENTER]";
-//    fflush(stdin);
-//    cin.get();
-//    fflush(stdin);
-//    staffStudentMenu();
-//    delete[]s;
-//    delete[]p;
-//    return;
-//}
-//
-//void staff_4_4() {
-//    //Remove a specific student
-//    //input classID
-//
-//    string* s = new string[2]{ "","" };
-//    fPtr* p = new fPtr[2]{ inputClass,inputStudent };
-//    inputData(s, p, 2, 0, checkStaff_5_3);
-//    if (s[0].length() == 0 || s[1].length() == 0)
-//    {
-//        staffStudentMenu();
-//        delete[]s;
-//        delete[]p;
-//        return;
-//    }
-//    string
-//        classID = s[0],
-//        studentID = s[1];
-//
-//    //string classID;
-//    //cout << "\n\nEnter class ID: ";
-//    //getline(cin, classID, '\n');
-//    //normalize(classID);
-//
-//    ////input student ID
-//    //string studentID;
-//    //cout << "\n\nEnter class ID: ";
-//    //getline(cin, studentID, '\n');
-//    //normalize(studentID);
-//
-//    //load and check if the student is in class
-//    ClassLecturerList classLecturerList;
-//    if (!classLecturerList.load(classID))
-//        EXITCODE(6);
-//    if (classLecturerList.find(studentID, ACTIVE) == nullptr)
-//        EXITCODE(6);
-//
-//    classLecturerList.find(studentID, ACTIVE)->active = 0;
-//
-//    LecturerList lecturerList;
-//    if (!lecturerList.load())
-//        EXITCODE(6);
-//    if (lecturerList.find(studentID, ACTIVE) == nullptr)
-//        EXITCODE(6);
-//    LecturerNode* node = lecturerList.find(studentID, ACTIVE);
-//    //if (node == nullptr)
-//    //    EXITCODE(6);
-//    node->active = 0;
-//    //lecturerList.find(studentID, ACTIVE)->active = 0;
-//    classLecturerList.save(classID);
-//    lecturerList.save();
-//
-//    cout << endl << studentID << " deleted! [ENTER]";
-//    fflush(stdin);
-//    cin.get();
-//    fflush(stdin);
-//    staffStudentMenu();
-//    delete[]s;
-//    delete[]p;
-//    return;
-//}
-//
-//void staff_4_5() {
-//    //View list of students of a class
-//   //input classID
-//
-//    string* s = new string[1]{ "" };
-//    fPtr* p = new fPtr[1]{ inputClass };
-//    inputData(s, p, 1, 0, checkStaff_5_2);
-//    if (s[0].length() == 0)
-//    {
-//        staffStudentMenu();
-//        delete[]s;
-//        delete[]p;
-//        return;
-//    }
-//    string
-//        classID = s[0];
-//
-//    /*string classID;
-//    cout << "\n\nEnter class ID: ";
-//    getline(cin, classID, '\n');
-//    normalize(classID);*/
-//
-//    //load and check if the class is valid
-//    ClassLecturerList classLecturerList;
-//    if (!classLecturerList.load(classID))
-//        EXITCODE(6);
-//    LecturerList lecturerList;
-//    if (!lecturerList.load())
-//        EXITCODE(6);
-//    //output student ID
-//
-//    LecturerNode* cur = lecturerList.Head;
-//
-//    for (ClassLecturerNode* node = classStudentList.Head; node; node = node->Next)
-//    {
-//        while (node->studentID != cur->studentID)
-//            cur = cur->Next;
-//        cout << "\n\nStudent ID: " << cur->studentID
-//            << "\nStudent name: " << cur->studentName
-//            << "\nStudent DOB: (yyyy/mm/dd)" << cur->DOB.y << "/" << cur->DOB.m << "/" << cur->DOB.d
-//            << "\nClass: " << cur->classID;
-//        cur = lecturerList.Head;
-//    }
 
-   // cout << "\nDone view list of class " << classID << "[ENTER]";
+    cout << "Lecturer's ID: ";
+    cin.ignore();
+    getline(cin, newLecturerNode->lecturerID, '\n');
+    cout << "Lecturer's Full Name: ";
+    cin.ignore();
+    getline(cin, newLecturerNode->lecturerName, '\n');
+    cout << "Lecturer's Academic Title: ";
+    cin.ignore();
+    getline(cin, newLecturerNode->lecturerName, '\n');
+    cout << "Lecturer's Gender: (Male=1/Female=0)";
+    cin.ignore();
+    getline(cin, temp, '\n');
+    normalize(temp);
+    if (temp == "1")
+        newLecturerNode->gender = 1;
+    else if (temp == "0")
+        newLecturerNode->gender = 0;
+    else
+    {
+        cout << "\nError!!!\nEnter wrong syntax";
+        staffLecturerMenu();
+        return;
+    }
+
+    lecturerList.pushBack(newLecturerNode);
+
+    lecturerList.save();
+    cout << "\n\nNew Lecturer created. [ENTER]";
     fflush(stdin);
     cin.get();
     fflush(stdin);
-    staffStudentMenu();
-    //delete[]s;
-    //delete[]p;
+    staffLecturerMenu();
+    return;
+}
+    
+    void staff_4_3() {
+        //Update a specific lecturer
+    
+        string* s = new string[1]{"" };
+        fPtr* p = new fPtr[1]{ inputLecturer };
+        inputData(s, p, 1, 0, checkStaff_4_3);
+        if (s[0].length() == 0 )
+        {
+            staffLecturerMenu();
+            delete[]s;
+            delete[]p;
+            return;
+        }
+        string
+            lecturerID = s[0];
+    
+    
+        /*string classID;
+        cout << "Enter class's ID: ";
+        getline(cin, classID, '\n');
+    
+        string oldStudentID;
+        cout << "\n\nEnter student's ID: ";
+        getline(cin, oldStudentID, '\n');*/
+    
+        
+        LecturerList lecturerList;
+        if (!lecturerList.load())
+            EXITCODE(6);
+    
+        if (lecturerList.find(lecturerID, ACTIVE)==nullptr)
+            EXITCODE(6);
+    
+        //update old to new
+        LecturerNode* newlecturer = new LecturerNode;
+        newlecturer = lecturerList.find(lecturerID, ACTIVE);
+    
+        newlecturer->active = 1;
+    
+        string temp;
+        cout << "Enter Lecturer's name";
+        getline(cin, newlecturer->lecturerName, '\n');
+        normalizeFullName(newlecturer->lecturerName);
+        cout << "Enter Lecturer's Academic Title: ";
+        getline(cin, newlecturer->academicTitle, '\n');
+        cout << "Lecturer's Gender: (Male=1/Female=0)";
+        cin.ignore();
+        getline(cin, temp, '\n');
+        normalize(temp);
+        if (temp == "1")
+            newlecturer->gender = 1;
+        else if (temp == "0")
+            newlecturer->gender = 0;
+        else
+        {
+            cout << "\nError!!!\nEnter wrong syntax";
+            staffLecturerMenu();
+            return;
+        }
+    
+        //flag to tell if the class can be changed or not
+        lecturerList.save();
+    
+        cout << "\n\nUpdate Lecturer's information completed [ENTER]";
+        fflush(stdin);
+        cin.get();
+        fflush(stdin);
+        staffLecturerMenu();
+        delete[]s;
+        delete[]p;
+        return;
+    }
+    
+    void staff_4_4() {
+        //Remove a specific lectuerer
+        //input classID
+    
+        string* s = new string[1]{ "" };
+        fPtr* p = new fPtr[1]{ inputLecturer };
+        inputData(s, p, 1, 0, checkStaff_4_3);
+        if (s[0].length() == 0)
+        {
+            staffLecturerMenu();
+            delete[]s;
+            delete[]p;
+            return;
+        }
+        string
+            lecturerID = s[0];
+    
+        //string classID;
+        //cout << "\n\nEnter class ID: ";
+        //getline(cin, classID, '\n');
+        //normalize(classID);
+    
+        ////input student ID
+        //string studentID;
+        //cout << "\n\nEnter class ID: ";
+        //getline(cin, studentID, '\n');
+        //normalize(studentID);
+    
+        //load and check if the student is in class
+    
+        LecturerList lecturerList;
+        if (!lecturerList.load())
+            EXITCODE(6);
+        if (lecturerList.find(lecturerID, ACTIVE) == nullptr)
+            EXITCODE(6);
+        LecturerNode* node = lecturerList.find(lecturerID, ACTIVE);
+        //if (node == nullptr)
+        //    EXITCODE(6);
+        node->active = 0;
+        
+        lecturerList.save();
+    
+        cout << endl <<lecturerID << " deleted! [ENTER]";
+        fflush(stdin);
+        cin.get();
+        fflush(stdin);
+        staffLecturerMenu();
+        delete[]s;
+        delete[]p;
+        return;
+    }
+    
+    void staff_4_5() {
+        //View list of lecturer
+       //input classID
+    
+        LecturerList lecturerList;
+        if (!lecturerList.load())
+            EXITCODE(6);
+        //output student ID
+    
+        LecturerNode* cur = lecturerList.Head;
+    
+        while (cur != nullptr)
+        {
+            cout << cur->lecturerID << endl
+                << cur->lecturerName << endl
+                << cur->academicTitle << endl;
+            cur = cur->Next;
+        }
+
+        cout << "\nDone view list of lecturers [ENTER]";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
+    staffLecturerMenu();
     return;
 }
 
