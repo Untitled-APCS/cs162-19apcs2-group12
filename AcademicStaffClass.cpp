@@ -134,8 +134,17 @@ void staff_2_1() {
         }
     }
     classList.save();
-
+    ClassNode* cur = classList.Head;
+    while (cur != nullptr) {
+        ofstream f;
+        f.open(getLocation() + "/data/" + cur->classID + "-student.txt");
+        if (!f.is_open())
+            EXITCODE(4);
+        f << "0";
+        f.close();
+    }
     fin.close();
+
     cout << "Successfully import class [ENTER]";
     fflush(stdin);
     char keyPress = cin.get();
