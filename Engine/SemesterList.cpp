@@ -65,15 +65,15 @@ bool SemesterList::load() {
             Tail = Tail->Next = new SemesterNode;
 
         CHECKDAMAGED
-        getline(fin, Tail->semesterID);
+        getline(fin, Tail->semesterID); //cout << Tail->semesterID << endl;
 
         CHECKDAMAGED
         fin >> Tail->active;
-        getline(fin, tmp);
+        getline(fin, tmp); //cout << Tail->active << endl;
 
         CHECKDAMAGED
         fin >> Tail->current;
-        getline(fin, tmp);
+        getline(fin, tmp); //cout << Tail->current << endl;
 
         if (Tail->current == CURRENT)
             currentSemester = Tail->semesterID;
