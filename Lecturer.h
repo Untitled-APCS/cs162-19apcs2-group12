@@ -44,7 +44,7 @@ void printCourse(CourseNode* node, int&index);
 void printStudent(StudentNode* node, int &index);
 void printArray(int* arr, int n);
 void printScoreboard(StudentList llist, CourseStudentList llist2);
-void loadCSVScoreBoard(CourseStudentList&llist, string filePath);
+bool loadCSVScoreBoard(CourseStudentList&llist, string filePath);
 
 
 
