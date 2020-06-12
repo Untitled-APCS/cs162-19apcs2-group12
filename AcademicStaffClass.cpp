@@ -312,10 +312,10 @@ bool checkStaff_2_2(string* s, int n) {
 }
 
 bool checkStaff_2_3(string* s, int n) {
-    ClassList classlist;
+    /*ClassList classlist;
     classlist.load();
     if (!classlist.find(s[0], ACTIVE))
-        return false;
+        return false;*/
     return true;
 }
 
