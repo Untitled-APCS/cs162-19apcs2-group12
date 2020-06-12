@@ -4,6 +4,8 @@
 
 #include "Engine.h"
 #include "Menu.h"
+#include "Lecturer.h"
+
 
 void staff_2_1();
 

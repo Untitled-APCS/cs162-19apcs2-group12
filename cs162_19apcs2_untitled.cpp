@@ -62,10 +62,6 @@ int main(int argc, const char **argv) {
 //        fileLocation.pop_back();
     logo();
     logInMenu();
-
-//    SemesterList semesterList;
-//    if (!semesterList.load())
-//        EXITCODE_V(6, 0)
     
     //lecturer_1_();
     //staff_2_1();
