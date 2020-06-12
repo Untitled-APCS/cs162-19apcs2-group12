@@ -168,18 +168,18 @@ string getGreeting() {
 }
 
 string getHashedPassword(string password) {
-    //hashing password using PBKDF2 with 10000 iterations of HMAC-SHA256
-
-    const int keyLen = 50;
-    string ans;
-
-    cppcrypto::hmac hmac(cppcrypto::sha256(), password);
-    unsigned char *key = new unsigned char [keyLen];
-    pbkdf2(hmac, (const unsigned char*)"Untitled_APCS_2020", 18, 20000, key, sizeof(unsigned char) * keyLen);
-
-    unsigedCharToHexString(key, keyLen, ans);
-    delete [] key;
-    return ans;
+//    //hashing password using PBKDF2 with 10000 iterations of HMAC-SHA256
+//
+//    const int keyLen = 50;
+//    string ans;
+//
+//    cppcrypto::hmac hmac(cppcrypto::sha256(), password);
+//    unsigned char *key = new unsigned char [keyLen];
+//    pbkdf2(hmac, (const unsigned char*)"Untitled_APCS_2020", 18, 20000, key, sizeof(unsigned char) * keyLen);
+//
+//    unsigedCharToHexString(key, keyLen, ans);
+//    delete [] key;
+//    return ans;
 
 //    const unsigned int keyLen = 50;
 //    unsigned char key[keyLen];

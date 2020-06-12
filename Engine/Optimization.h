@@ -10,16 +10,16 @@
 #include "DateTime.h"
 #include "AppLocation.h"
 
-#include "cppcrypto/sha256.h"
-#include "cppcrypto/hmac.h"
-#include "cppcrypto/portability.h"
-#include "cppcrypto/crypto_hash.h"
-#include "cppcrypto/pbkdf2.h"
-#include "cppcrypto/cpuinfo.h"
-#include "cppcrypto/alignedarray.h"
-//Sources: http://cppcrypto.sourceforge.net/
-//https://neurotechnics.com/tools/pbkdf2-test
-//https://asecuritysite.com/encryption/PBKDF2z
+//#include "cppcrypto/sha256.h"
+//#include "cppcrypto/hmac.h"
+//#include "cppcrypto/portability.h"
+//#include "cppcrypto/crypto_hash.h"
+//#include "cppcrypto/pbkdf2.h"
+//#include "cppcrypto/cpuinfo.h"
+//#include "cppcrypto/alignedarray.h"
+////Sources: http://cppcrypto.sourceforge.net/
+////https://neurotechnics.com/tools/pbkdf2-test
+////https://asecuritysite.com/encryption/PBKDF2z
 
 #define userTitle getTitle(user::fullName, user::type, user::gender)
 
