@@ -684,7 +684,7 @@ void staff_3_10() {
     //Export a scoreboard to file.
     // inputData: semesterID, classID, courseID, filePath
     string* s = new string[4]{ "","","","" };
-    fPtr* p = new fPtr[4]{ inputSemester, inputClass, inputCourse , inputFilePath};
+    fPtr* p = new fPtr[4]{ inputSemester, inputClass, inputCourse , inputPathExportCSV};
     inputData(s, p, 4, 0, checkStaff_3_10);
     string semesterID = s[0], courseID = s[2], classID = s[1], filePath=s[3];
 
@@ -764,7 +764,7 @@ void staff_3_11() {
 void staff_3_12() {
     //Export an attendance list to file.
     string* s = new string[4]{ "","","","" };
-    fPtr* p = new fPtr[4]{ inputSemester, inputClass, inputCourse, inputFilePath};
+    fPtr* p = new fPtr[4]{ inputSemester, inputClass, inputCourse, inputPathExportCSV};
     inputData(s, p, 4, 0, checkStaff_3_12);
     string semesterID = s[0], courseID = s[2], classID = s[1], filePath = s[3];
 

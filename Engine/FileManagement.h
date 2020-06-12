@@ -20,7 +20,7 @@ const int numCommaLecturerList = 4;
 const string StudentListHeader = "No,Student ID,Student Name,DOB (yyyy/mm/dd)";
 const int numCommaStudentList = 3;
 
-const string ScoreBoardListHeader = "No,Student ID,Midterm,Final,Bonus,Total,W01,W02,W03,W04,W05,W06,W07,W08,W09,W10";
+const string ScoreBoardListHeader = "No,Student ID,Midterm,Final,Bonus,Total";
 const int numCommaScoreBoardList = 5;
 
 struct PathNode {

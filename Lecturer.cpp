@@ -636,8 +636,8 @@ void lecturer_5_() {
 
 	
 	string *s = new string[4]{"", "", "",""};
-	fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse, inputPath};
-	inputData(s, p, 3, 0, checklecturer_5);
+	fPtr *p = new fPtr[4]{inputSemester, inputClass, inputCourse, inputPathScoreBoardListCSV};
+	inputData(s, p, 4, 0, checklecturer_5);
 
 
 	//string filePath = "D:/cs162-19apcs2-group12/wr272_scoreboard.csv";
@@ -645,7 +645,7 @@ void lecturer_5_() {
 	if (!stuList.load()) EXITCODE(6);
 	//string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227", filePath = "";
 	
-	string semesterID = s[0], courseID = s[2], classID = s[1];
+	string semesterID = s[0], courseID = s[2], classID = s[1], filePath = s[3];
 	
 	SemesterList sems; ClassList classes; CourseList courses;
 	if (!sems.load()|| !classes.load()) EXITCODE(6);
