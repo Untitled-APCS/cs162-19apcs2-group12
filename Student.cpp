@@ -79,7 +79,7 @@ void student_1() {
 	cout << "Week: " << week << endl;
 	cout << "Please enter the check-in code provided by your lecturer to complete the verification.\n";
 	cout << "[  enter  ] Verify my attendance.\n";
-	cout << "[` + enter] Back to menu.\n";
+	cout << "[` + enter] Back to menu.\n\n";
 
 	while (true) {
         cout << "Your check-in code: ";

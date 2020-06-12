@@ -37,7 +37,9 @@ struct PathList {
     PathList();
     ~PathList();
 
+    void destroy();
     void getDirectoryList(string path, bool (*checkPath)(string), string *hint, int n);
+    void getFolderList(string path);
 };
 
 bool cmpPath(const PathNode &a, const PathNode &b);

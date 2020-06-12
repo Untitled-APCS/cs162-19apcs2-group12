@@ -53,8 +53,9 @@ void preferencesMenu() {
     cout << "\n\n" << userTitle << ", this is the place you can adjust your preferences. So, what's next?\n";
     cout << "[1 + enter] View my profile information.\n";
     cout << "[2 + enter] Change my password.\n";
-    cout << "[3 + enter] Turn off Recommendation System.\n";
-    cout << "[4 + enter] Turn off Mistyping Correction.\n";
+    cout << "[3 + enter] Change my workplace folder.\n";
+    cout << "[4 + enter] Turn off Recommendation System.\n";
+    cout << "[5 + enter] Turn off Mistyping Correction.\n";
     cout << "[A + enter] About us.\n";
     cout << "[` + enter] Back.\n";
 
@@ -74,9 +75,12 @@ void preferencesMenu() {
                 changePassword();
                 break;
             case '3':
-                turnOffRecommendation();
+                changeWorkspace();
                 break;
             case '4':
+                turnOffRecommendation();
+                break;
+            case '5':
                 turnOffCorrection();
                 break;
             case 'A':
