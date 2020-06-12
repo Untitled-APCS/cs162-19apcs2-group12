@@ -697,9 +697,9 @@ void staff_3_2() {
             continue;
         }
 
-        courseNode->startingDate.y = startingDate[0] * 1000 + startingDate[1] * 100 + startingDate[2] * 10 + startingDate[3];
-        courseNode->startingDate.m = startingDate[5] * 10 + startingDate[6];
-        courseNode->startingDate.d = startingDate[8] * 10 + startingDate[9];
+        courseNode->startingDate.y = (startingDate[0] - '0') * 1000 + (startingDate[1] - '0') * 100 + (startingDate[2] - '0') * 10 + (startingDate[3] - '0');
+        courseNode->startingDate.m = (startingDate[5] - '0') * 10 + (startingDate[6] - '0');
+        courseNode->startingDate.d = (startingDate[8] - '0') * 10 + (startingDate[9] - '0');
 
         if (!courseNode->startingDate.wrongFormat())
             passed = true;
@@ -735,9 +735,9 @@ void staff_3_2() {
             continue;
         }
 
-        courseNode->startingTime.h = startingTime[0] * 10 + startingTime[1];
-        courseNode->startingTime.m = startingTime[3] * 10 + startingTime[4];
-        courseNode->startingTime.s = startingTime[6] * 10 + startingTime[7];
+        courseNode->startingTime.h = (startingTime[0] - '0') * 10 + (startingTime[1] - '0');
+        courseNode->startingTime.m = (startingTime[3] - '0') * 10 + (startingTime[4] - '0');
+        courseNode->startingTime.s = (startingTime[6] - '0') * 10 + (startingTime[7] - '0');
 
         if (!courseNode->startingTime.wrongFormat())
             passed = true;
@@ -773,9 +773,9 @@ void staff_3_2() {
             continue;
         }
 
-        courseNode->endingTime.h = endingTime[0] * 10 + endingTime[1];
-        courseNode->endingTime.m = endingTime[3] * 10 + endingTime[4];
-        courseNode->endingTime.s = endingTime[6] * 10 + endingTime[7];
+        courseNode->endingTime.h = (endingTime[0] - '0') * 10 + (endingTime[1] - '0');
+        courseNode->endingTime.m = (endingTime[3] - '0') * 10 + (endingTime[4] - '0');
+        courseNode->endingTime.s = (endingTime[6] - '0') * 10 + (endingTime[7] - '0');
 
         if (!courseNode->endingTime.wrongFormat() && courseNode->startingTime <= courseNode->endingTime)
             passed = true;
@@ -983,9 +983,9 @@ void staff_3_3() {
             continue;
         }
 
-        courseNode->startingDate.y = startingDate[0] * 1000 + startingDate[1] * 100 + startingDate[2] * 10 + startingDate[3];
-        courseNode->startingDate.m = startingDate[5] * 10 + startingDate[6];
-        courseNode->startingDate.d = startingDate[8] * 10 + startingDate[9];
+        courseNode->startingDate.y = (startingDate[0] - '0') * 1000 + (startingDate[1] - '0') * 100 + (startingDate[2] - '0') * 10 + (startingDate[3] - '0');
+        courseNode->startingDate.m = (startingDate[5] - '0') * 10 + (startingDate[6] - '0');
+        courseNode->startingDate.d = (startingDate[8] - '0') * 10 + (startingDate[9] - '0');
 
         if (!courseNode->startingDate.wrongFormat())
             passed = true;
@@ -1021,9 +1021,9 @@ void staff_3_3() {
             continue;
         }
 
-        courseNode->startingTime.h = startingTime[0] * 10 + startingTime[1];
-        courseNode->startingTime.m = startingTime[3] * 10 + startingTime[4];
-        courseNode->startingTime.s = startingTime[6] * 10 + startingTime[7];
+        courseNode->startingTime.h = (startingTime[0] - '0') * 10 + (startingTime[1] - '0');
+        courseNode->startingTime.m = (startingTime[3] - '0') * 10 + (startingTime[4] - '0');
+        courseNode->startingTime.s = (startingTime[6] - '0') * 10 + (startingTime[7] - '0');
 
         if (!courseNode->startingTime.wrongFormat())
             passed = true;
@@ -1059,9 +1059,9 @@ void staff_3_3() {
             continue;
         }
 
-        courseNode->endingTime.h = endingTime[0] * 10 + endingTime[1];
-        courseNode->endingTime.m = endingTime[3] * 10 + endingTime[4];
-        courseNode->endingTime.s = endingTime[6] * 10 + endingTime[7];
+        courseNode->endingTime.h = (endingTime[0] - '0') * 10 + (endingTime[1] - '0');
+        courseNode->endingTime.m = (endingTime[3] - '0') * 10 + (endingTime[4] - '0');
+        courseNode->endingTime.s = (endingTime[6] - '0') * 10 + (endingTime[7] - '0');
 
         if (!courseNode->endingTime.wrongFormat() && courseNode->startingTime <= courseNode->endingTime)
             passed = true;
