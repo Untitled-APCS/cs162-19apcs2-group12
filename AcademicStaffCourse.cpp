@@ -274,6 +274,12 @@ void staff_1_3() {
     string* s = new string[1]{ "" };
     fPtr* p = new fPtr[1]{ inputSemester};
     inputData(s, p, 1, 0, checkStaff_1_3);
+
+    if (s[0].length() == 0) {
+        staffSemesterMenu();
+        return;
+    }
+
     semesterList.find(s[0], ACTIVE)->active = 0;
     semesterList.save();
     delete[]s;
@@ -384,9 +390,16 @@ void staff_3_1() {
      filepath = "E:/University Works/Project/cs162-19apcs2-group12/cmake-build-debug/Semester1/19ctt2_courselist.csv";*/
     //DEBUG END
 
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+        staffCourseMenu();
+        return;
+    }
+
     semesterID = s[0];
     classID = s[1];
     filepath = s[2];
+    delete[]s;
+    delete[]p;
 
     //loadCSV
     string temp, temp2;
@@ -815,7 +828,8 @@ void staff_3_2() {
 
     courseNode->active = true;
     courseNode->Next = nullptr;
-
+    normalize(courseNode->courseID);
+    normalizeFullName(courseNode->courseName);
     courseList.pushBack(courseNode);
     courseList.save(semesterID,classID);
     //load Student List
@@ -836,7 +850,6 @@ void staff_3_2() {
     fflush(stdin);
     cin.get();
     fflush(stdin);
-
     staffCourseMenu();
 }
 
@@ -854,9 +867,17 @@ void staff_3_3() {
     fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
     inputData(s, p, 3, 0, checkStaff_1_1);
 
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+        staffCourseMenu();
+        return;
+    }
+
     semesterID = s[0];
     classID = s[1];
     courseID = s[2];
+
+    delete[]s;
+    delete[]p;
 
     if (!courseList.load(semesterID,classID))
     EXITCODE(6);
@@ -1101,6 +1122,13 @@ void staff_3_3() {
 
     courseNode->active = true;
     courseNode->Next = nullptr;
+
+    cout << "  [enter]";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
+    staffCourseMenu();
+    return;
 }
 
 void staff_3_4() {
@@ -1116,9 +1144,17 @@ void staff_3_4() {
     fPtr *p = new fPtr[3]{inputSemester, inputClass,inputCourse};
     inputData(s, p, 3, 0, checkStaff_1_1);
 
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+        staffCourseMenu();
+        return;
+    }
+
     semesterID = s[0];
     classID = s[1];
     courseID = s[2];
+
+    delete[]s;
+    delete[]p;
 
     if (!courseList.load(semesterID, classID))
     EXITCODE(6);
@@ -1144,8 +1180,17 @@ void staff_3_5() {
     fPtr *p = new fPtr[2]{inputSemester, inputClass};
     inputData(s, p, 2, 0, checkStaff_3_5);
 
+    if (s[0].length() == 0 || s[1].length() == 0) {
+        staffCourseMenu();
+        return;
+    }
+
     semesterID = s[0];
     classID = s[1];
+
+    delete[]s;
+    delete[]p;
+
     CourseList courseList;
     if (!courseList.load(semesterID, classID))
     EXITCODE(6);
@@ -1163,6 +1208,9 @@ void staff_3_5() {
         courseList.Head = courseList.Head->Next;
     }
     cout << "\n\n[enter]";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
     staffCourseMenu();
     return;
 }
@@ -1181,13 +1229,27 @@ void staff_3_6() {
     fPtr *p = new fPtr[4]{inputSemester, inputClass,inputCourse, inputStudent};
     inputData(s, p, 4, 0, checkStaff_3_5);
 
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length() == 0) {
+        staffCourseMenu();
+        return;
+    }
+
     semesterID = s[0];
     classID = s[1];
     courseID=s[2];
     studentID=s[3];
 
+    delete[]s;
+    delete[]p;
+
     if (!courseList.load(semesterID, classID)||!courseStudentList.load(semesterID,classID,courseID))
     EXITCODE(6);
+    if (courseStudentList.find(studentID, ACTIVE) == nullptr)
+    {
+        cout << "Student not found in course";
+        staffCourseMenu();
+        return;
+    }
     courseStudentList.find(studentID, ACTIVE)->active = 0;
     courseStudentList.save(semesterID, classID, courseID);
     cout << "\n\nSuccessfully deleted student " << studentID<<"  [enter]";
@@ -1215,7 +1277,14 @@ void staff_3_7() {
     fPtr *p = new fPtr[3]{inputStudent};
     inputData(s, p, 1, 0, checkStaff_1_1);
 
+    if (s[0].length() == 0) {
+        staffCourseMenu();
+        return;
+    }
+
     studentID=s[0];
+
+    
 
     p[0] = inputSemester;
     p[1] = inputClass;
@@ -1246,6 +1315,8 @@ void staff_3_7() {
     }
     courseStudentList.save(semesterID, classID, courseID);
 
+    delete[]s;
+    delete[]p;
     fflush(stdin);
     cin.get();
     fflush(stdin);
