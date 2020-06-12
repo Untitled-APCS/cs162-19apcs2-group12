@@ -160,7 +160,7 @@ void staffStudentMenu() {
 
         switch (keyPress) {
             case '1':
-                testStaffStudent();
+                staff_5_1();
                 break;
             case '2':
                 testStaffStudent();

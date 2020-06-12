@@ -221,12 +221,14 @@ bool checklecturer_7(string* s, int n) {
 	if (!semesters.load() || !classes.load()) {
 		EXITCODE_V(6, false);
 	}
-	for (SemesterNode* semNode = semesters.Head; semNode; semNode = semNode->Next) {
+	if (!courses.load(s[0], s[1])) EXITCODE_V(6,false);
+	if (courses.find(s[n - 1], ALL)) return true;
+	/*for (SemesterNode* semNode = semesters.Head; semNode; semNode = semNode->Next) {
 		for (ClassNode* classNode = classes.Head; classNode; classNode = classNode->Next) {
 			courses.load(semNode->semesterID, classNode->classID);
 			if (courses.find(s[n - 1], ALL)) return true;
 		}
-	}
+	}*/
 	cout << "\n\nThis course does not exist." << endl;
 	return false;
 }
@@ -350,6 +352,10 @@ bool loadCSVScoreBoard(CourseStudentList& llist, string filePath) {
 	while (fin.good()) {
 		node = new CourseStudentNode;
 		getline(fin, temp, ',');
+		if (temp == "") {
+			delete node;
+			continue;
+		}
 		cout << temp << " ";
 		getline(fin, temp, ',');
 		cout << temp << " ";
@@ -630,11 +636,11 @@ void lecturer_5_() {
 
 	
 	string *s = new string[4]{"", "", "",""};
-	fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
+	fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse, inputPath};
 	inputData(s, p, 3, 0, checklecturer_5);
 
 
-	string filePath = "D:/cs162-19apcs2-group12/wr272_scoreboard.csv";
+	//string filePath = "D:/cs162-19apcs2-group12/wr272_scoreboard.csv";
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
 	//string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227", filePath = "";
@@ -717,7 +723,7 @@ void lecturer_7_() {
 
 	
 	string *s = new string[3]{"", "", ""};
-	fPtr *p = new fPtr[3]{inputSemester, inputCourse, inputClass};
+	fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
 	inputData(s, p, 3, 0, checklecturer_7);
 
 

@@ -303,11 +303,12 @@ void staff_5_1()
     //Import list of students from file
 
     //input classID
-
+    cin.ignore();
     string classID;
 
     cout << "\n\nClass ID: ";
     getline(cin, classID, '\n');
+   
 
     string filepath;
     cout << "\n\nfilepath: ";
@@ -342,6 +343,7 @@ void staff_5_1()
 
     while (getline(fin, temp1, ','))
     {
+        //getline(fin, temp1, ',');
         newStudentNode = new StudentNode;
         newClassStudentNode = new ClassStudentNode;
         //getline(fin, temp, ',');
@@ -351,8 +353,8 @@ void staff_5_1()
         newStudentNode->DOB.y = 1000 * (temp[0] - '0') + 100 * (temp[1] - '0') + 10 * (temp[2] - '0') + (temp[3] - '0');
         newStudentNode->DOB.m = 10 * (temp[5] - '0') + (temp[6] - '0');
         newStudentNode->DOB.d = 10 * (temp[8] - '0') + (temp[9] - '0');
-        getline(fin, newStudentNode->classID);
-
+        //getline(fin, newStudentNode->classID);
+        newStudentNode->classID = classID;
         newClassStudentNode->studentID = newStudentNode->studentID;
 
         newStudentNode->active = 1;
