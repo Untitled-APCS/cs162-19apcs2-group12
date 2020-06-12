@@ -66,6 +66,11 @@ void staff_1_1() {
             return;
         }
 
+        if (s[0].length() == 0) {
+            cout << "This field must not be empty. Please enter one more time.\n";
+            continue;
+        }
+
         if (semesterList.find(s[0], ALL) == nullptr)
             passed = true;
         else {
@@ -160,7 +165,7 @@ void staff_1_2() {
             return;
         }
 
-        if (semesterList.find(newSemesterID, ALL) != nullptr)
+        if (semesterList.find(newSemesterID, ALL) == nullptr)
             passed = true;
         else {
             cout << "The semester ID that you typed has been existing. Please enter another one.\n";
@@ -592,6 +597,11 @@ void staff_3_2() {
             return;
         }
 
+        if (courseNode->courseID.length() == 0) {
+            cout << "This field must not be empty. Please enter one more time.\n";
+            continue;
+        }
+
         if (courseList.find(courseNode->courseID, ALL) == nullptr)
             passed = true;
         else {
@@ -646,6 +656,11 @@ void staff_3_2() {
 
             staffCourseMenu();
             return;
+        }
+
+        if (courseNode->lecturerID.length() == 0) {
+            cout << "This field must not be empty. Please enter one more time.\n";
+            continue;
         }
 
         if (lecturerList.find(courseNode->lecturerID, ACTIVE) != nullptr)
@@ -868,6 +883,11 @@ void staff_3_3() {
             return;
         }
 
+        if (courseNode->courseID.length() == 0) {
+            cout << "This field must not be empty. Please enter one more time.\n";
+            continue;
+        }
+
         if (courseList.find(courseNode->courseID, ALL) == nullptr)
             passed = true;
         else {
@@ -924,6 +944,11 @@ void staff_3_3() {
             return;
         }
 
+        if (courseNode->lecturerID.length() == 0) {
+            cout << "This field must not be empty. Please enter one more time.\n";
+            continue;
+        }
+
         if (lecturerList.find(courseNode->lecturerID, ACTIVE) != nullptr)
             passed = true;
         else {
@@ -968,7 +993,6 @@ void staff_3_3() {
             cout << "The date you type is invalid or wrong in format. Please type again.\n";
         }
     }
-
 
     //input startingTime
     string startingTime;
