@@ -52,13 +52,13 @@ void student_3();
 
 void student_4();
 
-bool checkStudent_1();
+bool checkStudent_1(string* s, int n);
 
-bool checkStudent_2();
+bool checkStudent_2(string* s, int n);
 
-bool checkStudent_3();
+bool checkStudent_3(string* s, int n);
 
-bool checkStudent_4();
+bool checkStudent_4(string* s, int n);
 
 
 

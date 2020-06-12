@@ -995,7 +995,7 @@ bool checkLecturer_7() {
 void ScoreBoardFormat(CourseStudentList llist, ofstream &fout) {
     StudentList stuList;
     if (!stuList.load()) EXITCODE(6);
-    fout << "\n\nNo," <<  "Student Name," << "Student ID," << "Midterm," << "Final," << "Bonus," << "Total" << endl;
+    fout << "No," <<  "Student Name," << "Student ID," << "Midterm," << "Final," << "Bonus," << "Total" << endl;
     int index = 1;
     for (CourseStudentNode* node = llist.Head; node; node = node->Next) {
         StudentNode* tmp = stuList.find(node->studentID, ACTIVE);
