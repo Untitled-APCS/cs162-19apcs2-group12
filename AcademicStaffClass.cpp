@@ -5,7 +5,7 @@ void staff_2_1() {
 
     //import classID
 
-    string filepath;
+    //string filepath;
 
     //inputData(filepath);
     string* s = new string[1]{ "" };
