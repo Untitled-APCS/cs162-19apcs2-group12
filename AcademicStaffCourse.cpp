@@ -219,8 +219,8 @@ void staff_3_1() {
     if (!semesterList.load()|| !classList.load()||!lecturerList.load())
         EXITCODE(6);
     string *s = new string[3]{"", "", ""};
-    //fPtr *p = new fPtr[3]{inputSemester, inputClass, filepath};
-    //inputData(s, p, 3, 0, checkStaff_1_1);
+    fPtr *p = new fPtr[3]{inputSemester, inputClass, inputPathCourseListCSV};
+    inputData(s, p, 3, 0, checkStaff_1_1);
 
     //DEBUG ONLY!!
    /* fPtr *p = new fPtr[2]{inputSemester, inputClass};
@@ -244,6 +244,11 @@ void staff_3_1() {
     while (finput.good()) {
         courseNode = new CourseNode;
         getline(finput,temp ,',');
+        if (temp == "")
+        {
+            delete courseNode;
+            continue;
+        }
         getline(finput, courseNode->courseID,',');
         getline(finput, courseNode->courseName, ',');
         getline(finput, courseNode->lecturerID, ',');
