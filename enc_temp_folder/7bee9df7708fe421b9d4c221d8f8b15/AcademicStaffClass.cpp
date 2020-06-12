@@ -565,23 +565,18 @@ void staff_5_2()
     string temp;
 
     cout << "Student's ID: ";
-    cin.ignore();
     getline(cin, newStudentNode->studentID, '\n');
     newClassStudentNode->studentID = newStudentNode->studentID;
     cout << "Student's Full Name: ";
-    cin.ignore();
     getline(cin, newStudentNode->studentName, '\n');
 
     cout << "Student's Date of Birth:\n Date: ";
-    cin.ignore();
     getline(cin, temp, '\n');
     newStudentNode->DOB.d = stoi(temp);
     cout << "\nMonth: ";
-    cin.ignore();
     getline(cin, temp, '\n');
     newStudentNode->DOB.m = stoi(temp);
     cout << "\nYear: ";
-    cin.ignore();
     getline(cin, temp, '\n');
     newStudentNode->DOB.y = stoi(temp);
     newStudentNode->classID = classID;
