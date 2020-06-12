@@ -96,6 +96,7 @@ void logIn() {
         if (getHashedPassword(password) == hashedPassword) {
             user::ID = ID;
             user::fullName = fullName;
+            user::password = hashedPassword;
             user::type = type;
 
             cout << "\n\nLogin successfully. [enter]\n";
@@ -126,7 +127,41 @@ void logOut() {
 }
 
 void viewProfileInfo() {
-    cout << "\n\nYour personal information: [enter]\n";
+    cout << "\n\nYour personal information:\n";
+
+    if (user::type == STAFF) {
+        cout << "ID: " << user::ID << endl;
+        cout << "Full name: " << user::fullName << endl;
+        cout << "Gender: " << (user::gender == MALE ? "Male" : "Female") << endl;
+        cout << "[enter] Back to menu.\n";
+    } else if (user::type == LECTURER) {
+        LecturerList lecturerList;
+        if (!lecturerList.load()) EXITCODE(3)
+
+        LecturerNode *lecturerNode = lecturerList.find(user::ID, ACTIVE);
+        if (lecturerNode == nullptr) EXITCODE(3)
+
+        cout << "ID: " << user::ID << endl;
+        cout << "Full name: " << user::fullName << endl;
+        cout << "Academic Title: " << lecturerNode->academicTitle << endl;
+        cout << "Gender: " << (user::gender == MALE ? "Male" : "Female") << endl;
+        cout << "[enter] Back to menu.\n";
+    } else if (user::type == STUDENT) {
+        StudentList studentList;
+        if (!studentList.load()) EXITCODE(3)
+
+        StudentNode *studentNode = studentList.find(user::ID, ACTIVE);
+        if (studentNode == nullptr) EXITCODE(3)
+
+        cout << "ID: " << user::ID << endl;
+        cout << "Full name: " << user::fullName << endl;
+        cout << "Date of Birth: ";
+        printf("%04d/%02d/%02d\n", studentNode->DOB.y, studentNode->DOB.m, studentNode->DOB.d);
+        cout << "Class: " << studentNode->classID << endl;
+        cout << "[enter] Back to Preferences.\n";
+    } else
+        EXITCODE(3)
+
 
     char keyPress = cin.get();
     fflush(stdin);
@@ -134,6 +169,139 @@ void viewProfileInfo() {
 }
 
 void changePassword() {
+    string password, oldPassword, newPassword, newPasswordRetyped;
+    bool passed;
+
+    cout << "\n\nYou are under protection, " << getTitle(user::fullName, user::type, user::gender) << ". Please type in your old password.\n";
+    cout << "In this version, the password is not hidden on the screen. Please be aware of intentional glances of people around you.\n";
+    cout << "[` + enter] Back to Preferences.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "Your old password: ";
+
+        fflush(stdin);
+        getline(cin, oldPassword);
+        fflush(stdin);
+
+        if (oldPassword.find('`') != string::npos) {
+//            cout << "\n\nGetting you back to Preferences... [enter]";
+//
+//            fflush(stdin);
+//            char keyPress = cin.get();
+//            fflush(stdin);
+            preferencesMenu();
+            return;
+        }
+
+        if (getHashedPassword(oldPassword) == user::password)
+            passed = true;
+//            cout << "\n\nLogin successfully. [enter]\n";
+//
+//            fflush(stdin);
+//            char keyPress = cin.get();
+//            fflush(stdin);
+//            mainMenu();
+//            return;
+        else
+            cout << "Your password is incorrect. Please try again.\n";
+    }
+
+    cout << "\n\nGood job! Now create a new password.\n";
+    cout << "In this version, the password is not hidden on the screen. Please be aware of intentional glances of people around you.\n";
+    cout << "[` + enter] Back to Preferences.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "Your new password: ";
+
+        fflush(stdin);
+        getline(cin, newPassword);
+        fflush(stdin);
+
+        if (newPassword.find('`') != string::npos) {
+//            cout << "\n\nGetting you back to Preferences... [enter]";
+//
+//            fflush(stdin);
+//            char keyPress = cin.get();
+//            fflush(stdin);
+            preferencesMenu();
+            return;
+        }
+
+        if (isStrongPassword(newPassword)) {
+            passed = true; cout << newPassword << endl;}
+        else {
+            cout << "Your password is not strong enough. Please create another one.\n";
+            cout << "A strong password has at least 8 characters, 1 lowercase, 1 uppercase, 1 special character and must not"
+                 << " consist of character '`'.\n";
+        }
+    }
+
+    cout << "\n\nYou are almost done. Re-enter your new password to finish the process.\n";
+    cout << "In this version, the password is not hidden on the screen. Please be aware of intentional glances of people around you.\n";
+    cout << "[` + enter] Back to Preferences.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "Retype your new password: ";
+
+        fflush(stdin);
+        getline(cin, newPasswordRetyped);
+        fflush(stdin);
+
+        if (newPasswordRetyped.find('`') != string::npos) {
+//            cout << "\n\nGetting you back to Preferences... [enter]";
+//
+//            fflush(stdin);
+//            char keyPress = cin.get();
+//            fflush(stdin);
+            preferencesMenu();
+            return;
+        }
+
+        if (newPassword == newPasswordRetyped)
+            passed = true;
+        else
+            cout << "They do not match. Please type again.\n";
+    }
+
+    if (user::type == STAFF) {
+        StaffList staffList;
+        if (!staffList.load()) EXITCODE(3)
+
+        StaffNode *staffNode;
+        staffNode = staffList.find(user::ID);
+        if (staffNode == nullptr) EXITCODE(3)
+
+        staffNode->password = getHashedPassword(newPassword);
+        if (!staffList.save()) EXITCODE(3);
+    } else if (user::type == LECTURER) {
+        LecturerList lecturerList;
+        if (!lecturerList.load()) EXITCODE(3)
+
+        LecturerNode *lecturerNode;
+        lecturerNode = lecturerList.find(user::ID, ACTIVE);
+        if (lecturerNode == nullptr) EXITCODE(3)
+
+        lecturerNode->password = getHashedPassword(newPassword);
+        if (!lecturerList.save()) EXITCODE(3);
+    } else if (user::type == STUDENT) {
+        StudentList studentList;
+        if (!studentList.load()) EXITCODE(3)
+
+        StudentNode *studentNode;
+        studentNode = studentList.find(user::ID, ACTIVE);
+        if (studentNode == nullptr) EXITCODE(3)
+
+        studentNode->password = getHashedPassword(newPassword);
+        if (!studentList.save()) EXITCODE(3);
+    } else
+        EXITCODE(3)
+
     cout << "\n\nYour password has been changed. [enter]\n";
 
     char keyPress = cin.get();

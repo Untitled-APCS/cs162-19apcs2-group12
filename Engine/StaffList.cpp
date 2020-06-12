@@ -81,6 +81,36 @@ bool StaffList::load() {
     return true;
 }
 
+bool StaffList::save() {
+    ofstream fout;
+    fout.open(getLocation() + "data/staff.txt");
+
+    //check if the file is missing?
+    if (!fout.is_open())
+    EXITCODE_V(4, false);
+
+    fout << cnt << endl;
+    StaffNode *Tail = nullptr;
+
+    for (int i = 0; i<cnt; i++) {
+        //check the actual length of the list < cnt?
+        Tail = (i == 0 ? Head : Tail->Next);
+        if (Tail == nullptr)
+        EXITCODE_V(6, false)
+
+        fout << Tail->staffID << endl;
+        fout << Tail->password << endl;
+        fout << Tail->staffName << endl;
+        fout << Tail->gender << endl;
+    }
+
+    //check the actual length of the list > cnt?
+    if (cnt > 0 && Tail->Next != nullptr)
+    EXITCODE_V(6, false)
+
+    return true;
+}
+
 StaffNode *StaffList::find(string staffID) {
     StaffNode* Tail = nullptr;
 

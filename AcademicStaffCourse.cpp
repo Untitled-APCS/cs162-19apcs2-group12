@@ -49,10 +49,29 @@ void staff_1_1() {
     //inputData(s, p, 1, 0, checkStaff_1_1);
     
     //INPUT:
-    cout << "Input semester ID: ";
-    fflush(stdin);
-    getline(cin, s[0]);
-    fflush(stdin);
+    cout << "\n\nCreate a new semester. Please enter the semester ID you want.\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    bool passed = false;
+
+    while (!passed) {
+        cout << "New semester ID: ";
+
+        fflush(stdin);
+        getline(cin, s[0]);
+        fflush(stdin);
+
+        if (s[0].find('`') != string::npos) {
+            staffSemesterMenu();
+            return;
+        }
+
+        if (semesterList.find(s[0], ALL) != nullptr)
+            passed = true;
+        else {
+            cout << "The semester ID that you typed has been existing. Please enter another one.\n";
+        }
+    }
     
     semesterNode->current = 0;
     semesterNode->active = 1;
@@ -84,21 +103,151 @@ void staff_1_1() {
 void staff_1_2() {
     //Update a specific semester
 
+    //Initialization
+    SemesterList semesterList;
+    SemesterNode *semesterNode;
+    if (!semesterList.load()) EXITCODE(6)
+
+    ClassList classList;
+    ClassNode *classNode;
+    if (!classList.load()) EXITCODE(6)
+
+    CourseList courseList;
+    CourseNode *courseNode;
+
+    CourseStudentList courseStudentList;
+    CourseStudentNode courseStudentNode;
+
+    char keyPress;
+
     //Input oldSemesterID
     //oldSemesterID is not current but is active
+    string *s = new string [1];
+    fPtr *p = new fPtr [1] {inputSemester};
+    if (!inputData(s, p, 1, 0, checkStaff_1_2)) EXITCODE(6);
+
+    if (s[0].length() == 0) {
+        staffSemesterMenu();
+        return;
+    }
+
+    string oldSemesterID = s[0], newSemesterID;
+
+    semesterNode = semesterList.find(oldSemesterID, ACTIVE);
+    if (semesterNode == nullptr) EXITCODE(6)
 
     //Input newSemesterID which does not exist in semester list
+    cout << "\n\nRename a specific semester. Please enter the new semester ID.\n";
+    cout << "[  enter  ] Skip this step.\n";
+    cout << "[` + enter] Back to menu.\n\n";
 
-    //update oldSemesterID to newSemesterID
+    bool passed = false;
 
-    //copy all files oldSemesterID-[classID]-course.txt to newSemesterID-[classID]-course.txt
-    //each file oldSemesterID-[classID]-course.txt, copy all files oldSemesterID-[classID]-[courseID]-student.txt to newSemesterID-[classID]-[courseID]-student.txt
+    while (!passed) {
+        cout << "New semester ID: ";
+
+        fflush(stdin);
+        getline(cin, newSemesterID);
+        fflush(stdin);
+
+        if (newSemesterID.length() == 0) {
+            passed = true;
+            continue;
+        }
+
+        if (newSemesterID.find('`') != string::npos) {
+            staffSemesterMenu();
+            return;
+        }
+
+        if (semesterList.find(newSemesterID, ALL) != nullptr)
+            passed = true;
+        else {
+            cout << "The semester ID that you typed has been existing. Please enter another one.\n";
+        }
+    }
+
+    if (newSemesterID.length() > 0) {
+        //update oldSemesterID to newSemesterID
+        semesterNode->semesterID = newSemesterID;
+
+        //copy all files oldSemesterID-[classID]-course.txt to newSemesterID-[classID]-course.txt
+        //each file oldSemesterID-[classID]-course.txt, copy all files oldSemesterID-[classID]-[courseID]-student.txt to newSemesterID-[classID]-[courseID]-student.txt
+        for (classNode = classList.Head; classNode != nullptr; classNode = classNode->Next) {
+            if (!courseList.load(oldSemesterID, classNode->classID)) EXITCODE(6)
+
+            for (courseNode = courseList.Head; courseNode != nullptr; courseNode = courseNode->Next)
+                copyFile(getLocation() + "data/" + oldSemesterID + "-" + classNode->classID + "-" + courseNode->courseID + "-student.txt",
+                         getLocation() + "data/" + newSemesterID + "-" + classNode->classID + "-" + courseNode->courseID + "-student.txt");
+
+            copyFile(getLocation() + "data/" + oldSemesterID + "-" + classNode->classID + "-course.txt",
+                     getLocation() + "data/" + newSemesterID + "-" + classNode->classID + "-course.txt");
+
+            courseList.destroy();
+        }
+
+        cout << "The semester '" << oldSemesterID << "' has been renamed to '" << newSemesterID << "' successfully. [enter]\n";
+
+        fflush(stdin);
+        keyPress = cin.get();
+        fflush(stdin);
+    }
 
     //if newSemesterID is not current and is active,
     //ask user whether he wants to make it currentSemester, type newSemesterID to confirm,
-    //after confirmation, make currentSemester PREV and make newSemesterID CURRENT
+    if (semesterNode->active && semesterNode->current == NEXT) {
+        //if (newSemesterID.length() == 0) newSemesterID = oldSemesterID;
+
+        cout << "\n\nSet this semester as the current semester. Would you like to continue?\n";
+        cout << "If you agree, the semester '" << SemesterList::currentSemester << "' will be set as a previous semester, "
+             << "which means, it CANNOT be set as the current semester anymore. [enter] \n";
+
+        fflush(stdin);
+        keyPress = cin.get();
+        fflush(stdin);
+
+        cout << "If your intention does not change, please type the confirmation code '" << semesterNode->semesterID
+             << "' (without the single quotation marks) and press [enter] to confirm.\n";
+        cout << "[` + enter] Back to menu.\n\n";
+
+        string confirmation;
+        passed = false;
+
+        while (!passed) {
+            cout << "Your confirmation code: ";
+
+            fflush(stdin);
+            getline(cin, confirmation);
+            fflush(stdin);
+
+            if (confirmation.find('`') != string::npos) {
+                staffSemesterMenu();
+                return;
+            }
+
+            if (confirmation == semesterNode->semesterID)
+                passed = true;
+            else {
+                cout << "Your code is invalid. Please enter one more time.\n";
+            }
+        }
+
+        //after confirmation, make currentSemester PREVIOUS and make newSemesterID CURRENT
+        semesterNode->current = CURRENT;
+
+        semesterNode = semesterList.find(SemesterList::currentSemester, ACTIVE);
+        if (semesterNode == nullptr || !semesterNode->active || semesterNode->current != CURRENT) EXITCODE(6)
+
+        semesterNode->current = PREVIOUS;
+
+        cout << "\n\nSet as current semester successfully. [enter]\n";
+
+        fflush(stdin);
+        keyPress = cin.get();
+        fflush(stdin);
+    }
+
     staffSemesterMenu();
-    return;
 }
 
 void staff_1_3() {
@@ -175,8 +324,8 @@ bool checkStaff_1_1(string* s,int n) {
     return true;
 }
 
-bool checkStaff_1_2() {
-    return false;
+bool checkStaff_1_2(string *s, int n) {
+    return true;
 }
 
 bool checkStaff_1_3(string* s,int n) {
@@ -394,12 +543,24 @@ void staff_3_2() {
     SemesterList semesterList;
     ClassList classList;
     CourseList courseList;
+    LecturerList lecturerList;
    
     if (!semesterList.load()|| !classList.load())
         EXITCODE(6);
+
+    //inputData
     string *s = new string[2]{"", ""};
     fPtr *p = new fPtr[2]{inputSemester, inputClass};
-    inputData(s, p, 0, 2, checkStaff_1_1);
+
+    if (!inputData(s, p, 0, 2, checkStaff_1_1)) EXITCODE(6);
+
+    delete [] s;
+    delete [] p;
+
+    if (s[0].length() == 0) {
+        staffCourseMenu();
+        return;
+    }
     
     semesterID = s[0];
     classID = s[1];
@@ -410,7 +571,234 @@ void staff_3_2() {
     //s[0] = "";
     //inputData(s,p,0,1,checkStaff_3_2);
     CourseNode *courseNode = new CourseNode;
-    //input
+
+    //input courseID
+    cout << "\n\nCreate a new course. Please type in the new course ID.\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    bool passed = false;
+
+    while (!passed) {
+        cout << "New course ID: ";
+
+        fflush(stdin);
+        getline(cin, courseNode->courseID);
+        fflush(stdin);
+
+        if (courseNode->courseID.find('`') != string::npos) {
+            delete courseNode;
+
+            staffCourseMenu();
+            return;
+        }
+
+        if (courseList.find(courseNode->courseID, ALL) == nullptr)
+            passed = true;
+        else {
+            cout << "The course ID that you typed has been existing in class '" << classID << "'. Please enter another one.\n";
+        }
+    }
+
+    //input courseName
+    cout << "\n\nCreate a new course. Please type in the new course name.\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "New course name: ";
+
+        fflush(stdin);
+        getline(cin, courseNode->courseName);
+        fflush(stdin);
+
+        if (courseNode->courseName.find('`') != string::npos) {
+            delete courseNode;
+
+            staffCourseMenu();
+            return;
+        }
+
+        if (courseNode->courseName.length() > 0)
+            passed = true;
+        else {
+            cout << "This field must not be empty. Please type again.\n";
+        }
+    }
+
+    //input lecturerID
+    lecturerList.load();
+
+    cout << "\n\nCreate a new course. Please type in the lecturer ID.\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "Lecturer ID: ";
+
+        fflush(stdin);
+        getline(cin, courseNode->lecturerID);
+        fflush(stdin);
+
+        if (courseNode->lecturerID.find('`') != string::npos) {
+            delete courseNode;
+
+            staffCourseMenu();
+            return;
+        }
+
+        if (lecturerList.find(courseNode->lecturerID, ACTIVE) != nullptr)
+            passed = true;
+        else {
+            cout << "The lecturer with ID '" << courseNode->lecturerID << "' does not exist. Please enter again.\n";
+        }
+    }
+
+    //input startingDate
+    string startingDate;
+
+    cout << "\n\nCreate a new course. Please type in the starting date (yyyy/mm/dd).\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "Course starting date: ";
+
+        fflush(stdin);
+        getline(cin, startingDate);
+        fflush(stdin);
+
+        if (startingDate.find('`') != string::npos) {
+            delete courseNode;
+
+            staffCourseMenu();
+            return;
+        }
+
+        if (startingDate.length() < 10) {
+            cout << "The date you type is invalid or wrong in format. Please type again.\n";
+            continue;
+        }
+
+        courseNode->startingDate.y = startingDate[0] * 1000 + startingDate[1] * 100 + startingDate[2] * 10 + startingDate[3];
+        courseNode->startingDate.m = startingDate[5] * 10 + startingDate[6];
+        courseNode->startingDate.d = startingDate[8] * 10 + startingDate[9];
+
+        if (!courseNode->startingDate.wrongFormat())
+            passed = true;
+        else {
+            cout << "The date you type is invalid or wrong in format. Please type again.\n";
+        }
+    }
+
+    //input startingTime
+    string startingTime;
+
+    cout << "\n\nCreate a new course. Please type in the starting time (hh:mm:ss).\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "Course starting time: ";
+
+        fflush(stdin);
+        getline(cin, startingTime);
+        fflush(stdin);
+
+        if (startingTime.find('`') != string::npos) {
+            delete courseNode;
+
+            staffCourseMenu();
+            return;
+        }
+
+        if (startingTime.length() < 8) {
+            cout << "The time you type is invalid or wrong in format. Please re-enter it.\n";
+            continue;
+        }
+
+        courseNode->startingTime.h = startingTime[0] * 10 + startingTime[1];
+        courseNode->startingTime.m = startingTime[3] * 10 + startingTime[4];
+        courseNode->startingTime.s = startingTime[6] * 10 + startingTime[7];
+
+        if (!courseNode->startingTime.wrongFormat())
+            passed = true;
+        else {
+            cout << "The time you type is invalid or wrong in format. Please type again.\n";
+        }
+    }
+
+    //input endingTime
+    string endingTime;
+
+    cout << "\n\nCreate a new course. Please type in the ending time (hh:mm:ss).\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "Course ending time: ";
+
+        fflush(stdin);
+        getline(cin, endingTime);
+        fflush(stdin);
+
+        if (endingTime.find('`') != string::npos) {
+            delete courseNode;
+
+            staffCourseMenu();
+            return;
+        }
+
+        if (endingTime.length() < 8) {
+            cout << "The time you type is invalid or wrong in format. Please enter one more time.\n";
+            continue;
+        }
+
+        courseNode->endingTime.h = endingTime[0] * 10 + endingTime[1];
+        courseNode->endingTime.m = endingTime[3] * 10 + endingTime[4];
+        courseNode->endingTime.s = endingTime[6] * 10 + endingTime[7];
+
+        if (!courseNode->endingTime.wrongFormat() && courseNode->startingTime <= courseNode->endingTime)
+            passed = true;
+        else {
+            cout << "The time you type is invalid or wrong in format. Please enter one more time.\n";
+        }
+    }
+
+    //input room
+    cout << "\n\nCreate a new course. Please type in the course room.\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "Course room: ";
+
+        fflush(stdin);
+        getline(cin, courseNode->room);
+        fflush(stdin);
+
+        if (courseNode->room.find('`') != string::npos) {
+            delete courseNode;
+
+            staffCourseMenu();
+            return;
+        }
+
+        if (courseNode->room.length() > 0)
+            passed = true;
+        else {
+            cout << "This field must not be empty. Please type again.\n";
+        }
+    }
+
+    courseNode->active = true;
+    courseNode->Next = nullptr;
+
     courseList.pushBack(courseNode);
     courseList.save(semesterID,classID);
     //load Student List
@@ -431,8 +819,8 @@ void staff_3_2() {
     fflush(stdin);
     cin.get();
     fflush(stdin);
-    staffSemesterMenu;
-    return;
+
+    staffCourseMenu();
 }
 
 void staff_3_3() {
@@ -457,6 +845,235 @@ void staff_3_3() {
  
     //INPUT:
     // courseID, courseName, lecturerID, startingDate, startingTime, endingTime, room, active
+    CourseNode *courseNode = new CourseNode;
+
+    //input courseID
+    cout << "\n\nCreate a new course. Please type in the new course ID.\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    bool passed = false;
+
+    while (!passed) {
+        cout << "New course ID: ";
+
+        fflush(stdin);
+        getline(cin, courseNode->courseID);
+        fflush(stdin);
+
+        if (courseNode->courseID.find('`') != string::npos) {
+            delete courseNode;
+
+            staffCourseMenu();
+            return;
+        }
+
+        if (courseList.find(courseNode->courseID, ALL) == nullptr)
+            passed = true;
+        else {
+            cout << "The course ID that you typed has been existing in class '" << classID << "'. Please enter another one.\n";
+        }
+    }
+
+    //input courseName
+    cout << "\n\nCreate a new course. Please type in the new course name.\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "New course name: ";
+
+        fflush(stdin);
+        getline(cin, courseNode->courseName);
+        fflush(stdin);
+
+        if (courseNode->courseName.find('`') != string::npos) {
+            delete courseNode;
+
+            staffCourseMenu();
+            return;
+        }
+
+        if (courseNode->courseName.length() > 0)
+            passed = true;
+        else {
+            cout << "This field must not be empty. Please type again.\n";
+        }
+    }
+
+    //input lecturerID
+    lecturerList.load();
+
+    cout << "\n\nCreate a new course. Please type in the lecturer ID.\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "Lecturer ID: ";
+
+        fflush(stdin);
+        getline(cin, courseNode->lecturerID);
+        fflush(stdin);
+
+        if (courseNode->lecturerID.find('`') != string::npos) {
+            delete courseNode;
+
+            staffCourseMenu();
+            return;
+        }
+
+        if (lecturerList.find(courseNode->lecturerID, ACTIVE) != nullptr)
+            passed = true;
+        else {
+            cout << "The lecturer with ID '" << courseNode->lecturerID << "' does not exist. Please enter again.\n";
+        }
+    }
+
+    //input startingDate
+    string startingDate;
+
+    cout << "\n\nCreate a new course. Please type in the starting date (yyyy/mm/dd).\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "Course starting date: ";
+
+        fflush(stdin);
+        getline(cin, startingDate);
+        fflush(stdin);
+
+        if (startingDate.find('`') != string::npos) {
+            delete courseNode;
+
+            staffCourseMenu();
+            return;
+        }
+
+        if (startingDate.length() < 10) {
+            cout << "The date you type is invalid or wrong in format. Please type again.\n";
+            continue;
+        }
+
+        courseNode->startingDate.y = startingDate[0] * 1000 + startingDate[1] * 100 + startingDate[2] * 10 + startingDate[3];
+        courseNode->startingDate.m = startingDate[5] * 10 + startingDate[6];
+        courseNode->startingDate.d = startingDate[8] * 10 + startingDate[9];
+
+        if (!courseNode->startingDate.wrongFormat())
+            passed = true;
+        else {
+            cout << "The date you type is invalid or wrong in format. Please type again.\n";
+        }
+    }
+
+
+    //input startingTime
+    string startingTime;
+
+    cout << "\n\nCreate a new course. Please type in the starting time (hh:mm:ss).\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "Course starting time: ";
+
+        fflush(stdin);
+        getline(cin, startingTime);
+        fflush(stdin);
+
+        if (startingTime.find('`') != string::npos) {
+            delete courseNode;
+
+            staffCourseMenu();
+            return;
+        }
+
+        if (startingTime.length() < 8) {
+            cout << "The time you type is invalid or wrong in format. Please re-enter it.\n";
+            continue;
+        }
+
+        courseNode->startingTime.h = startingTime[0] * 10 + startingTime[1];
+        courseNode->startingTime.m = startingTime[3] * 10 + startingTime[4];
+        courseNode->startingTime.s = startingTime[6] * 10 + startingTime[7];
+
+        if (!courseNode->startingTime.wrongFormat())
+            passed = true;
+        else {
+            cout << "The time you type is invalid or wrong in format. Please type again.\n";
+        }
+    }
+
+    //input endingTime
+    string endingTime;
+
+    cout << "\n\nCreate a new course. Please type in the ending time (hh:mm:ss).\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "Course ending time: ";
+
+        fflush(stdin);
+        getline(cin, endingTime);
+        fflush(stdin);
+
+        if (endingTime.find('`') != string::npos) {
+            delete courseNode;
+
+            staffCourseMenu();
+            return;
+        }
+
+        if (endingTime.length() < 8) {
+            cout << "The time you type is invalid or wrong in format. Please enter one more time.\n";
+            continue;
+        }
+
+        courseNode->endingTime.h = endingTime[0] * 10 + endingTime[1];
+        courseNode->endingTime.m = endingTime[3] * 10 + endingTime[4];
+        courseNode->endingTime.s = endingTime[6] * 10 + endingTime[7];
+
+        if (!courseNode->endingTime.wrongFormat() && courseNode->startingTime <= courseNode->endingTime)
+            passed = true;
+        else {
+            cout << "The time you type is invalid or wrong in format. Please enter one more time.\n";
+        }
+    }
+
+    //input room
+    cout << "\n\nCreate a new course. Please type in the course room.\n";
+    cout << "[` + enter] Back to menu.\n\n";
+
+    passed = false;
+
+    while (!passed) {
+        cout << "Course room: ";
+
+        fflush(stdin);
+        getline(cin, courseNode->room);
+        fflush(stdin);
+
+        if (courseNode->room.find('`') != string::npos) {
+            delete courseNode;
+
+            staffCourseMenu();
+            return;
+        }
+
+        if (courseNode->room.length() > 0)
+            passed = true;
+        else {
+            cout << "This field must not be empty. Please type again.\n";
+        }
+    }
+
+    courseNode->active = true;
+    courseNode->Next = nullptr;
 }
 
 void staff_3_4() {

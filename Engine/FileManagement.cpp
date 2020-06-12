@@ -266,3 +266,32 @@ int numComma(string s) {
         if (s[i] == ',') ans++;
     return ans;
 }
+
+bool copyFile(string src, string des) {
+    if (src == des) EXITCODE_V(7, false)
+
+    ifstream fin;
+    ofstream fout;
+
+    fin.open(src, ios::binary);
+    fout.open(des, ios::binary);
+
+    if (!fin.is_open() || ! fout.is_open()) EXITCODE_V(4, false);
+
+    char *A;
+    int n;
+
+    fin.seekg(0, ios::end);
+    n = fin.tellg(); //cout << n << endl;
+    fin.seekg(0, ios::beg);
+
+    A = new char [n];
+    fin.read((char*) A, n * sizeof(char));
+    fout.write((char*) A, n * sizeof(char));
+
+    delete [] A;
+    fin.close();
+    fout.close();
+
+    return true;
+}

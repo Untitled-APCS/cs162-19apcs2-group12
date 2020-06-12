@@ -92,6 +92,16 @@ bool Time::wrongFormat() {
            s < 0 || s > 59;
 }
 
+void Time::capture_gm() {
+    time_t cur;
+    time(&cur);
+    tm* gmTime = gmtime(&cur);
+
+    h = gmTime->tm_hour;
+    m = gmTime->tm_min;
+    s = gmTime->tm_sec;
+}
+
 bool isLeapYear(int y) {
     return ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0);
 }
