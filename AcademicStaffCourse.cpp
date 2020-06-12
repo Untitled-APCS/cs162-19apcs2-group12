@@ -375,6 +375,8 @@ void staff_3_1() {
     //delete[]s;
     //delete[]p;
     cout << "\n\nImport successfully. [enter]\n";
+    delete[]s;
+    delete[]p;
     fflush(stdin);
     cin.get();
     fflush(stdin);
@@ -410,7 +412,7 @@ void staff_3_2() {
     //s[0] = "";
     //inputData(s,p,0,1,checkStaff_3_2);
     CourseNode *courseNode = new CourseNode;
-    //input
+    //INPUT: PENDING!!!
     courseList.pushBack(courseNode);
     courseList.save(semesterID,classID);
     //load Student List
@@ -428,6 +430,8 @@ void staff_3_2() {
     }
     courseStudentList.save(semesterID, classID, courseNode->courseID);
     cout << "Created successfully! [enter]";
+    delete[]s;
+    delete[]p;
     fflush(stdin);
     cin.get();
     fflush(stdin);
@@ -455,8 +459,40 @@ void staff_3_3() {
     if (!courseList.load(semesterID,classID))
         EXITCODE(6);
  
-    //INPUT:
+    CourseStudentList courseStudentList;
+    courseStudentList.load(semesterID, classID, courseID);
+    //INPUT: PENDING!!!
     // courseID, courseName, lecturerID, startingDate, startingTime, endingTime, room, active
+    CourseNode* courseNode = courseList.find(courseID, ACTIVE);
+    cin.ignore();
+    getline(cin, courseNode->courseID, '\n');
+    cin.ignore();
+    getline(cin, courseNode->courseName, '\n');
+    cin.ignore();
+    getline(cin, courseNode->lecturerID, '\n');
+    cin >> courseNode->startingDate.y;
+    cin >> courseNode->startingDate.m;
+    cin >> courseNode->startingDate.d;
+    cin >> courseNode->startingTime.h;
+    cin >> courseNode->startingTime.m;
+    cin >> courseNode->startingTime.s;
+    cin >> courseNode->endingTime.h;
+    cin >> courseNode->endingTime.m;
+    cin >> courseNode->endingTime.s;
+    cin.ignore();
+    getline(cin, courseNode->room, '\n');
+    cin >> courseNode->active;
+    courseList.save(semesterID, classID);
+    courseStudentList.save(semesterID, classID, courseNode->courseID);
+    
+    cout << "Update successfully! [enter]";
+    delete[]s;
+    delete[]p;
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
+    staffCourseMenu();
+    return;
 }
 
 void staff_3_4() {
@@ -480,6 +516,8 @@ void staff_3_4() {
         EXITCODE(6);
     courseList.find(courseID, ACTIVE)->active = 0;
     courseList.save(semesterID, classID);
+    delete[]s;
+    delete[]p;
     cout << "Successfully deleted course [enter]";
     fflush(stdin);
     cin.get();
@@ -518,7 +556,11 @@ void staff_3_5() {
         cout << endl << endl;
         courseList.Head = courseList.Head->Next;
     }
+    delete[]s;
+    delete[]p;
+    fflush(stdin);
     cout << "\n\n[enter]";
+    fflush(stdin);
     staffCourseMenu();
     return;
 }
@@ -546,6 +588,8 @@ void staff_3_6() {
         EXITCODE(6);
     courseStudentList.find(studentID, ACTIVE)->active = 0;
     courseStudentList.save(semesterID, classID, courseID);
+    delete[]s;
+    delete[]p;
     cout << "\n\nSuccessfully deleted student " << studentID<<"  [enter]";
     fflush(stdin);
     cin.get();
@@ -602,6 +646,8 @@ void staff_3_7() {
     }
     courseStudentList.save(semesterID, classID, courseID);
     
+    delete[]s;
+    delete[]p;
     fflush(stdin);
     cin.get();
     fflush(stdin);
@@ -708,6 +754,7 @@ void staff_3_10() {
     if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
     
     saveCSV(llist, filePath, ScoreBoard);
+    staffCourseMenu();
     delete[]s;
     delete[]p;
 }
@@ -788,6 +835,8 @@ void staff_3_12() {
     if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
 
     saveCSV(llist, filePath, AttendanceList);
+
+    staffCourseMenu();
     delete[]s;
     delete[]p;
 }
