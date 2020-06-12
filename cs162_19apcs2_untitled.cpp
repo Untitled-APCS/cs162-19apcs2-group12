@@ -60,8 +60,11 @@ int main(int argc, const char **argv) {
 //    fileLocation = argv[0];
 //    while (fileLocation.size() > 0 && fileLocation[fileLocation.size()-1] != '/')
 //        fileLocation.pop_back();
+    //staff_5_1();
     logo();
     logInMenu();
+
+    //setAttendanceCourse();
     
     //lecturer_1_();
     //staff_2_1();
