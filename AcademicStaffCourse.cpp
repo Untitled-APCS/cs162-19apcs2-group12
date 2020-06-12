@@ -245,6 +245,8 @@ void staff_1_2() {
 
         semesterNode->current = PREVIOUS;
 
+        semesterList.save();
+
         cout << "\n\nSet as current semester successfully. [enter]\n";
 
         fflush(stdin);
@@ -557,7 +559,10 @@ void staff_3_2() {
     string *s = new string[2]{"", ""};
     fPtr *p = new fPtr[2]{inputSemester, inputClass};
 
-    if (!inputData(s, p, 0, 2, checkStaff_1_1)) EXITCODE(6);
+    if (!inputData(s, p, 2, 0, checkStaff_1_1)) EXITCODE(6);
+
+    semesterID = s[0];
+    classID = s[1];
 
     delete [] s;
     delete [] p;
@@ -566,9 +571,6 @@ void staff_3_2() {
         staffCourseMenu();
         return;
     }
-
-    semesterID = s[0];
-    classID = s[1];
 
     if (!courseList.load(semesterID, classID))
     EXITCODE(6);
