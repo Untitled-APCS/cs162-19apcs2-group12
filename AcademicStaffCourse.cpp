@@ -1232,6 +1232,12 @@ void staff_3_8() {
     string* s = new string[3]{ "","","" };
     fPtr* p = new fPtr[3]{ inputSemester, inputClass, inputCourse };
     inputData(s, p, 3, 0, checkStaff_3_8);
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+        staffCourseMenu();
+        delete[]s;
+        delete[]p;
+        return;
+    }
     StudentList stuList;
     if (!stuList.load()) EXITCODE(6);
     
@@ -1268,6 +1274,13 @@ void staff_3_9() {
     string* s = new string[3]{ "","","" };
     fPtr* p = new fPtr[3]{ inputSemester, inputClass, inputCourse };
     inputData(s, p, 3, 0, checkStaff_3_9);
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+        staffCourseMenu();
+        delete[]s;
+        delete[]p;
+        return;
+    }
+
 
     string semesterID = s[0], courseID = s[2], classID = s[1]; 
     
@@ -1310,6 +1323,12 @@ void staff_3_10() {
     string* s = new string[4]{ "","","","" };
     fPtr* p = new fPtr[4]{ inputSemester, inputClass, inputCourse , inputPathExportCSV};
     inputData(s, p, 4, 0, checkStaff_3_10);
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length()==0) {
+        staffCourseMenu();
+        delete[]s;
+        delete[]p;
+        return;
+    }
     string semesterID = s[0], courseID = s[2], classID = s[1], filePath=s[3];
 
     SemesterList sems; ClassList classes; CourseList courses;
@@ -1327,6 +1346,7 @@ void staff_3_10() {
     if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
     
     saveCSV(llist, filePath, ScoreBoard);
+    staffCourseMenu();
     delete[]s;
     delete[]p;
 }
@@ -1337,6 +1357,12 @@ void staff_3_11() {
     string* s = new string[3]{ "","","" };
     fPtr* p = new fPtr[3]{ inputSemester, inputClass, inputCourse };
     inputData(s, p, 3, 0, checkStaff_3_11);
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+        staffCourseMenu();
+        delete[]s;
+        delete[]p;
+        return;
+    }
 
     StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
@@ -1392,6 +1418,12 @@ void staff_3_12() {
     fPtr* p = new fPtr[4]{ inputSemester, inputClass, inputCourse, inputPathExportCSV};
     inputData(s, p, 4, 0, checkStaff_3_12);
     string semesterID = s[0], courseID = s[2], classID = s[1], filePath = s[3];
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length()) {
+        staffCourseMenu();
+        delete[]s;
+        delete[]p;
+        return;
+    }
 
     SemesterList sems; ClassList classes; CourseList courses;
     if (!sems.load() || !classes.load()) EXITCODE(6);
