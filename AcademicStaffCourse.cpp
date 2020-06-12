@@ -401,7 +401,7 @@ void staff_3_2() {
         EXITCODE(6);
     string *s = new string[2]{"", ""};
     fPtr *p = new fPtr[2]{inputSemester, inputClass};
-    inputData(s, p, 0, 2, checkStaff_1_1);
+    inputData(s, p, 2, 0, checkStaff_1_1);
     
     semesterID = s[0];
     classID = s[1];
@@ -413,6 +413,24 @@ void staff_3_2() {
     //inputData(s,p,0,1,checkStaff_3_2);
     CourseNode *courseNode = new CourseNode;
     //INPUT: PENDING!!!
+    cin.ignore();
+    getline(cin, courseNode->courseID, '\n');
+    cin.ignore();
+    getline(cin, courseNode->courseName, '\n');
+    cin.ignore();
+    getline(cin, courseNode->lecturerID, '\n');
+    cin >> courseNode->startingDate.y;
+    cin >> courseNode->startingDate.m;
+    cin >> courseNode->startingDate.d;
+    cin >> courseNode->startingTime.h;
+    cin >> courseNode->startingTime.m;
+    cin >> courseNode->startingTime.s;
+    cin >> courseNode->endingTime.h;
+    cin >> courseNode->endingTime.m;
+    cin >> courseNode->endingTime.s;
+    cin.ignore();
+    getline(cin, courseNode->room, '\n');
+    cin >> courseNode->active;
     courseList.pushBack(courseNode);
     courseList.save(semesterID,classID);
     //load Student List
@@ -435,7 +453,7 @@ void staff_3_2() {
     fflush(stdin);
     cin.get();
     fflush(stdin);
-    staffSemesterMenu;
+    staffSemesterMenu();
     return;
 }
 
