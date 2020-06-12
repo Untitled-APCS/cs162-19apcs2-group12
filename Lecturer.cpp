@@ -401,7 +401,10 @@ void lecturer_1_() {
 	CourseList allCourses;
 	SemesterList Sems;
 	ClassList classes;
-	
+	if (s[0].length() == 0) {
+		lecturerMenu();
+		return;
+	}
 	
 	if (!Sems.load()) 
 		EXITCODE(6);
@@ -587,7 +590,12 @@ void lecturer_2_() {
 	fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
 	cin.ignore(numeric_limits<streamsize>::max(),'\n');
 	inputData(s, p, 3, 0, checklecturer_2);
+	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+		lecturerMenu();
+		return;
+	}
 	string semesterID = s[0], classID=s[1], courseID=s[2];
+
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
 	
@@ -641,7 +649,10 @@ void lecturer_3_() {
 	string *s = new string[3]{"", "", ""};
 	fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
 	inputData(s, p, 3, 0, checklecturer_3);
-
+	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+		lecturerMenu();
+		return;
+	}
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
 	string semesterID = s[0], classID = s[1], courseID = s[2];
@@ -693,7 +704,10 @@ void lecturer_4_() {
 	fPtr *p = new fPtr[4]{inputSemester, inputClass, inputCourse, inputStudent};
 	
 	inputData(s, p, 4, 0, checklecturer_4);
-
+	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length() == 0) {
+		lecturerMenu();
+		return;
+	}
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
 	//string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227", studentID ="19125133";
@@ -746,7 +760,10 @@ void lecturer_5_() {
 	string *s = new string[4]{"", "", "",""};
 	fPtr *p = new fPtr[4]{inputSemester, inputClass, inputCourse, inputPathScoreBoardListCSV};
 	inputData(s, p, 4, 0, checklecturer_5);
-
+	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length() == 0) {
+		lecturerMenu();
+		return;
+	}
 
 	//string filePath = "D:/cs162-19apcs2-group12/wr272_scoreboard.csv";
 	StudentList stuList;
@@ -786,7 +803,10 @@ void lecturer_6_() {
 	string *s = new string[4]{"", "", "",""};
 	fPtr *p = new fPtr[4]{inputSemester, inputClass, inputCourse, inputStudent};
 	inputData(s, p, 4, 0, checklecturer_6);
-
+	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length() == 0) {
+		lecturerMenu();
+		return;
+	}
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
 	string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227", studentID = "19125133";
@@ -833,7 +853,10 @@ void lecturer_7_() {
 	string *s = new string[3]{"", "", ""};
 	fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
 	inputData(s, p, 3, 0, checklecturer_7);
-
+	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+		lecturerMenu();
+		return;
+	}
 
 	string semesterID = s[0], classID = s[1], courseID =s[2];
 	

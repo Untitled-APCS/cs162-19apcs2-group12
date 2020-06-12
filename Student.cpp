@@ -141,6 +141,10 @@ void student_2() {
 	string* s = new string[2]{ "","" };
 	fPtr* p = new fPtr[2]{ inputSemester, inputStudent };
 	inputData(s, p, 2, 0, checkStudent_2);
+	if (s[0].length() == 0 || s[1].length() == 0) {
+		studentMenu();
+		return;
+	}
 	string semesterID = s[0], studentID = s[1];
 	CourseStudentList llist;
 	CourseList courses;
@@ -192,6 +196,10 @@ void student_3() {
 	string* s = new string[2]{ "","" };
 	fPtr* p = new fPtr[2]{ inputSemester, inputStudent };
 	inputData(s, p, 2 ,0, checkStudent_3);
+	if (s[0].length() == 0 || s[1].length() == 0) {
+		studentMenu();
+		return;
+	}
 	string semesterID = s[0], studentID = s[1];
 
 	CourseStudentList llist;
@@ -228,6 +236,10 @@ void student_4() {
 	string* s = new string[2]{ "","" };
 	fPtr* p = new fPtr[2]{ inputSemester, inputStudent };
 	inputData(s, p, 2, 0, checkStudent_4);
+	if (s[0].length() == 0 || s[1].length() == 0) {
+		studentMenu();
+		return;
+	}
 	string semesterID = s[0], studentID = s[1];
 	CourseStudentList llist;
 	CourseList courses;
