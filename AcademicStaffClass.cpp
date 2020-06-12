@@ -10,7 +10,7 @@ void staff_2_1() {
     //inputData(filepath);
     cout << "\n\nPlease enter the CSV file path: ";
     getline(cin, filepath, '\n');
-
+    normalize(filepath);
     ifstream fin;
     fin.open(filepath);
 
@@ -125,6 +125,12 @@ void staff_2_1() {
         classList.Head = classList.Head->Next;
     }
     fin.close();
+    cout << "Successfully import class [ENTER]";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
+    staffClassMenu();
+    return;
 }
 
 void staff_2_2() {
@@ -167,6 +173,10 @@ void staff_2_2() {
     }
 
     
+    cout << "Successfully create new class [ENTER]";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
     staffClassMenu();
     return;
 }
@@ -214,6 +224,10 @@ void staff_2_3() {
 //    courseList.load(semesterID, oldClassID);
 //    courseList.save(semesterID, newClassID);
 
+    cout << "Successfully update class [ENTER]";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
     staffClassMenu();
     return;
 }
@@ -232,7 +246,10 @@ void staff_2_4() {
         EXITCODE(6);
     //remove classID: active -> 0
     classlist.find(oldClass, ACTIVE)->active = 0;
-    cout << "Successfully deleted class";
+    cout << "Successfully deleted class [ENTER]";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
     staffClassMenu();
     return;
 }
@@ -253,6 +270,12 @@ void staff_2_5() {
         cur->classID;
         cur = cur->Next;
     }
+    cout << "Successfully deleted class [ENTER]";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
+    staffClassMenu();
+    return;
 }
 
 bool checkStaff_2_1() {
