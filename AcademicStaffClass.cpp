@@ -646,7 +646,7 @@ void staff_5_2()
     classStudentList.save(classID);
     cout << "\n\nNew student created. [ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress= cin.get();
     fflush(stdin);
     staffStudentMenu();
     delete[]s;
@@ -755,7 +755,7 @@ void staff_5_3()
 
     cout << "\n\nUpdate student's information completed [ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffStudentMenu();
     delete[]s;
@@ -817,7 +817,7 @@ void staff_5_4()
 
     cout << endl << studentID << " deleted! [ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress =cin.get();
     fflush(stdin);
     staffStudentMenu();
     delete[]s;
@@ -872,7 +872,7 @@ void staff_5_5()
 
     cout << "\nDone view list of class " << classID << "[ENTER]";
     fflush(stdin);
-    cin.get();
+    char keyPress = cin.get();
     fflush(stdin);
     staffStudentMenu();
     delete[]s;
