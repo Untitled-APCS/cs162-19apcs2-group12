@@ -607,12 +607,13 @@ void staff_3_7() {
 void staff_3_8() {
     //View list of students of a course.
     // inputData : semesterID, classID, courseID
-    
-   
+    string* s = new string[3]{ "","","" };
+    fPtr* p = new fPtr[3]{ inputSemester, inputClass, inputCourse };
+    inputData(s, p, 3, 0, checkStaff_3_8);
     StudentList stuList;
     if (!stuList.load()) EXITCODE(6);
     
-    string semesterID = "", classID = "", courseID = ""; // Data for testing.
+    string semesterID = s[0], classID = s[1], courseID = s[2]; // Data for testing.
     SemesterList sems; ClassList classes; CourseList courses;
   
 	if (!sems.load()|| !classes.load()) EXITCODE(6);
@@ -631,8 +632,8 @@ void staff_3_8() {
 		printStudent(stuNode, index);
 	}
     // Remember to de allocate s and p
-	//delete [] s;
-	//delete[] p;
+	delete [] s;
+	delete[] p;
 
 
 }
@@ -640,8 +641,11 @@ void staff_3_8() {
 void staff_3_9() {
     //View a scoreboard
     //inputData: semesterID, classID, courseID
+    string* s = new string[3]{ "","","" };
+    fPtr* p = new fPtr[3]{ inputSemester, inputClass, inputCourse };
+    inputData(s, p, 3, 0, checkStaff_3_9);
 
-    string semesterID = "", courseID = "", classID = ""; 
+    string semesterID = s[0], courseID = s[2], classID = s[1]; 
     
     SemesterList sems; ClassList classes; CourseList courses;
     if (!sems.load() || !classes.load()) EXITCODE(6);
@@ -672,14 +676,17 @@ void staff_3_9() {
     }
 
         
-        //delete[] s;
-        //delete[] p;
+        delete[] s;
+        delete[] p;
 }
 
 void staff_3_10() {
     //Export a scoreboard to file.
     // inputData: semesterID, classID, courseID, filePath
-    string semesterID = "", courseID = "", classID = "", filePath="";
+    string* s = new string[4]{ "","","","" };
+    fPtr* p = new fPtr[4]{ inputSemester, inputClass, inputCourse , inputFilePath};
+    inputData(s, p, 4, 0, checkStaff_3_10);
+    string semesterID = s[0], courseID = s[2], classID = s[1], filePath=s[3];
 
     SemesterList sems; ClassList classes; CourseList courses;
     if (!sems.load() || !classes.load()) EXITCODE(6);
@@ -696,16 +703,21 @@ void staff_3_10() {
     if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
     
     saveCSV(llist, filePath, ScoreBoard);
+    delete[]s;
+    delete[]p;
 }
 
 void staff_3_11() {
     //View an attendance list
     // inputData: semesterID, classID, courseID
+    string* s = new string[3]{ "","","" };
+    fPtr* p = new fPtr[3]{ inputSemester, inputClass, inputCourse };
+    inputData(s, p, 3, 0, checkStaff_3_11);
 
     StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
 	
-    string semesterID = "", courseID = "", classID = "";
+    string semesterID = s[0], courseID = s[2], classID = s[1];
 
     SemesterList sems; ClassList classes; CourseList courses;
 	if (!sems.load()|| !classes.load()) EXITCODE(6);
@@ -740,8 +752,8 @@ void staff_3_11() {
 
     }
     // Remember to de allocate:
-   // delete[]s;
-    //delete[]p;
+   delete[]s;
+   delete[]p;
 
 
 
@@ -751,7 +763,10 @@ void staff_3_11() {
 
 void staff_3_12() {
     //Export an attendance list to file.
-    string semesterID = "", courseID = "", classID = "", filePath = "";
+    string* s = new string[4]{ "","","","" };
+    fPtr* p = new fPtr[4]{ inputSemester, inputClass, inputCourse, inputFilePath};
+    inputData(s, p, 4, 0, checkStaff_3_12);
+    string semesterID = s[0], courseID = s[2], classID = s[1], filePath = s[3];
 
     SemesterList sems; ClassList classes; CourseList courses;
     if (!sems.load() || !classes.load()) EXITCODE(6);
@@ -768,6 +783,8 @@ void staff_3_12() {
     if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
 
     saveCSV(llist, filePath, AttendanceList);
+    delete[]s;
+    delete[]p;
 }
 
 bool checkStaff_3_1() {
@@ -825,24 +842,24 @@ bool checkStaff_3_7() {
     return false;
 }
 
-bool checkStaff_3_8() {
-    return false;
+bool checkStaff_3_8(string*s, int n) {
+    return true;
 }
 
-bool checkStaff_3_9() {
-    return false;
+bool checkStaff_3_9(string* s, int n) {
+    return true;
 }
 
-bool checkStaff_3_10() {
-    return false;
+bool checkStaff_3_10(string* s, int n) {
+    return true;
 }
 
-bool checkStaff_3_11() {
-    return false;
+bool checkStaff_3_11(string* s, int n) {
+    return true;
 }
 
-bool checkStaff_3_12() {
-    return false;
+bool checkStaff_3_12(string* s, int n) {
+    return true;
 }
 
 void lecturer_1() {

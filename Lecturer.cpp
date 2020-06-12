@@ -12,13 +12,13 @@ bool checklecturer_1(string* s, int n) {
 	if (!llist.load()) {
 		EXITCODE_V(6, false);
 	}
-	if (s[0] != llist.currentSemester) {
+	/*if (s[0] != llist.currentSemester) {
 		cout << "\nThis is not current semester " << endl;
 		fflush(stdin);
 		char keyPress = cin.get();
 		fflush(stdin);
 		return false;
-	}
+	}*/
 	return true;
 
 }
@@ -40,6 +40,8 @@ bool checklecturer_2(string* s, int n) {
 	char keyPress = cin.get();
 	fflush(stdin);
 	return false;
+
+	
 }
 
 bool checklecturer_3(string* s, int n) {
@@ -281,8 +283,11 @@ void printStudent(StudentNode* node, int &index) {
 
 //---
 void lecturer_1_() {
-	//inputData : semesterID
+	string* s = new string[1]{ "" };
+	fPtr* p = new fPtr[1]{ inputSemester };
 	// checklecturer(string *s, 1);
+	inputData(s, p, 1, 0, checklecturer_1);
+	string semesterID = s[0];
 	CourseList allCourses;
 	SemesterList Sems;
 	ClassList classes;
@@ -292,8 +297,8 @@ void lecturer_1_() {
 		EXITCODE(6);
 	
 	// Find current Semester:
-	SemesterNode* node = Sems.Head;
-	while (node && node->current != CURRENT) node = node->Next;
+	//SemesterNode* node = Sems.Head;
+	//while (node && node->current != CURRENT) node = node->Next;
 	
 	if (!classes.load()) EXITCODE(6);
 
@@ -301,13 +306,22 @@ void lecturer_1_() {
 	ClassNode* classNode = classes.Head;
 	CourseList courseList;
 	int index = 1;
-	cout << "\n\n" << "No\t" << "Course Name\t" << "Course ID\t" << "Starting Date\t" << "Starting time\t" << "Ending time\t" << "Room" << endl;
 	while (classNode) {
 		if (classNode->active) {
-			if (!courseList.load(node->semesterID, classNode->classID)) EXITCODE(6);
+			if (!courseList.load(semesterID, classNode->classID)) EXITCODE(6);
 			for (CourseNode* coursenode = courseList.Head; coursenode; coursenode = coursenode->Next) {
-				if (coursenode->lecturerID == user::ID) {
-					printCourse(coursenode, index);
+				if (coursenode->lecturerID == user::ID && courseList.find(coursenode->courseID, ACTIVE)) {
+					cout << "No: " << index << endl;
+					cout << "Course Name " << coursenode->courseName << endl;
+					cout << "Course ID " << coursenode->courseID << endl;
+					cout << "Starting Date " << coursenode->startingDate.y << "/" << coursenode->startingDate.m << "/"
+						<< coursenode->startingDate.d << endl;
+					cout << "Starting Time " << coursenode->startingTime.h << ":" << coursenode->startingTime.m << ":"
+						<< coursenode->startingTime.s << endl;
+					cout << "Ending Time " << coursenode->endingTime.h << ":" << coursenode->endingTime.m << ":"
+						<< coursenode->endingTime.s << endl;
+					cout << "Room " << coursenode->room << endl;
+					index++;
 				}
 			}
 			courseList.destroy();
@@ -316,34 +330,45 @@ void lecturer_1_() {
 		classNode = classNode->Next;
 	}
 	lecturerMenu();
+	delete[]s;
+	delete[]p;
 
 	
 }
-void loadCSVScoreBoard(CourseStudentList& llist, string filePath) {
+bool loadCSVScoreBoard(CourseStudentList& llist, string filePath) {
 	ifstream fin;
 	string temp;
 	fin.open(filePath);
 	if (!fin.is_open()) {
 		cout << "\n\nCannot open this file " << endl;
-		EXITCODE(6);
+		EXITCODE_V(6, false);
 	}
-	//CourseStudentList stuList;
-	int choice;
+	bool choice = 0;
 	getline(fin, temp);
+	cout << temp << endl;
 	CourseStudentNode* node;
-	while (!fin.good()) {
+	while (fin.good()) {
 		node = new CourseStudentNode;
-		getline(fin, node->studentID, ',');
-		getline(fin,temp, ',');
+		getline(fin, temp, ',');
+		cout << temp << " ";
+		getline(fin, temp, ',');
+		cout << temp << " ";
+		node->studentID = temp;
+		getline(fin, temp, ',');
+		cout << temp << " ";
 		node->score.midterm = stod(temp);
 		getline(fin, temp, ',');
+		cout << temp << " ";
 		node->score.final = stod(temp);
 		getline(fin, temp, ',');
+		cout << temp << " ";
 		node->score.bonus = stod(temp);
-		getline(fin, temp, ',');
+		getline(fin, temp, '\n');
+		cout << temp << endl;
 		node->score.total = stod(temp);
-		CourseStudentNode* stuNode = llist.find(node->studentID, ALL);
 
+
+		CourseStudentNode* stuNode = llist.find(node->studentID, ACTIVE);
 		if (stuNode) {
 			if (stuNode->score.midterm == -1 && stuNode->score.final == -1 && stuNode->score.bonus == -1 && stuNode->score.total == -1) {
 				if (stuNode->active == 1) {
@@ -357,6 +382,7 @@ void loadCSVScoreBoard(CourseStudentList& llist, string filePath) {
 					cout << "\n\nThis student has dropped out"; // inactive.
 				}
 			}
+
 			else {
 				if (choice == REPLACE_ALL) {
 					if (stuNode->active == 1) {
@@ -391,8 +417,6 @@ void loadCSVScoreBoard(CourseStudentList& llist, string filePath) {
 					continue;
 				}
 				else {
-		
-					
 					char keyPress;
 
 					cout << "\n\nThe student with ID '" << node->studentID << "' has already added.\n";
@@ -407,36 +431,36 @@ void loadCSVScoreBoard(CourseStudentList& llist, string filePath) {
 						fflush(stdin);
 
 						switch (keyPress) {
-						case '1':
-							choice = SKIP;
-							break;
-						case '2':
-							choice = REPLACE;
-							break;
-						case '3':
-							choice = SKIP_ALL;
-							break;
-						case '4':
-							choice = REPLACE_ALL;
-							break;
-						default:
-							choice = 0;
+							case '1':
+								choice = SKIP;
+								break;
+							case '2':
+								choice = REPLACE;
+								break;
+							case '3':
+								choice = SKIP_ALL;
+								break;
+							case '4':
+								choice = REPLACE_ALL;
+								break;
+							default:
+								choice = 0;
 						}
 					}
-
 				}
 			}
 		}
 		else {
-			cout << "\n\n" << node->studentID << " does not exist." << endl;
-			
+			cout << "\n\n" << node->studentID << " does not exist" << endl;
 		}
 		delete node;
-
-
-
 	}
+	
+
+	fin.close();
+	return true;
 }
+
 
 
 	
@@ -447,12 +471,13 @@ void lecturer_2_() {
 	
 	string *s = new string[3]{"", "", ""};
 	fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
+	cin.ignore(numeric_limits<streamsize>::max(),'\n');
 	inputData(s, p, 3, 0, checklecturer_2);
-	string semesterID = s[0], classID=s[1], courseID=s[3];
+	string semesterID = s[0], classID=s[1], courseID=s[2];
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
 	
-  //string semesterID = s[0], courseID = s[2], classID = s[1];
+  
 	/*if (!isPermissible(courseID)) {
 		cout << "\n\nYou are not allowed to access this course" << endl;
 		fflush(stdin);
@@ -489,28 +514,24 @@ void lecturer_2_() {
 	/*fflush(stdin);
 	char keyPress = cin.get();
 	fflush(stdin);*/
-
+	
 	lecturerMenu();
-	//delete [] s;
-	//delete[] p;
+	delete [] s;
+	delete[] p;
 	
 }
 
 //------------------------------------------------------------------------------------------------------------
 void lecturer_3_() {
-	/*input semester, class, course
-  string *s = new string[3]{"", "", ""};
-  fptr *p = new fptr[3]{inputSemester, inputClass, inputCourse};
-  inputdata(s, p, 0, 3, checkstaff_1_1);*/
+
+	string *s = new string[3]{"", "", ""};
+	fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
+	inputData(s, p, 3, 0, checklecturer_3);
 
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
-	string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227";
-  //string semesterID = s[0], courseID = s[2], classID = s[1];
-	/*if (!isPermissible(courseID)) {
-		cout << "\n\nYou are not allowed to access this course" << endl;
-		return;
-  }*/
+	string semesterID = s[0], classID = s[1], courseID = s[2];
+  
 	SemesterList sems; ClassList classes; CourseList courses;
 	if (!sems.load()|| !classes.load()) EXITCODE(6);
 
@@ -543,8 +564,8 @@ void lecturer_3_() {
 		
 	}
 	lecturerMenu();
-	//delete[]s;
-	//delete[]p;
+	delete[]s;
+	delete[]p;
 
 
 
@@ -553,15 +574,16 @@ void lecturer_3_() {
 //-------------------------------------------------------------------------------------------------------------------------
 
 void lecturer_4_() {
-	/*input semester, class, course
+	
 	string *s = new string[4]{"", "", "",""};
-	fptr *p = new fptr[4]{inputSemester, inputClass, inputCourse, inputStudent};
-	inputdata(s, p, 0, 4, checkstaff_1_1);*/
+	fPtr *p = new fPtr[4]{inputSemester, inputClass, inputCourse, inputStudent};
+	
+	inputData(s, p, 4, 0, checklecturer_4);
 
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
-	string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227", studentID ="19125133";
-	//string semesterID = s[0], courseID = s[1], classID = s[2], studentID = s[3];
+	//string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227", studentID ="19125133";
+	string semesterID = s[0], courseID = s[1], classID = s[2], studentID = s[3];
 	SemesterList sems; ClassList classes; CourseList courses;
 	if (!sems.load()|| !classes.load()) EXITCODE(6);
 	if (stuList.find(studentID, ACTIVE)== nullptr) EXITCODE(6);
@@ -596,8 +618,8 @@ void lecturer_4_() {
 	llist.save(semesterID, classID, courseID);
 	lecturerMenu();
 	
-	//delete[]s;
-	//detete[]p;
+	delete[]s;
+	delete[]p;
 	
 
 	
@@ -606,16 +628,18 @@ void lecturer_4_() {
 
 void lecturer_5_() {
 
-	//input semester, class, course
-	//string *s = new string[4]{"", "", "","",""};
-	//fptr *p = new fptr[4]{inputSemester, inputClass, inputCourse, filePath};
-	//inputdata(s, p, 0, 4, checkstaff_1_1);
+	
+	string *s = new string[4]{"", "", "",""};
+	fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
+	inputData(s, p, 3, 0, checklecturer_5);
 
+
+	string filePath = "D:/cs162-19apcs2-group12/wr272_scoreboard.csv";
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
-	string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227", filePath = "";
+	//string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227", filePath = "";
 	
-	//string semesterID = s[0], courseID = s[2], classID = s[1], filePath = s[3];
+	string semesterID = s[0], courseID = s[2], classID = s[1];
 	
 	SemesterList sems; ClassList classes; CourseList courses;
 	if (!sems.load()|| !classes.load()) EXITCODE(6);
@@ -630,12 +654,12 @@ void lecturer_5_() {
 	CourseStudentList llist;
 	if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
 
-	loadCSVScoreBoard(llist, filePath);
+	if(loadCSVScoreBoard(llist, filePath)) cout <<"OK"<<endl;
 	llist.save(semesterID, classID, courseID);
 
 	lecturerMenu();
-	//delete []s;
-	//delete[]p;
+	delete []s;
+	delete[]p;
 	
 
 
@@ -644,10 +668,10 @@ void lecturer_5_() {
 
 void lecturer_6_() {
 
-	/*input semester, class, course
+	
 	string *s = new string[4]{"", "", "",""};
-	fptr *p = new fptr[4]{inputSemester, inputClass, inputCourse, inputStudent};
-	inputdata(s, p, 0, 4, checkstaff_1_1);*/
+	fPtr *p = new fPtr[4]{inputSemester, inputClass, inputCourse, inputStudent};
+	inputData(s, p, 4, 0, checklecturer_6);
 
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
@@ -684,25 +708,21 @@ void lecturer_6_() {
 	lecturerMenu();
 	
 
-	//delete[] s;
-	// delete[]p;
+	delete[] s;
+	delete[]p;
 }
 
 
 void lecturer_7_() {
 
-	/*input semester, class, course
-	string *s = new string[3]{"", "", "",""};
-	fptr *p = new fptr[3]{inputSemester, inputCourse, inputClass};
-	inputdata(s, p, 0, 3, checkstaff_1_1);*/
+	
+	string *s = new string[3]{"", "", ""};
+	fPtr *p = new fPtr[3]{inputSemester, inputCourse, inputClass};
+	inputData(s, p, 3, 0, checklecturer_7);
 
 
-	string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227";
-	//string semesterID = s[0], courseID = s[1], classID = s[2];
-	/*if (!isPermissible(courseID)) {
-		cout <<"\n\nYou are not allowed to access this course" << endl;
-		EXITCODE(3);
-	}*/
+	string semesterID = s[0], classID = s[1], courseID =s[2];
+	
 	SemesterList sems; ClassList classes; CourseList courses;
 	if (!sems.load()|| !classes.load()) EXITCODE(6);
 	
@@ -723,7 +743,7 @@ void lecturer_7_() {
 	printScoreboard(stuList, llist);
 	lecturerMenu();
 
-	//delete[] s;
-	//delete[] p;
+	delete[] s;
+	delete[] p;
 }
 

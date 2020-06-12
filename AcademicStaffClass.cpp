@@ -148,13 +148,25 @@ void staff_2_2() {
     ClassNode* newClassNode = new ClassNode;
     newClassNode->classID = newClass;
     classList.pushBack(newClassNode);
-
+    classList.save();
 
     //create [semesterID]-classID-course.txt with 0 course
-    ofstream fout;
-    fout.open(semeList.currentSemester + newClass + "-course.txt");
-    fout << "0";
-    fout.close();
+    // + ALL semester
+
+    SemesterList seme;
+    seme.load();
+    SemesterNode* cur;
+    cur = seme.Head;
+    while (cur != nullptr)
+    {
+        ofstream fout;
+        fout.open(cur->semesterID + "-" + newClass + "-course.txt");
+        fout << "0";
+        fout.close();
+        cur = cur->Next;
+    }
+
+    
     staffClassMenu();
     return;
 }
@@ -181,7 +193,7 @@ void staff_2_3() {
     //Input newClassID which does not exist in class list
     string newClass;
     getline(cin, newClass, '\n');
-    if (classlist.find(newClass, ACTIVE))
+    if (!classlist.find(newClass, ACTIVE))
         EXITCODE(6);
     //Update oldClassID to newClassID
     ClassNode* newClassNode = new ClassNode;
@@ -412,8 +424,12 @@ void staff_5_1()
     classStudentList.save(classID);
 
     cout << "\n\nImport successfully";
-    cout << "\nData saved to student.txt and " << classID << "-student.txt";
+    cout << "\nData saved to student.txt and " << classID << "-student.txt\n[ENTER]";
     fin.close();
+
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
     staffStudentMenu();
     return;
 }
@@ -445,6 +461,7 @@ void staff_5_2()
 
     cout << "Student's ID: ";
     getline(cin, newStudentNode->studentID, '\n');
+    newClassStudentNode->studentID = newStudentNode->studentID;
     cout << "Student's Full Name: ";
     getline(cin, newStudentNode->studentName, '\n');
 
@@ -457,8 +474,19 @@ void staff_5_2()
     cout << "\nYear: ";
     getline(cin, temp, '\n');
     newStudentNode->DOB.y = stoi(temp);
+    newStudentNode->classID = classID;
 
-    cout << "Enter ";
+    studentList.pushBack(newStudentNode);
+    classStudentList.pushBack(newClassStudentNode);
+
+    studentList.save();
+    classStudentList.save(classID);
+    cout << "\n\nNew student created. [ENTER]";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
+    staffStudentMenu();
+    return;
 }
 
 void staff_5_3()
@@ -477,39 +505,164 @@ void staff_5_3()
     if (!classStudentList.load(classID))
         EXITCODE(6);
 
+    StudentList studentList;
+    if (!studentList.load())
+        EXITCODE(6);
+
+    if (!studentList.find(oldStudentID, ACTIVE))
+        EXITCODE(6);
+    if (!classStudentList.find(oldStudentID, ACTIVE))
+        EXITCODE(6);
+
+    //update old to new
+    StudentNode* newstudent = new StudentNode;
+    newstudent = studentList.find(oldStudentID, ACTIVE);
+    ClassStudentNode* newclassstudent = new ClassStudentNode;
+    newclassstudent = classStudentList.find(oldStudentID, ACTIVE);
+
+    newstudent->active = 1;
+
+    string temp;
+
+    getline(cin, newstudent->studentName);
+    normalizeFullName(newstudent->studentName);
+    getline(cin, temp, '\n');
+    newstudent->DOB.y = 1000 * (temp[0] - '0') + 100 * (temp[1] - '0') + 10 * (temp[2] - '0') + (temp[3] - '0');
+    newstudent->DOB.m = 10 * (temp[5] - '0') + (temp[6] - '0');
+    newstudent->DOB.d = 10 * (temp[8] - '0') + (temp[9] - '0');
+    getline(cin, newstudent->classID, '\n');
+    normalize(newstudent->classID);
+
+    //flag to tell if the class can be changed or not
+    bool changeclass = false;
+    if (newstudent->classID != classID)
+    {
+        SemesterList semester;
+        semester.load();
+
+        CourseList course;
+        course.load(semester.currentSemester, classID);
+        if (course.Head != nullptr)
+        {
+            cout << "You can not change this student class!!!";
+            newstudent->classID = classID;
+        }
+        else
+        {
+            changeclass = true;
+            //inactivate student in the old class
+            newclassstudent->active = 0;
+            classStudentList.pushBack(newclassstudent);
+            classStudentList.save(classID);
 
 
+            //activete and save student to new class
+            ClassStudentList newclassStudentlist;
+            newclassstudent->active = 1;
+            newclassStudentlist.load(newstudent->classID);
+            newclassStudentlist.pushBack(newclassstudent);
+            newclassStudentlist.save(newstudent->classID);
+        }
+    }
+    if (!changeclass)
+    {
+        ClassStudentList newclasslist;
+        newclasslist.load(newstudent->classID);
+        newclasslist.pushBack(newclassstudent);
+    }
+    studentList.pushBack(newstudent);
+    studentList.save();
+
+    cout << "\n\nUpdate student's information completed [ENTER]";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
+    staffStudentMenu();
+    return;
 }
 
 void staff_5_4()
 {
     //Remove a specific student
+    //input classID
+
+    string classID;
+    cout << "\n\nEnter class ID: ";
+    getline(cin, classID, '\n');
+    normalize(classID);
+
+    //input student ID
+    string studentID;
+    cout << "\n\nEnter class ID: ";
+    getline(cin, studentID, '\n');
+    normalize(studentID);
+
+    //load and check if the student is in class
+    ClassStudentList classStudentList;
+    if (!classStudentList.load(classID))
+        EXITCODE(6);
+    if (!classStudentList.find(studentID, ACTIVE))
+        EXITCODE(6);
+
+    classStudentList.find(studentID, ACTIVE)->active = 0;
+
+    StudentList studentList;
+    if (!studentList.load())
+        EXITCODE(6);
+    if (!studentList.find(studentID, ACTIVE))
+        EXITCODE(6);
+
+    classStudentList.find(studentID, ACTIVE)->active = 0;
+    studentList.find(studentID, ACTIVE)->active = 0;
+    classStudentList.save(classID);
+    studentList.save();
+
+    cout << endl << studentID << " deleted! [ENTER]";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
+    staffStudentMenu();
+    return;
 }
 
 void staff_5_5()
 {
     //View list of students of a class
-    StudentList stuList;
-    if (!stuList.load()) EXITCODE(6);
+    //input classID
 
-    string semesterID = "", classID = "", courseID = ""; // Data for testing.
-    SemesterList sems; ClassList classes; CourseList courses;
+    string classID;
+    cout << "\n\nEnter class ID: ";
+    getline(cin, classID, '\n');
+    normalize(classID);
 
-    if (!sems.load() || !classes.load()) EXITCODE(6);
+    //load and check if the class is valid
+    ClassStudentList classStudentList;
+    if (!classStudentList.load(classID))
+        EXITCODE(6);
+    StudentList studentList;
+    if (!studentList.load())
+        EXITCODE(6);
+    //output student ID
 
-    if (sems.find(semesterID, ACTIVE) == nullptr || classes.find(classID, ACTIVE) == nullptr) EXITCODE(6);
+    StudentNode* cur = studentList.Head;
 
-    if (!courses.load(semesterID, classID)) EXITCODE(6);
-    CourseNode* node = courses.find(courseID, ACTIVE);
-    if (node == nullptr) EXITCODE(6);
-    int index = 1;
-    CourseStudentList llist;
-    if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
-
-    for (CourseStudentNode* node = llist.Head; node; node = node->Next) {
-        StudentNode* stuNode = stuList.find(node->studentID, ACTIVE);
-        printStudent(stuNode, index);
+    for (ClassStudentNode* node = classStudentList.Head; node; node = node->Next)
+    {
+        while (node->studentID != cur->studentID)
+            cur = cur->Next;
+        cout << "\n\nStudent ID: " << cur->studentID
+            << "\nStudent name: " << cur->studentName
+            << "\nStudent DOB: (yyyy/mm/dd)" << cur->DOB.y << "/" << cur->DOB.m << "/" << cur->DOB.d
+            << "\nClass: " << cur->classID;
+        cur = studentList.Head;
     }
+
+    cout << "\nDone view list of class " << classID << "[ENTER]";
+    fflush(stdin);
+    cin.get();
+    fflush(stdin);
+    staffStudentMenu();
+    return;
 }
 
 bool checkStaff_5_1();
