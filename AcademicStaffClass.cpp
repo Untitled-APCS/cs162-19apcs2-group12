@@ -11,6 +11,12 @@ void staff_2_1() {
     string* s = new string[1]{ "" };
     fPtr* p = new fPtr[1]{ inputPathClassListCSV };
     inputData(s, p, 1, 0, checkStaff_2_1);
+    if (s[0].length() == 0)
+    {
+        staffClassMenu();
+        return;
+    }
+
 
     string
         filepath = s[0];
@@ -198,7 +204,11 @@ void staff_2_3() {
     string* s = new string[1]{ "" };
     fPtr* p = new fPtr[1]{ inputClass };
     inputData(s, p, 1, 0, checkStaff_2_3);
-
+    if (s[0].length() == 0)
+    {
+        staffClassMenu();
+        return;
+    }
     string
         oldClass = s[0];
 
@@ -286,7 +296,11 @@ void staff_2_4() {
     string* s = new string[1]{ "" };
     fPtr* p = new fPtr[1]{ inputClass };
     inputData(s, p, 1, 0, checkStaff_2_4);
-
+    if (s[0].length() == 0)
+    {
+        staffClassMenu();
+        return;
+    }
     string
         oldClass = s[0];
 
@@ -373,8 +387,12 @@ void staff_5_1()
 
     string* s = new string[2]{ "","" };
     fPtr* p = new fPtr[2]{ inputClass,inputPathStudentListCSV };
-    inputData(s, p, 1, 0, checkStaff_5_1);
-
+    inputData(s, p, 2, 0, checkStaff_5_1);
+    if (s[0].length() == 0||s[1].length()==0)
+    {
+        staffStudentMenu();
+        return;
+    }
     string
         classID = s[0],
         filepath = s[2];
@@ -538,7 +556,11 @@ void staff_5_2()
     string* s = new string[1]{ "" };
     fPtr* p = new fPtr[1]{ inputClass };
     inputData(s, p, 1, 0, checkStaff_5_2);
-
+    if (s[0].length() == 0)
+    {
+        staffStudentMenu();
+        return;
+    }
     string
         classID = s[0];
 
@@ -606,7 +628,11 @@ void staff_5_3()
     string* s = new string[2]{ "","" };
     fPtr* p = new fPtr[2]{ inputClass,inputStudent };
     inputData(s, p, 2, 0, checkStaff_5_3);
-
+    if (s[0].length() == 0 || s[1].length() == 0)
+    {
+        staffStudentMenu();
+        return;
+    }
     string
         classID = s[0],
         oldStudentID = s[1];
@@ -708,7 +734,11 @@ void staff_5_4()
     string* s = new string[2]{ "","" };
     fPtr* p = new fPtr[2]{ inputClass,inputStudent };
     inputData(s, p, 2, 0, checkStaff_5_3);
-
+    if (s[0].length() == 0 || s[1].length() == 0)
+    {
+        staffStudentMenu();
+        return;
+    }
     string
         classID = s[0],
         studentID = s[1];
@@ -760,7 +790,11 @@ void staff_5_5()
     string* s = new string[1]{ "" };
     fPtr* p = new fPtr[1]{ inputClass };
     inputData(s, p, 1, 0, checkStaff_5_2);
-
+    if (s[0].length() == 0)
+    {
+        staffStudentMenu();
+        return;
+    }
     string
         classID = s[0];
 
