@@ -9,6 +9,7 @@
 #include "AllRoles.h"
 #include "Student.h"
 #include "AcademicStaffCourse.h"
+#include "AcademicStaffClass.h"
 
 void mainMenu();
 

@@ -108,7 +108,7 @@ void student_1() {
 
         cout << "Your code is invalid. Please try one more time.\n";
 	}
-
+	studentMenu();
 	//AttendanceCode
 	// Enter the week. Recommend .
 }
@@ -138,7 +138,46 @@ bool isInRange( CourseNode* node) {
 	return currentDate <= endingDate;
 }
 void student_2() {
+	string* s = new string[2]{ "","" };
+	fPtr* p = new fPtr[2]{ inputSemester, inputStudent };
+	inputData(s, p, 2, 0, checkStudent_2);
+	if (s[0].length() == 0 || s[1].length() == 0) {
+		studentMenu();
+		delete[]s;
+		delete[]p;
+		return;
+	}
+	string semesterID = s[0], studentID = s[1];
+	CourseStudentList llist;
+	CourseList courses;
+	ClassList classes;
+	CourseStudentList stuList;
+	cout << "Course Name\tCourse ID\tMidterm\tFinal\tBonus\tTotal" << endl;
+	if (!classes.load()) EXITCODE(6);
+	for (ClassNode* classNode = classes.Head; classNode; classNode = classNode->Next) {
+		if (!courses.load(semesterID, classNode->classID)) EXITCODE(6);
+		for (CourseNode* courseNode = courses.Head; courseNode; courseNode = courseNode->Next) {
+			if (courses.find(courseNode->courseID, ACTIVE)) {
+				if (!stuList.load(semesterID, classNode->classID, courseNode->courseID)) EXITCODE(6);
+				CourseStudentNode* stuNode = stuList.find(studentID, ACTIVE);
+				if (stuNode) {
+					cout << courseNode->courseName << "\t" << courseNode->courseID << "\t";
+					for (int i = 0; i < 10; i++) {
+						if (i == 9) cout << stuNode->attendance[i] << endl;
+						else cout << stuNode->attendance[i] << "\t";
+					}
+				}
+				stuList.destroy();
 
+			}
+		}
+
+		courses.destroy();
+	}
+	cout << "\n\nBack to menu" << endl;
+	studentMenu();
+	delete[]s;
+	delete[]p;
 }
 
 void printCourse(CourseNode* node) {
@@ -153,8 +192,20 @@ void printCourse(CourseNode* node) {
 
 
 void student_3() {
-/*	//inputData : semesterID, studentID;
-	// Print courseName, courseID, Day, starting time, ending time, rooms
+	
+	
+	//Print courseName, courseID, Day, starting time, ending time, rooms
+	string* s = new string[2]{ "","" };
+	fPtr* p = new fPtr[2]{ inputSemester, inputStudent };
+	inputData(s, p, 2 ,0, checkStudent_3);
+	if (s[0].length() == 0 || s[1].length() == 0) {
+		studentMenu();
+		delete[]s;
+		delete[]p;
+		return;
+	}
+	string semesterID = s[0], studentID = s[1];
+
 	CourseStudentList llist;
 	CourseList courses;
 	ClassList classes;
@@ -176,12 +227,26 @@ void student_3() {
 
 		courses.destroy();
 	}
-	*/
+	cout << "\n\nBack to menu" << endl;
+	studentMenu();
+	delete[]s;
+	delete[]p;
+	
 }
 
 
 void student_4() {
-/*	// inputData: semesterID, studentID
+	//inputData: semesterID, studentID
+	string* s = new string[2]{ "","" };
+	fPtr* p = new fPtr[2]{ inputSemester, inputStudent };
+	inputData(s, p, 2, 0, checkStudent_4);
+	if (s[0].length() == 0 || s[1].length() == 0) {
+		studentMenu();
+		delete[]s;
+		delete[]p;
+		return;
+	}
+	string semesterID = s[0], studentID = s[1];
 	CourseStudentList llist;
 	CourseList courses;
 	ClassList classes;
@@ -205,5 +270,21 @@ void student_4() {
 
 		courses.destroy();
 	}
-	*/
+	cout << "\n\nBack to menu" << endl;
+	studentMenu();
+	delete[]s;
+	delete[]p;
+}
+
+bool checkStudent_3(string* s, int n) {
+	return true;
+}
+bool checkStudent_1(string* s, int n) {
+	return true;
+}
+bool checkStudent_2(string* s, int n) {
+	return true;
+}
+bool checkStudent_4(string* s, int n) {
+	return true;
 }

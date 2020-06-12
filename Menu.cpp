@@ -167,16 +167,16 @@ void staffStudentMenu() {
                 staff_5_1();
                 break;
             case '2':
-                testStaffStudent();
+                staff_5_2();
                 break;
             case '3':
-                testStaffStudent();
+                staff_5_3();
                 break;
             case '4':
-                testStaffStudent();
+                staff_5_4();
                 break;
             case '5':
-                testStaffStudent();
+                staff_5_5();
                 break;
             case '`':
                 staffMenu();
@@ -289,19 +289,19 @@ void staffClassMenu() {
 
         switch (keyPress) {
             case '1':
-                testStaffClass();
+                staff_2_1();
                 break;
             case '2':
-                testStaffClass();
+                staff_2_2();
                 break;
             case '3':
-                testStaffClass();
+                staff_2_3();
                 break;
             case '4':
-                testStaffClass();
+                staff_2_4();
                 break;
             case '5':
-                testStaffClass();
+                staff_2_5();
                 break;
             case '`':
                 staffMenu();
@@ -466,13 +466,13 @@ void studentMenu() {
                 student_1();
                 break;
             case '2':
-                testStudent();
+                student_2();
                 break;
             case '3':
-                testStudent();
+                student_3();
                 break;
             case '4':
-                testStudent();
+                student_4();
                 break;
             case 'P':
             case 'p':

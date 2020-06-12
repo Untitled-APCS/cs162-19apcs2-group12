@@ -57,7 +57,7 @@ bool CourseList::load(string semesterID, string classID) {
 
     //check if the file is missing?
     if (!fin.is_open())
-    EXITCODE_V(4, false);
+        EXITCODE_V(4, false);
 
     fin >> cnt;
     string tmp;

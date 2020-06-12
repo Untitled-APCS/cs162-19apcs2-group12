@@ -22,25 +22,25 @@ void viewCourseScore(string username);
 
 #endif //CS162_19APCS2_GROUP12_STUDENT_H
 
-void staff_5_1();
-
-void staff_5_2();
-
-void staff_5_3();
-
-void staff_5_4();
-
-void staff_5_5();
-
-bool checkStaff_5_1();
-
-bool checkStaff_5_2();
-
-bool checkStaff_5_3();
-
-bool checkStaff_5_4();
-
-bool checkStaff_5_5();
+//void staff_5_1();
+//
+//void staff_5_2();
+//
+//void staff_5_3();
+//
+//void staff_5_4();
+//
+//void staff_5_5();
+//
+//bool checkStaff_5_1();
+//
+//bool checkStaff_5_2();
+//
+//bool checkStaff_5_3();
+//
+//bool checkStaff_5_4();
+//
+//bool checkStaff_5_5();
 
 
 
@@ -52,13 +52,13 @@ void student_3();
 
 void student_4();
 
-bool checkStudent_1();
+bool checkStudent_1(string* s, int n);
 
-bool checkStudent_2();
+bool checkStudent_2(string* s, int n);
 
-bool checkStudent_3();
+bool checkStudent_3(string* s, int n);
 
-bool checkStudent_4();
+bool checkStudent_4(string* s, int n);
 
 
 

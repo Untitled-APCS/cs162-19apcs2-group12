@@ -1,9 +1,117 @@
 #include "Lecturer.h"
 
+bool checklecturerCheckin(string* s, int n) {
+	if (!checklecturer_4(s, n)) return false;
+	// check date of course:'
+	Time currentTime;
+	SemesterList sems;
+	ClassList classes;
+	CourseStudentList stuCourse;
+	CourseStudentNode* stuNode;
+	string code = "";
+	CourseNode* courseNode, * currentCourse = nullptr;
+	ClassNode* classNode, * currentClass = nullptr;
+	CourseList courses;
 
+	int week=0;
+	Date startingDate, currentDate;
+
+	bool flag = false;
+	if (!sems.load() || !classes.load()) EXITCODE_V(6,false);
+	string semesterID = sems.currentSemester;
+	for (classNode = classes.Head; classNode; classNode = classNode->Next) {
+		if (!courses.load(semesterID, classNode->classID)) EXITCODE_V(6,false);
+		for (courseNode = courses.Head; courseNode; courseNode = courseNode->Next) {
+			if (!stuCourse.load(semesterID, classNode->classID, courseNode->courseID)) EXITCODE_V(6,false);
+
+			stuNode = stuCourse.find(user::ID, ACTIVE);
+			if (stuNode != nullptr) {
+
+				//check if courseNode occurs on currentDate
+				week = 0;
+				startingDate = courseNode->startingDate;
+				currentDate.capture();
+				while (startingDate <= currentDate) {
+					week++;
+					startingDate.nextWeek();
+				}
+				if (week > 10) {
+					cout << "\n\nYour course has been expired" << endl;
+					return false;
+				}
+				startingDate = courseNode->startingDate;
+				for (int i = 0; i < week - 1; i++)
+					startingDate.nextWeek();
+
+				if (currentDate == startingDate &&
+					currentTime >= courseNode->startingTime &&
+					currentTime <= courseNode->endingTime) {
+					currentCourse = courseNode;
+					currentClass = classNode;
+					flag = true;
+					break;
+				}
+			}
+
+			stuCourse.destroy();
+		}
+
+		if (!flag)
+			courses.destroy();
+		if (flag) break;
+	}
+	if (!flag) {
+		cout << "\n\nThis course is not available at this time " << endl;
+		return false;
+	}
+	return true;
+
+}
 void setAttendanceCourse() {
 	// inputData: semesterID, classID, courseID
 	// AttendanceCode
+	string* s = new string[3]{ "","","" };
+	fPtr* p = new fPtr[3]{ inputSemester, inputClass, inputCourse};
+	inputData(s, p, 3, 0, checklecturerCheckin);
+	string semesterID = s[0], classID = s[1], courseID = s[2];
+	int week = 0;
+	Date startingDate, currentDate;
+	SemesterList sems;
+	ClassList classes;
+	ClassNode* classNode;
+	CourseStudentList stuCourse;
+	CourseStudentNode* stuNode;
+	CourseList courses;
+	CourseNode* courseNode, * currentCourse = nullptr;
+
+	bool flag = false;
+	if (!sems.load() || !classes.load()) EXITCODE(6);
+	//string semesterID = sems.currentSemester;
+	for (classNode = classes.Head; classNode; classNode = classNode->Next) {
+		if (!courses.load(semesterID, classNode->classID)) EXITCODE(6);
+		for (courseNode = courses.Head; courseNode; courseNode = courseNode->Next) {
+			if (!stuCourse.load(semesterID, classNode->classID, courseNode->courseID)) EXITCODE(6);
+
+			stuNode = stuCourse.find(user::ID, ACTIVE);
+			if (stuNode != nullptr) {
+
+				//check if courseNode occurs on currentDate
+				week = 0;
+				startingDate = courseNode->startingDate;
+				currentDate.capture();
+				while (startingDate <= currentDate) {
+					week++;
+					startingDate.nextWeek();
+				}
+			}
+		}
+	}
+	Time validTime;
+	string code = getCheckInCode(semesterID, classID, courseID, week);
+	cout << "\n\nThe code for today: " << code << endl;
+	cout << "\n\nThis code is valid in " << 60 - 1 - validTime.m << endl;
+
+
 
 	// Enter the week. Recommend.
 }
@@ -57,11 +165,11 @@ bool checklecturer_4(string* s, int n) {
 		EXITCODE_V(6, false);
 	}
 	if (s[0] != semesters.currentSemester) {
+	
+		cout << "\n\nYou are not allowed to make changes in this semester" << endl;
 		fflush(stdin);
 		char keyPress = cin.get();
 		fflush(stdin);
-		cout << "\n\nYou are not allowed to make changes in this semester" << endl;
-
 		return false;
 	}
 	
@@ -293,7 +401,13 @@ void lecturer_1_() {
 	CourseList allCourses;
 	SemesterList Sems;
 	ClassList classes;
-	
+	if (s[0].length() == 0) {
+		
+		lecturerMenu();
+		delete[]s;
+		delete[]p;
+		return;
+	}
 	
 	if (!Sems.load()) 
 		EXITCODE(6);
@@ -479,7 +593,14 @@ void lecturer_2_() {
 	fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
 	cin.ignore(numeric_limits<streamsize>::max(),'\n');
 	inputData(s, p, 3, 0, checklecturer_2);
+	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+		lecturerMenu();
+		delete[]s;
+		delete[]p;
+		return;
+	}
 	string semesterID = s[0], classID=s[1], courseID=s[2];
+
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
 	
@@ -533,7 +654,12 @@ void lecturer_3_() {
 	string *s = new string[3]{"", "", ""};
 	fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
 	inputData(s, p, 3, 0, checklecturer_3);
-
+	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+		lecturerMenu();
+		delete[]s;
+		delete[]p;
+		return;
+	}
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
 	string semesterID = s[0], classID = s[1], courseID = s[2];
@@ -585,7 +711,12 @@ void lecturer_4_() {
 	fPtr *p = new fPtr[4]{inputSemester, inputClass, inputCourse, inputStudent};
 	
 	inputData(s, p, 4, 0, checklecturer_4);
-
+	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length() == 0) {
+		lecturerMenu();
+		delete[]p;
+		delete[]s;
+		return;
+	}
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
 	//string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227", studentID ="19125133";
@@ -638,7 +769,12 @@ void lecturer_5_() {
 	string *s = new string[4]{"", "", "",""};
 	fPtr *p = new fPtr[4]{inputSemester, inputClass, inputCourse, inputPathScoreBoardListCSV};
 	inputData(s, p, 4, 0, checklecturer_5);
-
+	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length() == 0) {
+		lecturerMenu();
+		delete[]s;
+		delete[]p;
+		return;
+	}
 
 	//string filePath = "D:/cs162-19apcs2-group12/wr272_scoreboard.csv";
 	StudentList stuList;
@@ -678,7 +814,12 @@ void lecturer_6_() {
 	string *s = new string[4]{"", "", "",""};
 	fPtr *p = new fPtr[4]{inputSemester, inputClass, inputCourse, inputStudent};
 	inputData(s, p, 4, 0, checklecturer_6);
-
+	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length() == 0) {
+		lecturerMenu();
+		delete[]s;
+		delete[]p;
+		return;
+	}
 	StudentList stuList;
 	if (!stuList.load()) EXITCODE(6);
 	string semesterID = "2020-2021hk1", classID = "18ctt1", courseID = "wr227", studentID = "19125133";
@@ -725,7 +866,12 @@ void lecturer_7_() {
 	string *s = new string[3]{"", "", ""};
 	fPtr *p = new fPtr[3]{inputSemester, inputClass, inputCourse};
 	inputData(s, p, 3, 0, checklecturer_7);
-
+	if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+		lecturerMenu();
+		delete[]s;
+		delete[]p;
+		return;
+	}
 
 	string semesterID = s[0], classID = s[1], courseID =s[2];
 	

@@ -62,11 +62,6 @@ int main(int argc, const char **argv) {
 //        fileLocation.pop_back();
     logo();
     logInMenu();
-
-    //if (!copyFile("data/2020-2021hk1-18ctt1-wr227-student.txt", "data/2020-2021hk1-18ctt1-wr227-student_copy.txt"))
-    //    EXITCODE_V(6, 0)
-
-    //cout << getCheckInCode("2020-2021hk1", "18ctt1", "wr227", 4);
     
     //lecturer_1_();
     //staff_2_1();

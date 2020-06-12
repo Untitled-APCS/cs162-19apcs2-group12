@@ -5,13 +5,26 @@ void staff_2_1() {
 
     //import classID
 
-    string filepath;
+    //string filepath;
 
     //inputData(filepath);
-    cout << "\n\nPlease enter the CSV file path: ";
-    getline(cin, filepath, '\n');
-    normalize(filepath);
+    string* s = new string[1]{ "" };
+    fPtr* p = new fPtr[1]{ inputPathClassListCSV };
+    inputData(s, p, 1, 0, checkStaff_2_1);
+    if (s[0].length() == 0)
+    {
+        staffClassMenu();
+        return;
+    }
+
+
+    string
+        filepath = s[0];
+    //cout << "\n\nPlease enter the CSV file path: ";
+    //getline(cin, classID, '\n');
+   // normalize(filepath);
     ifstream fin;
+
     fin.open(filepath);
 
     if (!fin.is_open())
@@ -65,7 +78,7 @@ void staff_2_1() {
                         break;
                     case '2':
                         choice = REPLACE;
-                       
+
                         dupp = classList.find(classNode.classID, ALL);
                         dupp->active = 1;
                         //dupp->DOB = newStudentNode->DOB;
@@ -109,9 +122,9 @@ void staff_2_1() {
                     dupp->classID = newclassNode->classID;
                 }
             }
-            
+
         }
-        
+
         else
         {
             newclassNode->active = 1;
@@ -119,11 +132,7 @@ void staff_2_1() {
         }
     }
     classList.save();
-    for (int i = 0; i < 4; i++)
-    {
-        cout << classList.Head->classID;
-        classList.Head = classList.Head->Next;
-    }
+
     fin.close();
     cout << "Successfully import class [ENTER]";
     fflush(stdin);
@@ -142,17 +151,24 @@ void staff_2_2() {
     if (!semeList.load() || !classList.load())
         EXITCODE(6);
     //Input classID not exist in class list
+
+
+
     string newClass, newSeme;
     cout << "\n\nEnter Semester: ";
     getline(cin, newSeme, '\n');
     cout << "\n\n Enter the new class ID: ";
     getline(cin, newClass, '\n');
-    
-    if (!classList.find(newClass, ACTIVE))
+
+    if (classList.find(newClass, ACTIVE))
+    {
+        cout << "\nClass has already existed, you may NOT want to new one!!!\n";
         EXITCODE(6);
+    }
     //pushBack --> save to class list
     ClassNode* newClassNode = new ClassNode;
     newClassNode->classID = newClass;
+    newClassNode->active = 1;
     classList.pushBack(newClassNode);
     classList.save();
 
@@ -166,13 +182,13 @@ void staff_2_2() {
     while (cur != nullptr)
     {
         ofstream fout;
-        fout.open(cur->semesterID + "-" + newClass + "-course.txt");
+        fout.open(getLocation() + "/data/" + cur->semesterID + "-" + newClass + "-course.txt");
         fout << "0";
         fout.close();
         cur = cur->Next;
     }
 
-    
+
     cout << "Successfully create new class [ENTER]";
     fflush(stdin);
     cin.get();
@@ -185,9 +201,17 @@ void staff_2_3() {
     //Update a specific class
 
     //Input oldClass which is active
-    string semeID;
-    cout << "\n\nEnter semester's ID: ";
-    getline(cin, semeID, '\n');
+    string* s = new string[1]{ "" };
+    fPtr* p = new fPtr[1]{ inputClass };
+    inputData(s, p, 1, 0, checkStaff_2_3);
+    if (s[0].length() == 0)
+    {
+        staffClassMenu();
+        return;
+    }
+    string
+        oldClass = s[0];
+
     SemesterList semeList;
     if (!semeList.load())
         EXITCODE(6);
@@ -196,30 +220,60 @@ void staff_2_3() {
     if (!classlist.load())
         EXITCODE(6);
 
-    string oldClass;
-    getline(cin, oldClass, '\n');
-    if (!classlist.find(oldClass, ACTIVE))
+    ClassNode* oldClassNode = classlist.find(oldClass, ACTIVE);
+    if (oldClassNode->active == 0)
         EXITCODE(6);
     //Input newClassID which does not exist in class list
     string newClass;
+
+    cout << "\n\nEnter new class ID";
+    cin.ignore();
     getline(cin, newClass, '\n');
-    if (!classlist.find(newClass, ACTIVE))
+    normalize(newClass);
+    if (classlist.find(newClass, ACTIVE))
         EXITCODE(6);
-    //Update oldClassID to newClassID
-    ClassNode* newClassNode = new ClassNode;
-    newClassNode = classlist.find(oldClass, ACTIVE);
-    classlist.find(oldClass, ACTIVE)->active = 0;
-    classlist.pushBack(newClassNode);
-    classlist.save();
-    //copy all files [semesterID]-newClassID-course.txt to [semesterID]-newClassID-course.txt
-    CourseList courseList;
-    if (!courseList.load(semeID, oldClass))
-        EXITCODE(6);
-    courseList.save(semeID, newClass);
-    //each file [semesterID]-newClassID-course.txt, copy all files [semesterID]-newClassID-[courseID]-student.txt to [semesterID]-newClassID-[courseID]-student.txt
+    if (classlist.find(newClass, ALL)) {
 
-    //Ask for help
+        //set the oldclass to inactive and re_active the existing class 
 
+        classlist.find(newClass, ALL)->active = 1;
+        classlist.find(oldClass, ACTIVE)->active = 0;
+        classlist.save();
+    }
+    else
+    {
+        //Update oldClassID to newClassID
+        ClassNode* newClassNode = new ClassNode;
+        //newClassNode = oldClassNode;
+        newClassNode->classID = newClass;
+        newClassNode->active = 1;
+
+        //oldClassNode->active = 0;
+        //classlist.pushBack(newClassNode);
+        //classlist.save();
+        //copy all files [semesterID]-newClassID-course.txt to [semesterID]-newClassID-course.txt
+        CourseList courseList;
+
+        SemesterNode* cur_seme = semeList.Head;
+        if (courseList.load(cur_seme->semesterID, oldClass) == 0)
+            EXITCODE(6);
+        courseList.save(cur_seme->semesterID, newClass);
+
+        oldClassNode->active = 0;
+        classlist.pushBack(newClassNode);
+        classlist.save();
+        //each file [semesterID]-newClassID-course.txt, copy all files [semesterID]-olClassID-[courseID]-student.txt to [semesterID]-newClassID-[courseID]-student.txt
+        CourseStudentList courseStudentList;
+        CourseNode* cur = courseList.Head;
+        while (cur != nullptr) {
+            cout << cur->courseID;
+            if (!courseStudentList.load(cur_seme->semesterID, oldClass, cur->courseID))
+                EXITCODE(6);
+            courseStudentList.save(cur_seme->semesterID, newClass, cur->courseID);
+            courseStudentList.destroy();
+            cur = cur->Next;
+        }
+    }
     //EX:
 //    courseList.load(semesterID, oldClassID);
 //    courseList.save(semesterID, newClassID);
@@ -239,13 +293,24 @@ void staff_2_4() {
     ClassList classlist;
     if (!classlist.load())
         EXITCODE(6);
+    string* s = new string[1]{ "" };
+    fPtr* p = new fPtr[1]{ inputClass };
+    inputData(s, p, 1, 0, checkStaff_2_4);
+    if (s[0].length() == 0)
+    {
+        staffClassMenu();
+        return;
+    }
+    string
+        oldClass = s[0];
 
-    string oldClass;
-    getline(cin, oldClass, '\n');
+    //string oldClass;
+    //getline(cin, oldClass, '\n');
     if (!classlist.find(oldClass, ACTIVE))
         EXITCODE(6);
     //remove classID: active -> 0
     classlist.find(oldClass, ACTIVE)->active = 0;
+    classlist.save();
     cout << "Successfully deleted class [ENTER]";
     fflush(stdin);
     cin.get();
@@ -265,12 +330,14 @@ void staff_2_5() {
         EXITCODE(6);
     ClassNode* cur;
     cur = classList.Head;
+
+    cout << "\n\nList of active class(es): \n\n";
     while (cur != nullptr)
     {
-        cur->classID;
+        cout << cur->classID << endl;
         cur = cur->Next;
     }
-    cout << "Successfully deleted class [ENTER]";
+    cout << "\n\nSuccessfully view list of class(es) [ENTER]";
     fflush(stdin);
     cin.get();
     fflush(stdin);
@@ -278,24 +345,37 @@ void staff_2_5() {
     return;
 }
 
-bool checkStaff_2_1() {
-    return false;
+bool checkStaff_2_1(string* s, int n) {
+
+    return true;
 }
 
-bool checkStaff_2_2() {
-    return false;
+bool checkStaff_2_2(string* s, int n) {
+    return true;
 }
 
-bool checkStaff_2_3() {
-    return false;
+bool checkStaff_2_3(string* s, int n) {
+    ClassList classlist;
+    if (!classlist.load())
+    {
+        cout << "\n\nCan not load list of Classes!!!";
+        return false;
+    }
+    if (!classlist.find(s[0], ACTIVE))
+        return false;
+    return true;
 }
 
-bool checkStaff_2_4() {
-    return false;
+bool checkStaff_2_4(string* s, int n) {
+    ClassList classlist;
+    classlist.load();
+    if (!classlist.find(s[0], ACTIVE))
+        return false;
+    return true;
 }
 
-bool checkStaff_2_5() {
-    return false;
+bool checkStaff_2_5(string* s, int n) {
+    return true;
 }
 
 void staff_5_1()
@@ -303,16 +383,28 @@ void staff_5_1()
     //Import list of students from file
 
     //input classID
-    cin.ignore();
-    string classID;
 
-    cout << "\n\nClass ID: ";
-    getline(cin, classID, '\n');
-   
 
-    string filepath;
+    string* s = new string[2]{ "","" };
+    fPtr* p = new fPtr[2]{ inputClass,inputPathStudentListCSV };
+    inputData(s, p, 2, 0, checkStaff_5_1);
+    if (s[0].length() == 0||s[1].length()==0)
+    {
+        staffStudentMenu();
+        return;
+    }
+    string
+        classID = s[0],
+        filepath = s[1];
+    //string classID;
+
+    //cout << "\n\nClass ID: ";
+    //getline(cin, classID, '\n');
+
+
+    /*string filepath;
     cout << "\n\nfilepath: ";
-    getline(cin, filepath, '\n');
+    getline(cin, filepath, '\n');*/
 
     //normalize(classID);
 
@@ -341,113 +433,126 @@ void staff_5_1()
     bool skipAll = false;
     bool replaceAll = false;
 
-    while (getline(fin, temp1, ','))
+    while (fin.good())
     {
-        //getline(fin, temp1, ',');
         newStudentNode = new StudentNode;
         newClassStudentNode = new ClassStudentNode;
-        //getline(fin, temp, ',');
-        getline(fin, newStudentNode->studentID, ',');
-        getline(fin, newStudentNode->studentName, ',');
         getline(fin, temp, ',');
+        cout << temp << " ";
+        if (temp == "") {
+            delete newStudentNode;
+            delete newClassStudentNode;
+            cout << "ok" << endl;
+            continue;
+        }
+        getline(fin, temp, ','); // newStudentNode->studentID
+        newStudentNode->studentID = temp;
+        cout << temp << " ";
+        getline(fin, temp, ','); // name
+        newStudentNode->studentName = temp;
+        cout << temp << " ";
+        getline(fin, temp);
+        cout << temp << endl;
         newStudentNode->DOB.y = 1000 * (temp[0] - '0') + 100 * (temp[1] - '0') + 10 * (temp[2] - '0') + (temp[3] - '0');
         newStudentNode->DOB.m = 10 * (temp[5] - '0') + (temp[6] - '0');
         newStudentNode->DOB.d = 10 * (temp[8] - '0') + (temp[9] - '0');
-        //getline(fin, newStudentNode->classID);
         newStudentNode->classID = classID;
+
         newClassStudentNode->studentID = newStudentNode->studentID;
 
         newStudentNode->active = 1;
         newClassStudentNode->active = 1;
 
-        StudentNode* dupp;
-        string pw;
-        pw = to_string((newStudentNode->DOB.y * 10000 + newStudentNode->DOB.m * 100 + newStudentNode->DOB.d));
-        newStudentNode->password = getHashedPassword(pw);
+        //    StudentNode* dupp;
+        //    string pw;
+        //    pw = to_string((newStudentNode->DOB.y * 10000 + newStudentNode->DOB.m * 100 + newStudentNode->DOB.d));
+        //    newStudentNode->password = getHashedPassword(pw);
 
-        if (studentList.find(newStudentNode->studentID, ALL))
-        {
-            if (!skipAll && !replaceAll)
-            {
-                string ID;
-                int choice = 0;
-                char keyPress;
+        //    if (studentList.find(newStudentNode->studentID, ALL))
+        //    {
+        //        if (!skipAll && !replaceAll)
+        //        {
+        //            string ID;
+        //            int choice = 0;
+        //            char keyPress;
 
-                cout << "\n\nThe student with ID '" << ID << "' has already added.\n";
-                cout << "[1 + enter] Skip.\n";
-                cout << "[2 + enter] Replace.\n";
-                cout << "[3 + enter] Skip all.\n";
-                cout << "[4 + enter] Replace all.\n";
+        //            cout << "\n\nThe student with ID '" << ID << "' has already added.\n";
+        //            cout << "[1 + enter] Skip.\n";
+        //            cout << "[2 + enter] Replace.\n";
+        //            cout << "[3 + enter] Skip all.\n";
+        //            cout << "[4 + enter] Replace all.\n";
 
-                while (choice == 0) {
-                    fflush(stdin);
-                    keyPress = cin.get();
-                    fflush(stdin);
+        //            while (choice == 0) {
+        //                fflush(stdin);
+        //                keyPress = cin.get();
+        //                fflush(stdin);
 
-                    switch (keyPress) {
-                    case '1':
-                        choice = SKIP;
-                        delete newStudentNode;
-                        break;
-                    case '2':
-                        choice = REPLACE;
-                        dupp = studentList.find(newStudentNode->studentID, ALL);
-                        dupp->active = 1;
-                        dupp->DOB = newStudentNode->DOB;
-                        //dupp->Next = newStudentNode->Next;
-                        pw = to_string((dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d));
-                        dupp->password = getHashedPassword(pw);
-                        dupp->studentName = newStudentNode->studentName;
-                        dupp->classID = newStudentNode->classID;
-                        break;
-                    case '3':
-                        choice = SKIP_ALL;
-                        skipAll = true;
-                        delete newStudentNode;
-                        break;
-                    case '4':
-                        choice = REPLACE_ALL;
-                        replaceAll = true;
-                        dupp = studentList.find(newStudentNode->studentID, ALL);
-                        dupp->active = 1;
-                        dupp->DOB = newStudentNode->DOB;
-                        //dupp->Next = newStudentNode->Next;
-                        pw = to_string(dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d);
-                        dupp->password = getHashedPassword(pw);
-                        dupp->studentName = newStudentNode->studentName;
-                        dupp->classID = newStudentNode->classID;
-                        break;
-                    default:
-                        choice = 0;
-                    }
+        //                switch (keyPress) {
+        //                case '1':
+        //                    choice = SKIP;
+        //                    delete newStudentNode;
+        //                    break;
+        //                case '2':
+        //                    choice = REPLACE;
+        //                    dupp = studentList.find(newStudentNode->studentID, ALL);
+        //                    dupp->active = 1;
+        //                    dupp->DOB = newStudentNode->DOB;
+        //                    //dupp->Next = newStudentNode->Next;
+        //                    pw = to_string((dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d));
+        //                    dupp->password = getHashedPassword(pw);
+        //                    dupp->studentName = newStudentNode->studentName;
+        //                    dupp->classID = newStudentNode->classID;
+        //                    break;
+        //                case '3':
+        //                    choice = SKIP_ALL;
+        //                    skipAll = true;
+        //                    delete newStudentNode;
+        //                    break;
+        //                case '4':
+        //                    choice = REPLACE_ALL;
+        //                    replaceAll = true;
+        //                    dupp = studentList.find(newStudentNode->studentID, ALL);
+        //                    dupp->active = 1;
+        //                    dupp->DOB = newStudentNode->DOB;
+        //                    //dupp->Next = newStudentNode->Next;
+        //                    pw = to_string(dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d);
+        //                    dupp->password = getHashedPassword(pw);
+        //                    dupp->studentName = newStudentNode->studentName;
+        //                    dupp->classID = newStudentNode->classID;
+        //                    break;
+        //                default:
+        //                    choice = 0;
+        //                }
 
-                }
-                if (skipAll)
-                    delete newStudentNode;
-                if (replaceAll)
-                {
-                    dupp = studentList.find(newStudentNode->studentID, ALL);
-                    dupp->active = 1;
-                    dupp->DOB = newStudentNode->DOB;
-                    //dupp->Next = newStudentNode->Next;
-                    pw = to_string(dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d);
-                    dupp->password = getHashedPassword(pw);
-                    dupp->studentName = newStudentNode->studentName;
-                    dupp->classID = newStudentNode->classID;
-                }
-            }
-            
-        }
-        else
-        {
-            studentList.pushBack(newStudentNode);
-            classStudentList.pushBack(newClassStudentNode);
-        }
+        //            }
+        //            if (skipAll)
+        //                delete newStudentNode;
+        //            if (replaceAll)
+        //            {
+        //                dupp = studentList.find(newStudentNode->studentID, ALL);
+        //                dupp->active = 1;
+        //                dupp->DOB = newStudentNode->DOB;
+        //                //dupp->Next = newStudentNode->Next;
+        //                pw = to_string(dupp->DOB.y * 10000 + dupp->DOB.m * 100 + dupp->DOB.d);
+        //                dupp->password = getHashedPassword(pw);
+        //                dupp->studentName = newStudentNode->studentName;
+        //                dupp->classID = newStudentNode->classID;
+        //            }
+        //        }
 
-    }
-    studentList.save();
-    classStudentList.save(classID);
+        //    }
+        //    else
+        //    {
+        //        studentList.pushBack(newStudentNode);
+        //        classStudentList.pushBack(newClassStudentNode);
+        //    }
 
+        //}
+        /*studentList.save();
+        classStudentList.save(classID);*/
+        delete newStudentNode;
+        delete newClassStudentNode;
+    } // nho xoa
     cout << "\n\nImport successfully";
     cout << "\nData saved to student.txt and " << classID << "-student.txt\n[ENTER]";
     fin.close();
@@ -462,10 +567,21 @@ void staff_5_1()
 void staff_5_2()
 {
     //Create a new student
-    string classID;
+    string* s = new string[1]{ "" };
+    fPtr* p = new fPtr[1]{ inputClass };
+    inputData(s, p, 1, 0, checkStaff_5_2);
+    if (s[0].length() == 0)
+    {
+        staffStudentMenu();
+        return;
+    }
+    string
+        classID = s[0];
+
+    /*string classID;
 
     cout << "\n\nClass ID: ";
-    getline(cin, classID, '\n');
+    getline(cin, classID, '\n');*/
 
     normalize(classID);
 
@@ -485,18 +601,23 @@ void staff_5_2()
     string temp;
 
     cout << "Student's ID: ";
+    cin.ignore();
     getline(cin, newStudentNode->studentID, '\n');
     newClassStudentNode->studentID = newStudentNode->studentID;
     cout << "Student's Full Name: ";
+    cin.ignore();
     getline(cin, newStudentNode->studentName, '\n');
 
     cout << "Student's Date of Birth:\n Date: ";
+    cin.ignore();
     getline(cin, temp, '\n');
     newStudentNode->DOB.d = stoi(temp);
     cout << "\nMonth: ";
+    cin.ignore();
     getline(cin, temp, '\n');
     newStudentNode->DOB.m = stoi(temp);
     cout << "\nYear: ";
+    cin.ignore();
     getline(cin, temp, '\n');
     newStudentNode->DOB.y = stoi(temp);
     newStudentNode->classID = classID;
@@ -518,13 +639,26 @@ void staff_5_3()
 {
     //Update a specific student
 
-    string classID;
+    string* s = new string[2]{ "","" };
+    fPtr* p = new fPtr[2]{ inputClass,inputStudent };
+    inputData(s, p, 2, 0, checkStaff_5_3);
+    if (s[0].length() == 0 || s[1].length() == 0)
+    {
+        staffStudentMenu();
+        return;
+    }
+    string
+        classID = s[0],
+        oldStudentID = s[1];
+
+
+    /*string classID;
     cout << "Enter class's ID: ";
     getline(cin, classID, '\n');
 
     string oldStudentID;
     cout << "\n\nEnter student's ID: ";
-    getline(cin, oldStudentID, '\n');
+    getline(cin, oldStudentID, '\n');*/
 
     ClassStudentList classStudentList;
     if (!classStudentList.load(classID))
@@ -549,7 +683,7 @@ void staff_5_3()
 
     string temp;
 
-    getline(cin, newstudent->studentName);
+    getline(cin, newstudent->studentName, '\n');
     normalizeFullName(newstudent->studentName);
     getline(cin, temp, '\n');
     newstudent->DOB.y = 1000 * (temp[0] - '0') + 100 * (temp[1] - '0') + 10 * (temp[2] - '0') + (temp[3] - '0');
@@ -611,16 +745,28 @@ void staff_5_4()
     //Remove a specific student
     //input classID
 
-    string classID;
-    cout << "\n\nEnter class ID: ";
-    getline(cin, classID, '\n');
-    normalize(classID);
+    string* s = new string[2]{ "","" };
+    fPtr* p = new fPtr[2]{ inputClass,inputStudent };
+    inputData(s, p, 2, 0, checkStaff_5_3);
+    if (s[0].length() == 0 || s[1].length() == 0)
+    {
+        staffStudentMenu();
+        return;
+    }
+    string
+        classID = s[0],
+        studentID = s[1];
 
-    //input student ID
-    string studentID;
-    cout << "\n\nEnter class ID: ";
-    getline(cin, studentID, '\n');
-    normalize(studentID);
+    //string classID;
+    //cout << "\n\nEnter class ID: ";
+    //getline(cin, classID, '\n');
+    //normalize(classID);
+
+    ////input student ID
+    //string studentID;
+    //cout << "\n\nEnter class ID: ";
+    //getline(cin, studentID, '\n');
+    //normalize(studentID);
 
     //load and check if the student is in class
     ClassStudentList classStudentList;
@@ -655,10 +801,21 @@ void staff_5_5()
     //View list of students of a class
     //input classID
 
-    string classID;
+    string* s = new string[1]{ "" };
+    fPtr* p = new fPtr[1]{ inputClass };
+    inputData(s, p, 1, 0, checkStaff_5_2);
+    if (s[0].length() == 0)
+    {
+        staffStudentMenu();
+        return;
+    }
+    string
+        classID = s[0];
+
+    /*string classID;
     cout << "\n\nEnter class ID: ";
     getline(cin, classID, '\n');
-    normalize(classID);
+    normalize(classID);*/
 
     //load and check if the class is valid
     ClassStudentList classStudentList;
@@ -690,12 +847,22 @@ void staff_5_5()
     return;
 }
 
-bool checkStaff_5_1();
+bool checkStaff_5_1(string* s, int n) {
+    return true;
+}
 
-bool checkStaff_5_2();
+bool checkStaff_5_2(string* s, int n) {
+    return true;
+}
 
-bool checkStaff_5_3();
+bool checkStaff_5_3(string* s, int n) {
+    return true;
+}
 
-bool checkStaff_5_4();
+bool checkStaff_5_4(string* s, int n) {
+    return true;
+}
 
-bool checkStaff_5_5();
+bool checkStaff_5_5(string* s, int n) {
+    return true;
+}
