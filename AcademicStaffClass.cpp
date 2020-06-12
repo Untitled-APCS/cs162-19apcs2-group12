@@ -18,6 +18,7 @@ void staff_2_1() {
     //getline(cin, classID, '\n');
    // normalize(filepath);
     ifstream fin;
+
     fin.open(filepath);
 
     if (!fin.is_open())
@@ -312,6 +313,7 @@ bool checkStaff_2_2(string* s, int n) {
 
 bool checkStaff_2_3(string* s, int n) {
     ClassList classlist;
+    classlist.load();
     if (!classlist.find(s[0], ACTIVE))
         return false;
     return true;
@@ -319,6 +321,7 @@ bool checkStaff_2_3(string* s, int n) {
 
 bool checkStaff_2_4(string* s, int n) {
     ClassList classlist;
+    classlist.load();
     if (!classlist.find(s[0], ACTIVE))
         return false;
     return true;
