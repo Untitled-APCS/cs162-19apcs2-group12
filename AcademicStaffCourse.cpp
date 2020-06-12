@@ -876,6 +876,9 @@ void staff_3_3() {
     classID = s[1];
     courseID = s[2];
 
+    CourseStudentList courseStudentList;
+    courseStudentList.load(semesterID, classID, courseID);
+
     delete[]s;
     delete[]p;
 
@@ -1120,10 +1123,23 @@ void staff_3_3() {
         }
     }
 
+    normalize(courseNode->courseID);
+    normalizeFullName(courseNode->courseName);
     courseNode->active = true;
     courseNode->Next = nullptr;
-
-    cout << "  [enter]";
+    //Copy
+    CourseNode* copyCourse = courseList.find(courseID, ACTIVE);
+    copyCourse->active = true;
+    copyCourse->courseID = courseNode->courseID;
+    copyCourse->courseName = courseNode->courseName;
+    copyCourse->endingTime = courseNode->endingTime;
+    copyCourse->lecturerID = courseNode->lecturerID;
+    copyCourse->room = courseNode->room;
+    copyCourse->startingDate = courseNode->startingDate;
+    copyCourse->startingTime = courseNode->startingTime;
+    courseList.save(semesterID, classID);
+    courseStudentList.save(semesterID, classID, courseNode->courseID);
+    cout << " Created successfully [enter]";
     fflush(stdin);
     cin.get();
     fflush(stdin);
