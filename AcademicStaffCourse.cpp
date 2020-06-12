@@ -829,6 +829,7 @@ void staff_3_3() {
     SemesterList semesterList;
     ClassList classList;
     CourseList courseList;
+    LecturerList lecturerList;
 
     if (!semesterList.load()||!classList.load())
     EXITCODE(6);
