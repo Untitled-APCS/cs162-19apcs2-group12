@@ -13,13 +13,14 @@
 
 #define PREVIOUS 0
 #define CURRENT 1
-#define NEXT -1
+#define NEXT 2
 
 #define CHECKDAMAGED {if (!fin.good()) EXITCODE_V(5, false)};
 
 struct SemesterNode {
     string semesterID;
-    bool active, current;
+    bool active;
+    int current;
     SemesterNode *Next;
 
     SemesterNode();

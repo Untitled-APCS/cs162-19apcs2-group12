@@ -245,6 +245,8 @@ void staff_1_2() {
 
         semesterNode->current = PREVIOUS;
 
+        semesterList.save();
+
         cout << "\n\nSet as current semester successfully. [enter]\n";
 
         fflush(stdin);
@@ -557,7 +559,10 @@ void staff_3_2() {
     string *s = new string[2]{"", ""};
     fPtr *p = new fPtr[2]{inputSemester, inputClass};
 
-    if (!inputData(s, p, 0, 2, checkStaff_1_1)) EXITCODE(6);
+    if (!inputData(s, p, 2, 0, checkStaff_1_1)) EXITCODE(6);
+
+    semesterID = s[0];
+    classID = s[1];
 
     delete [] s;
     delete [] p;
@@ -566,9 +571,6 @@ void staff_3_2() {
         staffCourseMenu();
         return;
     }
-
-    semesterID = s[0];
-    classID = s[1];
 
     if (!courseList.load(semesterID, classID))
     EXITCODE(6);
@@ -697,9 +699,9 @@ void staff_3_2() {
             continue;
         }
 
-        courseNode->startingDate.y = startingDate[0] * 1000 + startingDate[1] * 100 + startingDate[2] * 10 + startingDate[3];
-        courseNode->startingDate.m = startingDate[5] * 10 + startingDate[6];
-        courseNode->startingDate.d = startingDate[8] * 10 + startingDate[9];
+        courseNode->startingDate.y = (startingDate[0] - '0') * 1000 + (startingDate[1] - '0') * 100 + (startingDate[2] - '0') * 10 + (startingDate[3] - '0');
+        courseNode->startingDate.m = (startingDate[5] - '0') * 10 + (startingDate[6] - '0');
+        courseNode->startingDate.d = (startingDate[8] - '0') * 10 + (startingDate[9] - '0');
 
         if (!courseNode->startingDate.wrongFormat())
             passed = true;
@@ -735,9 +737,9 @@ void staff_3_2() {
             continue;
         }
 
-        courseNode->startingTime.h = startingTime[0] * 10 + startingTime[1];
-        courseNode->startingTime.m = startingTime[3] * 10 + startingTime[4];
-        courseNode->startingTime.s = startingTime[6] * 10 + startingTime[7];
+        courseNode->startingTime.h = (startingTime[0] - '0') * 10 + (startingTime[1] - '0');
+        courseNode->startingTime.m = (startingTime[3] - '0') * 10 + (startingTime[4] - '0');
+        courseNode->startingTime.s = (startingTime[6] - '0') * 10 + (startingTime[7] - '0');
 
         if (!courseNode->startingTime.wrongFormat())
             passed = true;
@@ -773,9 +775,9 @@ void staff_3_2() {
             continue;
         }
 
-        courseNode->endingTime.h = endingTime[0] * 10 + endingTime[1];
-        courseNode->endingTime.m = endingTime[3] * 10 + endingTime[4];
-        courseNode->endingTime.s = endingTime[6] * 10 + endingTime[7];
+        courseNode->endingTime.h = (endingTime[0] - '0') * 10 + (endingTime[1] - '0');
+        courseNode->endingTime.m = (endingTime[3] - '0') * 10 + (endingTime[4] - '0');
+        courseNode->endingTime.s = (endingTime[6] - '0') * 10 + (endingTime[7] - '0');
 
         if (!courseNode->endingTime.wrongFormat() && courseNode->startingTime <= courseNode->endingTime)
             passed = true;
@@ -983,9 +985,9 @@ void staff_3_3() {
             continue;
         }
 
-        courseNode->startingDate.y = startingDate[0] * 1000 + startingDate[1] * 100 + startingDate[2] * 10 + startingDate[3];
-        courseNode->startingDate.m = startingDate[5] * 10 + startingDate[6];
-        courseNode->startingDate.d = startingDate[8] * 10 + startingDate[9];
+        courseNode->startingDate.y = (startingDate[0] - '0') * 1000 + (startingDate[1] - '0') * 100 + (startingDate[2] - '0') * 10 + (startingDate[3] - '0');
+        courseNode->startingDate.m = (startingDate[5] - '0') * 10 + (startingDate[6] - '0');
+        courseNode->startingDate.d = (startingDate[8] - '0') * 10 + (startingDate[9] - '0');
 
         if (!courseNode->startingDate.wrongFormat())
             passed = true;
@@ -1021,9 +1023,9 @@ void staff_3_3() {
             continue;
         }
 
-        courseNode->startingTime.h = startingTime[0] * 10 + startingTime[1];
-        courseNode->startingTime.m = startingTime[3] * 10 + startingTime[4];
-        courseNode->startingTime.s = startingTime[6] * 10 + startingTime[7];
+        courseNode->startingTime.h = (startingTime[0] - '0') * 10 + (startingTime[1] - '0');
+        courseNode->startingTime.m = (startingTime[3] - '0') * 10 + (startingTime[4] - '0');
+        courseNode->startingTime.s = (startingTime[6] - '0') * 10 + (startingTime[7] - '0');
 
         if (!courseNode->startingTime.wrongFormat())
             passed = true;
@@ -1059,9 +1061,9 @@ void staff_3_3() {
             continue;
         }
 
-        courseNode->endingTime.h = endingTime[0] * 10 + endingTime[1];
-        courseNode->endingTime.m = endingTime[3] * 10 + endingTime[4];
-        courseNode->endingTime.s = endingTime[6] * 10 + endingTime[7];
+        courseNode->endingTime.h = (endingTime[0] - '0') * 10 + (endingTime[1] - '0');
+        courseNode->endingTime.m = (endingTime[3] - '0') * 10 + (endingTime[4] - '0');
+        courseNode->endingTime.s = (endingTime[6] - '0') * 10 + (endingTime[7] - '0');
 
         if (!courseNode->endingTime.wrongFormat() && courseNode->startingTime <= courseNode->endingTime)
             passed = true;
@@ -1257,6 +1259,12 @@ void staff_3_8() {
     string* s = new string[3]{ "","","" };
     fPtr* p = new fPtr[3]{ inputSemester, inputClass, inputCourse };
     inputData(s, p, 3, 0, checkStaff_3_8);
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+        staffCourseMenu();
+        delete[]s;
+        delete[]p;
+        return;
+    }
     StudentList stuList;
     if (!stuList.load()) EXITCODE(6);
 
@@ -1293,6 +1301,13 @@ void staff_3_9() {
     string* s = new string[3]{ "","","" };
     fPtr* p = new fPtr[3]{ inputSemester, inputClass, inputCourse };
     inputData(s, p, 3, 0, checkStaff_3_9);
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+        staffCourseMenu();
+        delete[]s;
+        delete[]p;
+        return;
+    }
+
 
     string semesterID = s[0], courseID = s[2], classID = s[1];
 
@@ -1335,6 +1350,12 @@ void staff_3_10() {
     string* s = new string[4]{ "","","","" };
     fPtr* p = new fPtr[4]{ inputSemester, inputClass, inputCourse , inputPathExportCSV};
     inputData(s, p, 4, 0, checkStaff_3_10);
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length()==0) {
+        staffCourseMenu();
+        delete[]s;
+        delete[]p;
+        return;
+    }
     string semesterID = s[0], courseID = s[2], classID = s[1], filePath=s[3];
 
     SemesterList sems; ClassList classes; CourseList courses;
@@ -1352,6 +1373,7 @@ void staff_3_10() {
     if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
 
     saveCSV(llist, filePath, ScoreBoard);
+    staffCourseMenu();
     delete[]s;
     delete[]p;
 }
@@ -1362,6 +1384,12 @@ void staff_3_11() {
     string* s = new string[3]{ "","","" };
     fPtr* p = new fPtr[3]{ inputSemester, inputClass, inputCourse };
     inputData(s, p, 3, 0, checkStaff_3_11);
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0) {
+        staffCourseMenu();
+        delete[]s;
+        delete[]p;
+        return;
+    }
 
     StudentList stuList;
     if (!stuList.load()) EXITCODE(6);
@@ -1417,6 +1445,12 @@ void staff_3_12() {
     fPtr* p = new fPtr[4]{ inputSemester, inputClass, inputCourse, inputPathExportCSV};
     inputData(s, p, 4, 0, checkStaff_3_12);
     string semesterID = s[0], courseID = s[2], classID = s[1], filePath = s[3];
+    if (s[0].length() == 0 || s[1].length() == 0 || s[2].length() == 0 || s[3].length()) {
+        staffCourseMenu();
+        delete[]s;
+        delete[]p;
+        return;
+    }
 
     SemesterList sems; ClassList classes; CourseList courses;
     if (!sems.load() || !classes.load()) EXITCODE(6);
