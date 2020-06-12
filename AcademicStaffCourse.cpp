@@ -708,6 +708,7 @@ void staff_3_10() {
     if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
     
     saveCSV(llist, filePath, ScoreBoard);
+    staffCourseMenu();
     delete[]s;
     delete[]p;
 }
@@ -788,6 +789,8 @@ void staff_3_12() {
     if (!llist.load(semesterID, classID, courseID)) EXITCODE(6);
 
     saveCSV(llist, filePath, AttendanceList);
+
+    staffCourseMenu();
     delete[]s;
     delete[]p;
 }

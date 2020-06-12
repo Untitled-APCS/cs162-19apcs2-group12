@@ -1217,9 +1217,14 @@ bool inputPathExportCSV(string *s, int cnt, int x) {
                     cout << "[~ + enter] Back to menu.\n\n";
                     cout << "Your file path: " << s[x];
 
-                    fflush(stdin);
-                    getline(cin, fileName);
-                    fflush(stdin);
+                    fileName.clear();
+
+                    do {
+                        fflush(stdin);
+                        getline(cin, fileName);
+                        fflush(stdin);
+                    } while (fileName.length() == 0);
+                    
 
                     if (fileName.find('~') != string::npos) {
                         s[x] = "~";
@@ -1235,7 +1240,7 @@ bool inputPathExportCSV(string *s, int cnt, int x) {
                         fileName += ".csv";
 
                     ofstream fout;
-                    fout.open(s[x] + fileName);
+                    fout.open(s[x] + fileName, ios::out);
                     if (fout.is_open()) {
                         fout.close();
                         s[x] += fileName;
