@@ -1,4 +1,5 @@
-# CS162 - 19APCS2 - Group12
+# Student system management  
+## Introduction
 
 ### Chu Duc An
 
