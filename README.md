@@ -1,6 +1,5 @@
 # Student system management  
-## Introduction
-
+## Team Information
 ### Chu Duc An
 
 - Student ID: 19125001
